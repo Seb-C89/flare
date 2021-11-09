@@ -11,7 +11,7 @@ export default function handler(req, res) {
 	database : process.env.MYSQL_DB,
 	port     : process.env.MYSQL_PORT
 	});
-
+	console.log(connection.state, connection.status)
 	connection.connect(
 		function(err) {
 			if (err)
@@ -20,23 +20,26 @@ export default function handler(req, res) {
 				console.log('connected as id ' + connection.threadId);
 		}
 	);
-
+	console.log("aaaa", connection.state, connection.status)
 	connection.query("SELECT user_name, game, image, UNIX_TIMESTAMP(date) AS date FROM post", 
-		function(err, res, fields){
+		function(err, res){
 			if(err)
 				console.error('error querying: ' + err.stack);
 			if(res)
 				console.log(res)
-			if(fields)
-				console.log(fields)
 		}
 	)
 
-	res.status(200).json({ res: res })
+	console.log("bbbb", connection.state, connection.status)
+	res.status(200).json({ res: "ok" })
 
 	connection.end(
 		function(err){
-			console.error('error closing connection: ' + err.stack)
+			if(err)
+				console.error('error closing connection: ' + err.stack)
 		}
 	);
+
+	console.log("cccc", connection.state, connection.status)
+	console.log('disconnected as id ' + connection.threadId);
 }
