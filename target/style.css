@@ -1,6 +1,10 @@
 body {
 	/*padding-left: 20%;
 	padding-right: 20%;*/
+}
+
+#Main {
+
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-around;
@@ -8,6 +12,13 @@ body {
 
 #Viewer {
 	display: none;
+	background-color: rgba(100, 100, 100 , 0.95);
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	top: 0px;
+	left: 0px;
 }
 
 #Menu {

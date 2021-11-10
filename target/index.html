@@ -7,7 +7,8 @@
 	<script src="script.js"></script>
 </head>
 <body>
-<div id="Viewer"></div>
+<div id="Viewer" onclick="hide_viewer()"><img id="Viewport" src="" alt="viewport" /></div>
+<div id="Main">
 <nav id="Menu">
 	<ul>
 		<li>Game 1</li>
@@ -25,7 +26,7 @@
 			<p>In <span class="game">game</span> posted by <span class="author">user</span></p>
 		</footer>
 	</article>
-	<article class="card">
+	<article class="card" onclick="show_viewer(this)">
 		<img src="a.jpg" alt="image of game 1" />
 		<footer>
 			<p>In <span class="game">game</span> posted by <span class="author">user</span></p>
@@ -77,5 +78,6 @@
 		</footer>
 	</article>
 </section>
+<div>
 </body>
 </html>
