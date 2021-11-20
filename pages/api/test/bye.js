@@ -1,4 +1,4 @@
-import a from "../../utils/db.js"
+import a from "../../../utils/db.js"
 
 export default async function handler(req, res) {
 	var sql_res;
