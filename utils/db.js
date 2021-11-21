@@ -18,4 +18,16 @@ connection.connect(
 	}
 );
 
-export default connection;
+function sql_query(sql, arg){
+	return new Promise((resolve, reject) => {
+		connection.query(sql, arg, (e, r) => {
+			if(e){
+				reject(e)
+			} else {
+				resolve(r)
+			}
+		})
+	})
+}
+
+export default sql_query;
