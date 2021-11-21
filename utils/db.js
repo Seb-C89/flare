@@ -22,6 +22,7 @@ function sql_query(sql, arg){
 	return new Promise((resolve, reject) => {
 		connection.query(sql, arg, (e, r) => {
 			if(e){
+				console.log(e)
 				reject(e)
 			} else {
 				resolve(r)
@@ -39,7 +40,7 @@ export function get_by_game(where){
 }
 
 export function get_games(){	
-	return sql_query("SELECT DISTINCT game FROM post ", null)
+	return sql_query("SELECT game, COUNT(game) AS count FROM post GROUP BY game", null)
 }
 
 export default sql_query;
