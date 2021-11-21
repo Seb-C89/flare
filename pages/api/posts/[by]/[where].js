@@ -1,4 +1,4 @@
-import db from "../../../../utils/db.js"
+import { get_recent, get_by_game } from "../../../../utils/db.js"
 
 export default async function handler(req, res) {
 	const { by, where } = req.query;
@@ -21,12 +21,4 @@ export default async function handler(req, res) {
 	}
 	console.log("end api");
 	await r.then((a) => {return res.status(200).json(a)}).catch((a) => {return res.status(500).end()})
-}
-	
-function get_recent(){	
-	return db("SELECT user_name, game, image, UNIX_TIMESTAMP(date) AS date FROM post", null)
-}
-
-async function get_by_game(where){	
-	return db("SELECT user_name, game, image, UNIX_TIMESTAMP(date) AS date FROM post WHERE game = ?", [where])
 }

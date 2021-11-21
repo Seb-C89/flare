@@ -30,4 +30,16 @@ function sql_query(sql, arg){
 	})
 }
 
+export function get_recent(){	
+	return sql_query("SELECT user_name, game, image, UNIX_TIMESTAMP(date) AS date FROM post", null)
+}
+
+export function get_by_game(where){	
+	return sql_query("SELECT user_name, game, image, UNIX_TIMESTAMP(date) AS date FROM post WHERE game = ?", [where])
+}
+
+export function get_games(){	
+	return sql_query("SELECT DISTINCT game FROM post ", null)
+}
+
 export default sql_query;
