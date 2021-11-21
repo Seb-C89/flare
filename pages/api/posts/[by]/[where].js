@@ -2,45 +2,31 @@ import db from "../../../../utils/db.js"
 
 export default async function handler(req, res) {
 	const { by, where } = req.query;
+	let r;
 	switch(req.method){
 		case "GET":
 			switch(by){
 				case "recent":
-					return get_recent();
+					r = get_recent()
+					break;
 				case "game":
-					return get_by_game(where);
+					r = get_by_game(where);
+					break;
+				default:
+					return res.status(404).end();
 			}
+			break;
 		default:
-			return res.status(404);
+			return res.status(404).end();
 	}
+	console.log("end api");
+	await r.then((a) => {return res.status(200).json(a)}).catch((a) => {return res.status(500).end()})
 }
 	
-async function get_recent(){	
-	return await db.query("SELECT user_name, game, image, UNIX_TIMESTAMP(date) AS date FROM post", 
-		function(err, r){
-			if(err) {
-				console.error('error querying: ' + err.stack);
-				return res.status(500)
-			}
-			if(res) {
-				console.log(r)
-				return res.status(200).json(r)
-			}
-		}
-	)
+function get_recent(){	
+	return db("SELECT user_name, game, image, UNIX_TIMESTAMP(date) AS date FROM post", null)
 }
 
-async function get_recent(where){	
-	return await db.query("SELECT user_name, game, image, UNIX_TIMESTAMP(date) AS date FROM post WHERE game ="+where, 
-		function(err, r){
-			if(err) {
-				console.error('error querying: ' + err.stack);
-				return res.status(500)
-			}
-			if(res) {
-				console.log(r)
-				return res.status(200).json(r)
-			}
-		}
-	)
+async function get_by_game(where){	
+	return db("SELECT user_name, game, image, UNIX_TIMESTAMP(date) AS date FROM post WHERE game = ?", [where])
 }
