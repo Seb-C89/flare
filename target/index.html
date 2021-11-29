@@ -7,8 +7,11 @@
 </head>
 <body>
 <div id="Viewer"><img id="Viewport" src="" alt="viewport" /></div>
+
 <div id="Main">
+<header id="head"><a href="#">Gallery</a><h1>Lens Flare</h1><a href="#">About</a></header>
 <nav id="Menu">
+	<h2>Games</h2>
 	<ul>
 		<li>Game 1</li>
 		<li>Game 2</li>
@@ -82,7 +85,7 @@
 		<h2>Participez !</h2>
 		<div>
 			<label for="file">
-				<span>Choisissez une capture d'écran</span>
+				<span>Choisissez une capture d'écran:</span>
 				<input type="file" id="form_file" name="file" accept=".jpg, .jpeg, .png, .bmp">
 			</label>
 		</div>
@@ -100,13 +103,14 @@
 		</div>
 		<div>
 			<label for="check">
-				<span>Entrez votre adresse email</span>
+				<span>Entrez votre adresse email:</span>
 				<input type="email" id="form_check" name="check" autocomplete="email" required="true">
+				<br>
 				<em>Vous devrez cliquez sur un lien envoyé par email pour validez le formulaire</em>
 			</label>
 		</div>
 		<div>
-			<input type="button" value="Envoyer">
+			<input id="submit" type="button" value="Envoyer">
 		</div>
 		<datalist id="form_game_list">
 			<option value="Chrome">
@@ -118,6 +122,12 @@
 		  </datalist>
 	</section>
 </form>
+<footer id="foot">
+	<ul>
+		<li>Confidentialité</li>
+		<li>Inspiré par: <a href="https://vgsmproject.com/">The video game sode machin project</a></li>
+	</ul>
+</footer>
 </div>
 <script src="script.js"></script>
 </body>
