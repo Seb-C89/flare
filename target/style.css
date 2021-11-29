@@ -1,16 +1,60 @@
-body {
-	padding-left: 10%;
-	padding-right: 10%;
+html, body {
+	padding: 0%;
+	margin: 0%;
+	height: 100%;
+	overflow: hidden;
 }
+
+html {
+	padding: 0 5% 0 5%;
+}
+
+body {
+	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
 
 #Main {
 	display: grid;
 	grid-template-columns: 1fr 5fr;
-	grid-template-rows: 1fr 1fr;
+	grid-template-rows: auto auto auto auto;
 	grid-template-areas:
-	"side1 main main main main main"
-	"side2 main main main main main";
-	/*grid-column-gap: 5%;*/
+	"head head"
+	"side1 main"
+	"side2 main"
+	"foot foot";
+	grid-column-gap: 3%;
+	height: 100%;
+}
+
+#head {
+	grid-area: head;
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	box-shadow: -1px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+#head * {
+	display: inline-block;
+	/*margin-left: auto;
+	margin-right: auto;*/
+	flex: 0 0 auto;
+}
+
+#foot {
+	grid-area: foot;
+}
+
+#foot ul {
+	list-style-type: disc;
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+#foot li {
+	display: list-item inline;
 }
 
 #Viewer {
@@ -22,8 +66,14 @@ body {
 	top: 0px;
 	left: 0px;
 	opacity: 0;
-	overflow: scroll;
+	overflow: auto;
 	background-color: rgba(100, 100, 100 , 0.95);
+}
+
+#Viewport {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 @keyframes fade_in {
@@ -48,17 +98,15 @@ body {
 
 #Menu {
 	/*display: inline-block;*/
-	margin: 0px;
-	margin-right: 10px;
 	padding: 0px;
-	padding-top: 5px;
 	/*border: 1px solid black;*/
-	overflow: hidden;
+	overflow-y: auto;
+	overflow-x: hidden;
 	grid-area: side1;
 }
 
-#Menu * {
-	/*border: 1px solid black;*/
+#Menu h2 {
+	text-align: center;
 }
 
 #Menu ul {
@@ -72,8 +120,9 @@ body {
 	justify-content: space-between;
 	align-items: center;
 	/*border: 1px solid black;*/
+	overflow: auto;
 	grid-area: main;
-	overflow: scroll;
+	scrollbar-width: none;
 }
 
 .card {
@@ -113,5 +162,28 @@ body {
 
 #Form {
 	grid-area: side2;
-	overflow: hidden;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+#Form h2 {
+	text-align: center;
+}
+
+#Form div {
+	margin: 5px 0px 5px 0px;
+	padding: 5px;
+	transition:	background-color 0.1s ease-out;
+}
+
+#Form div:hover {
+	background-color: lightgray;
+	border-radius: 5px;
+	
+}
+
+#submit {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
