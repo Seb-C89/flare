@@ -17,7 +17,7 @@ body {
 #Main {
 	display: grid;
 	grid-template-columns: 1fr 5fr;
-	grid-template-rows: auto auto auto auto;
+	grid-template-rows: 0fr auto auto 0fr;
 	grid-template-areas:
 	"head head"
 	"side1 main"
@@ -123,6 +123,8 @@ body {
 	overflow: auto;
 	grid-area: main;
 	scrollbar-width: none;
+	padding: 10px;
+	padding-bottom: 0px;
 }
 
 .card {
@@ -214,4 +216,42 @@ border-radius: 10px;*/
 
 ::-webkit-scrollbar-button {
 	height: 5%;
+}
+
+.layout-fullframe {
+	background-color: green;
+	grid-area: 2 / 1 / -1 / -1;
+}
+
+.layout-side1 {
+	grid-area: side1;
+}
+
+.layout-side2 {
+	grid-area: side2;
+}
+
+.layout-main {
+	grid-area: main;
+}
+
+@media (orientation: portrait) {
+
+html, body, #Main {
+	height: unset;
+	background-color: chocolate;
+}
+
+#Main {
+	display: unset;
+}
+
+#Gallery {
+	width: 100%;
+}
+
+.card {
+	width: 100%;
+}
+
 }

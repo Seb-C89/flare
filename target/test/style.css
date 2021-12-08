@@ -1,0 +1,57 @@
+html, body {
+	margin: 0%;
+	padding: 0%;
+	height: 100%;
+}
+
+#wrap {
+	display: grid;
+	grid-template-columns: 1fr 5fr;
+	grid-template-rows: 0fr auto 0fr;
+	height: 100%;
+}
+
+#un {
+	background-color: brown;
+	grid-area: 1 / 1 / 2 / 2;
+}
+
+#deux {
+	background-color: darkgreen;
+	grid-area: 3 / 1 / 4 / 2;
+}
+
+#trois {
+	background-color: bisque;
+	grid-area: 3 / 2 / 4 / 3;
+	/*overflow: auto;*/
+}
+
+#quatre {
+	background-color: blue;
+	grid-area: 2 / 2 / 3 / 3;
+	/*grid-area: 1 / 2 / 2 / 2;*/
+}
+
+#flex {
+	display: flex;
+	justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+#flex .li-flex {
+	display: contents
+}
+
+#flex .li-left {
+	order: 1;
+}
+
+#flex .li-center {
+	order: 2;
+}
+
+#flex .li-right {
+	order: 3;
+}
