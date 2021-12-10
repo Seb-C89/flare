@@ -255,3 +255,34 @@ html, body, #Main {
 }
 
 }
+
+.flex_menu {
+	display: flex;
+	justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.flex_menu ul {
+	display: contents;
+}
+
+.layout-fullframe {
+	height: 100%;
+}
+
+.layout-sidemenu {
+	display: grid;
+	grid-template-columns: 2fr 5fr;
+	grid-template-rows: auto;
+	grid-template-areas: "side main";
+	height: 100%;
+}
+
+.layout-sidemenu .side {
+	grid-area: side;
+}
+
+.layout-sidemenu .main {
+	grid-area: main;
+}
