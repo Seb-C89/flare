@@ -1,9 +1,9 @@
 import Card from "./Card.js"
+//import { get_recent, get_games } from '../utils/db.js'
 
-export default function(props) {
-	const { posts } = props
+export default function({ posts }) {
 	
-	let cards = posts.map((v) => {
+	let cards = posts?.map((v) => {
 		return <Card post={v} />
 	})
 

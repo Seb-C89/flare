@@ -1,7 +1,6 @@
-export default function(props){
-	let { games } = props
+export default function({ games }){
 	
-	let rows = games.map((value, index) => {
+	let rows = games?.map((value, index) => {
 		return <li key={ "game"+index }>{ ""+value.game+" ("+value.count+")" }</li>
 	})
 
