@@ -1,4 +1,4 @@
-html, body {
+html, body, #__next {
 	padding: 0%;
 	margin: 0%;
 	height: 100%;
@@ -13,6 +13,9 @@ body {
 	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
+#__next {
+	display: contents;
+}
 
 #Main {
 	display: grid;
@@ -102,7 +105,6 @@ body {
 	/*border: 1px solid black;*/
 	overflow-y: auto;
 	overflow-x: hidden;
-	grid-area: side1;
 }
 
 #Menu h2 {
@@ -119,12 +121,12 @@ body {
 	flex-flow: row wrap;
 	justify-content: space-between;
 	align-items: center;
-	/*border: 1px solid black;*/
+	align-content: flex-start;
 	overflow: auto;
-	grid-area: main;
 	scrollbar-width: none;
 	padding: 10px;
 	padding-bottom: 0px;
+	
 }
 
 .card {
