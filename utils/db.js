@@ -43,4 +43,8 @@ export function get_games(){
 	return sql_query("SELECT game, COUNT(game) AS count FROM post GROUP BY game", null)
 }
 
+export function insert_message(message, reply_to) {
+	return sql_query("INSERT INTO message (message, `reply-to`) VALUES (?, ?)", [message, reply_to])
+}
+
 export default sql_query;
