@@ -2,6 +2,7 @@ html, body, #__next {
 	padding: 0%;
 	margin: 0%;
 	height: 100%;
+	max-height: 100%;
 	overflow: hidden;
 }
 
@@ -11,6 +12,10 @@ html {
 
 body {
 	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+	display: grid;
+	grid-template-columns: 100%;
+	grid-template-rows: 0fr 1fr 0fr;
+	overflow: auto; /* permit scroll when zoom  */
 }
 
 #__next {
@@ -269,10 +274,6 @@ html, body, #Main {
 	display: contents;
 }
 
-.layout-fullframe {
-	height: 100%;
-}
-
 .layout-sidemenu {
 	display: grid;
 	grid-template-columns: 2fr 5fr;
@@ -287,4 +288,10 @@ html, body, #Main {
 
 .layout-sidemenu .main {
 	grid-area: main;
+}
+
+.layout_fullframe {
+	overflow: scroll;
+	margin: auto;
+	max-height: 100%; /* without scroll bar doesn't appear */
 }
