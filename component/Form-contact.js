@@ -1,10 +1,26 @@
+import React from "react"
+
 export default function(props) {
-	const onSubmit = event => {
+	const form_ref = React.createRef();
+	//const [status, setStatus] = useState();
+
+	const onSubmit = async event => {
 		event.preventDefault() // don't redirect the page
-		// where we'll add our form logic
+		var formData = new URLSearchParams(new FormData(form_ref.current))
+		fetch("http://localhost:3000/api/form/contact", {
+			method: 'POST',
+			body: formData
+		}).then((res) => {
+			if(res.ok)
+				console.log("DONE")
+			else
+				console.log("ERROR: "+res.status)
+		}).catch(
+			console.log("NETWORK ERROR")
+		)
 	}
 	
-	return <form id="Form" method="post" action="/result/contact" onSubmit={onSubmit}>
+	return <form ref={ form_ref } id="Form" method="POST" action="/result/contact" onSubmit={onSubmit}>
 		<section>
 			<h2>Contact</h2>
 			<div>
@@ -21,6 +37,11 @@ export default function(props) {
 			</div>
 			<div>
 				<input id="submit" type="submit" value="Envoyer" />
+			</div>
+			<div id="result">
+				{
+					//status()
+				}
 			</div>
 		</section>
 	</form>

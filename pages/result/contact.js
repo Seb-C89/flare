@@ -12,6 +12,8 @@ export default function(props) {
 export async function getServerSideProps(context) {
 	context.req.body = await parseBody(context.req, '1mb');
 	
+	console.log(context.req.body)
+
 	let bool
 	let { message, reply_to } = context.req.body || {}
 
