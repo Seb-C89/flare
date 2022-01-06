@@ -2,6 +2,7 @@ const formidable = require('formidable');
 const os = require('os'); // remove
 import { fileTypeFromFile } from 'file-type'
 const fs = require('fs')
+import { insert_post } from '../../../utils/db.js'
 
 export const config = {
 	api: {
@@ -31,8 +32,17 @@ export default async function endpoint(req, res) {
 			.catch(() => {
 				console.log('Failled to detecte file type')
 			})
-		console.log(res.mime)
-		console.log(res.ext)
+		//console.log(res.mime)
+		//console.log(res.ext)
+		let post = {
+			game: fields.game,
+			image: files.file.newFilename,
+		}
+		let file = [{
+			name: files.file.newFilename,
+			post: 999
+		}]
+		insert_post(post, file)
 	})
 
 	res.json('file recieved')

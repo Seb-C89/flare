@@ -18,7 +18,7 @@ connection.connect(
 
 function sql_query(sql, arg){
 	return new Promise((resolve, reject) => {
-		connection.query(sql, arg, (e, r) => {
+		let aaa = connection.query(sql, arg, (e, r) => {
 			if(e){
 				console.log(e)
 				reject(e)
@@ -26,6 +26,7 @@ function sql_query(sql, arg){
 				resolve(r)
 			}
 		})
+		console.log(aaa.sql)
 	})
 }
 
@@ -43,6 +44,27 @@ export function get_games(){
 
 export function insert_message(message, reply_to) {
 	return sql_query("INSERT INTO message (message, `reply-to`) VALUES (?, ?)", [message, reply_to])
+}
+
+export async function insert_post(post, files) {
+	return sql_query("START TRANSACTION")
+		.then(async () => {
+	 		return await sql_query("INSERT INTO post SET ?", post)
+		})
+		.then(async (r) => {
+			for(const f of files){
+				console.log(r)
+				f["post"] = r.insertId
+				await sql_query("INSERT INTO file SET ?", f)
+			}
+		})
+		.then(async () => {
+			await sql_query("COMMIT")
+		})
+		.catch(async (e) => {
+			await sql_query("ROLLBACK")
+			console.log(e)
+		})
 }
 
 export default sql_query;
