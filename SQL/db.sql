@@ -33,7 +33,8 @@ CREATE TABLE `file` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'redundant with post.date',
   `state` enum('MOD','DEL','OK') NOT NULL DEFAULT 'MOD',
   PRIMARY KEY (`id`),
-  CONSTRAINT `post` FOREIGN KEY (`id`) REFERENCES `post` (`id`)
+  KEY `POST_ID` (`post`),
+  CONSTRAINT `FK_POST_ID` FOREIGN KEY (`post`) REFERENCES `post` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
