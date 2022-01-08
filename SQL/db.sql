@@ -42,11 +42,11 @@ CREATE TABLE `file` (
 -- Dumping data for table `file`
 --
 
-LOCK TABLES `file` WRITE;
+LOCK TABLES `file` WRITE; SET FOREIGN_KEY_CHECKS=0;
 /*!40000 ALTER TABLE `file` DISABLE KEYS */;
 INSERT INTO `file` VALUES (1,'a',1,NULL,'jpg','2022-01-03 21:52:13','OK'),(2,'b',2,NULL,'jpg','2022-01-03 21:52:13','OK'),(3,'a',3,NULL,'jpg','2022-01-03 21:52:13','OK'),(12,'c',12,NULL,'test','2022-01-04 22:53:09','MOD'),(13,'c',14,NULL,'test','2022-01-04 22:53:28','MOD'),(14,'c',15,NULL,'test','2022-01-04 22:54:00','MOD'),(16,'c',17,NULL,'test','2022-01-04 22:54:13','MOD'),(17,'c',19,NULL,'test','2022-01-04 22:59:38','MOD'),(18,'c',999,NULL,'test','2022-01-04 23:14:40','MOD');
 /*!40000 ALTER TABLE `file` ENABLE KEYS */;
-UNLOCK TABLES;
+UNLOCK TABLES; SET FOREIGN_KEY_CHECKS=1;
 
 --
 -- Table structure for table `message`
@@ -86,7 +86,6 @@ CREATE TABLE `post` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_name` tinytext,
   `user_id` int DEFAULT NULL,
-  `image` tinytext CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `game` tinytext NOT NULL,
   PRIMARY KEY (`id`),
@@ -102,7 +101,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (1,'seb',2,'a','2021-11-07 16:12:17','battlefield 3'),(2,'seb',NULL,'b','2021-11-07 21:31:48','serious sam: the second encounter'),(3,'seb',2,'a','2021-11-21 23:49:31','battlefield 3'),(12,NULL,NULL,'c','2022-01-04 22:46:21','test'),(13,NULL,NULL,'c','2022-01-04 22:46:26','test'),(14,NULL,NULL,'c','2022-01-04 22:47:49','test'),(15,NULL,NULL,'c','2022-01-04 22:54:00','test'),(16,NULL,NULL,'c','2022-01-04 22:54:06','test'),(17,NULL,NULL,'c','2022-01-04 22:54:13','test'),(18,NULL,NULL,'c','2022-01-04 22:54:28','test'),(19,NULL,NULL,'c','2022-01-04 22:59:38','test');
+INSERT INTO `post` VALUES (1,'seb',2,'2021-11-07 16:12:17','battlefield 3'),(2,'seb',NULL,'2021-11-07 21:31:48','serious sam: the second encounter'),(3,'seb',2,'2021-11-21 23:49:31','battlefield 3'),(12,NULL,NULL,'2022-01-04 22:46:21','test'),(13,NULL,NULL,'2022-01-04 22:46:26','test'),(14,NULL,NULL,'2022-01-04 22:47:49','test'),(15,NULL,NULL,'2022-01-04 22:54:00','test'),(16,NULL,NULL,'2022-01-04 22:54:06','test'),(17,NULL,NULL,'2022-01-04 22:54:13','test'),(18,NULL,NULL,'2022-01-04 22:54:28','test'),(19,NULL,NULL,'2022-01-04 22:59:38','test');
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,4 +138,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-05 14:00:02
+-- Dump completed on 2022-01-08 13:58:11
