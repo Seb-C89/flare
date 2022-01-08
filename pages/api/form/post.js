@@ -11,37 +11,47 @@ export const config = {
 };
 
 export default async function endpoint(req, res) {
+	let nbr_files;
+	let field_for_file = "file" // name of the field containing the files
+	
 	const form = formidable({ 
-		multiples: false,
+		multiples: true,
 		uploadDir: "uploads/",
+		allowEmptyFiles: false,
+		filter: function ({name}) { // reject files not contained in the appropriate field
+			nbr_files++;
+			return name === field_for_file
+		},
 		//fileWriteStreamHandler: aaa // function who receive files data and save it
 	});
 
 	form.parse(req, async (err,fields,files) => {
 		console.log(err)
 		console.log(fields)
-		console.log(files.file.size)
+		console.log(files)
 		console.log(os.tmpdir())
-		let res = await fileTypeFromFile(files.file.filepath)
+		
+		if(nbr_files === 1) // if there are only one file uploaded, the properties containing the files is not itterable...
+			files[field_for_file] = [files[field_for_file]] // so put it in an array
+		for(let f of files.file){
+			await fileTypeFromFile(f.filepath)
 			.then((res) => {
-				console.log(res.mime)
-				console.log(res.ext)
+				f["ext"] = res.ext
 				//fs.rename(files.file.filepath, files.file.filepath+'_'+res.ext)
-				return res.ext
 			})
 			.catch(() => {
-				console.log('Failled to detecte file type')
+				console.log('Failled to detecte file type for'+f.filepath)
 			})
-		//console.log(res.mime)
-		//console.log(res.ext)
+		}
+
 		let post = {
 			game: fields.game,
-			image: files.file.newFilename,
 		}
-		let file = [{
-			name: files.file.newFilename,
-			post: 999
-		}]
+
+		let file = files.file.map(x => {
+			return {ext, newFilename, originalFilename} = x
+		})
+
 		insert_post(post, file)
 	})
 
