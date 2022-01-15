@@ -6,6 +6,8 @@ export default async function(req, res) {
 	console.log(req.body)
 	console.log(message)
 	console.log(reply_to)
+
+	// TODO check message, reply_to, subject
 	
 	await send_mail(message, reply_to, subject)
 		.then(() => {
@@ -17,7 +19,7 @@ export default async function(req, res) {
 }
 
 export function send_mail(message, reply_to, subject) {
-	let transporter = nodemailer.createTransport({
+	let transporter = nodemailer.createTransport({ // TODO add all param
 		service: "Outlook365",
 		auth: {
 			user: process.env.MAIL_USER,
