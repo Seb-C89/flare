@@ -3,7 +3,8 @@ import React from "react"
 export default function(props) {
 
 	const form_ref = React.createRef();
-	let error = props.error
+	const [error, setError] = React.useState(props.error);
+	const [submited, setSubmited] = React.useState(props.submited);
 
 	async function onSubmit(event) {
 		event.preventDefault() // don't redirect the page
@@ -14,13 +15,20 @@ export default function(props) {
 		}).then((res) => {
 			if(res.ok)
 				//console.log("DONE")
-				submited = true
+				setSubmited(true)
 			else
 				//console.log("ERROR: "+res.status)
-				error = true
-		}).catch(
+				setError(true)
+		}).catch(() => {
 			console.log("NETWORK ERROR")
-		)
+		})
+	}
+
+	function result(){
+		if(submited)
+			return onSuccess()
+		if(error)
+			return onFail()
 	}
 
 	return <form ref={ form_ref } id="Form" method="POST" action="/contact" onSubmit={onSubmit}>
@@ -29,25 +37,25 @@ export default function(props) {
 			<div>
 				<label htmlFor="reply_to">
 					<span>Entrez votre adresse email:</span>
-					<input type="email" id="form_mail" name="reply_to" autoComplete="email" required={ true } value={ props?.reply_to } />
+					<input type="email" id="reply_to" name="reply_to" autoComplete="email" required={ true } value={ props?.reply_to } />
 				</label>
 			</div>
 			<div>
 				<label htmlFor="subject">
 					<span>Sujet:</span>
-					<input id="subject" name="subject" autoComplete="email" required={ true } value={ props?.subject } />
+					<input id="subject" name="subject" autoComplete="email" required={ false } value={ props?.subject } />
 				</label>
 			</div>
 			<div>
 				<label htmlFor="message">
 					<span>Message:</span>
-					<textarea id="form_message" name="message" required={ true } value={ props?.message } />
+					<textarea id="message" name="message" required={ true } value={ props?.message } />
 				</label>
 			</div>
 			<div>
-				<input id="submit" type="submit" value="Envoyer" disabled={ props?.submited }/>
+				<input id="submit" type="submit" value="Envoyer" disabled={ submited }/>
 			</div>
-			{ props.error ? onSuccess() : onFail() }
+			{ result() }
 		</section>
 	</form>
 }

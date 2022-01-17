@@ -19,6 +19,8 @@ export default async function(req, res) {
 }
 
 export function send_mail(message, reply_to, subject) {
+	// TODO check params
+
 	let transporter = nodemailer.createTransport({ // TODO add all param
 		service: "Outlook365",
 		auth: {
