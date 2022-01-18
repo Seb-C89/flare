@@ -13,8 +13,9 @@ export default function(props) {
 export async function getServerSideProps(context) {
 	let {...fields} = await parseBody(context.req, '1mb'); 
 
-	/*let error, submited
-	let { message, reply_to, subject } = context.req.body || {}*/
+	/*let error = null
+	let submited = null*/
+	/*let { message, reply_to, subject } = context.req.body || {}*/
 
 	/*await send_mail(message, reply_to, subject)
 		.then(() => submited = true)

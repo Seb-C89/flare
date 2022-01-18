@@ -12,12 +12,12 @@ export default async function(req, res) {
 				req.body.error = true
 				res?.status(503).end()
 			})
-	}
+}
 
 export function send_mail(message, reply_to, subject) {
 	if(
 		message &&
-		"/^[^@ ]+@[^@ ]+$/".test(reply_to)
+		/^[^@ ]+@[^@ ]+$/.test(reply_to)
 	){
 		// TODO do not create transporter each time
 		/*let transporter = nodemailer.createTransport({ // TODO add all param
@@ -39,12 +39,12 @@ export function send_mail(message, reply_to, subject) {
 
 		return transporter.sendMail(mail)*/
 		return new Promise((resolve, reject) => {
-			resolve("message is falsy or reply_to is incorrecte")
-	})
+			resolve()
+		})
 	} 
 	else 
 		return new Promise((resolve, reject) => {
-				reject("message is falsy or reply_to is incorrecte")
+			reject("message is falsy or reply_to is incorrecte")
 		})
 }
 
