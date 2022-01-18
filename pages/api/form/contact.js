@@ -1,7 +1,8 @@
 //import { insert_message } from "../../../utils/db.js"
 const nodemailer = require("nodemailer");
 
-export default async function(req, res) {
+export default async function(req, res, fields) {
+	let error, submited
 	const { message, reply_to, subject } = req.body
 	console.log(req.body)
 	console.log(message)
@@ -11,17 +12,21 @@ export default async function(req, res) {
 	
 	await send_mail(message, reply_to, subject)
 		.then(() => {
-			return res.status(202).end()
+			submited = true
+			res?.status(202).end()
 		})
 		.catch(() => {
-			return res.status(503).end()
+			error = true
+			res?.status(503).end()
 		})
+	
+	fields = {...req.body, error, submited}
 }
 
 export function send_mail(message, reply_to, subject) {
 	// TODO check params
 
-	let transporter = nodemailer.createTransport({ // TODO add all param
+	/*let transporter = nodemailer.createTransport({ // TODO add all param
 		service: "Outlook365",
 		auth: {
 			user: process.env.MAIL_USER,
@@ -38,7 +43,13 @@ export function send_mail(message, reply_to, subject) {
 		//html: "<p>HTML version of the message</p>"
 	};
 
-	return transporter.sendMail(mail)
+	return transporter.sendMail(mail)*/
+	return new Promise((resolve, reject) => {
+		if (subject === '')
+			resolve()
+		else
+			reject()
+	})
 }
 
 /*
