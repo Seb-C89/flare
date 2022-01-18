@@ -37,19 +37,19 @@ export default function(props) {
 			<div>
 				<label htmlFor="reply_to">
 					<span>Entrez votre adresse email:</span>
-					<input type="email" id="reply_to" name="reply_to" autoComplete="email" required={ true } value={ props?.reply_to } />
+					<input type="email" id="reply_to" name="reply_to" autoComplete="email" required={ true } defaultValue={ props?.reply_to } />
 				</label>
 			</div>
 			<div>
 				<label htmlFor="subject">
 					<span>Sujet:</span>
-					<input id="subject" name="subject" autoComplete="email" required={ false } value={ props?.subject } />
+					<input id="subject" name="subject" autoComplete="email" required={ false } defaultValue={ props?.subject } />
 				</label>
 			</div>
 			<div>
 				<label htmlFor="message">
 					<span>Message:</span>
-					<textarea id="message" name="message" required={ true } value={ props?.message } />
+					<textarea id="message" name="message" required={ true } defaultValue={ props?.message } />
 				</label>
 			</div>
 			<div>

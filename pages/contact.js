@@ -11,8 +11,7 @@ export default function(props) {
 }
 
 export async function getServerSideProps(context) {
-	context.req.body = await parseBody(context.req, '1mb');
-	console.log(context.req.body)
+	let {...fields} = await parseBody(context.req, '1mb'); 
 
 	/*let error, submited
 	let { message, reply_to, subject } = context.req.body || {}*/
@@ -21,8 +20,9 @@ export async function getServerSideProps(context) {
 		.then(() => submited = true)
 		.catch(() => error = true)*/
 	
-	let fields = null
-	await contact_api(context.req, null, fields)
+	await contact_api({body: fields}, null)
+
+	console.log(fields)
 	
 	return {
 		/*props: {
