@@ -22,7 +22,7 @@ export default async function endpoint(req, res) {
 			nbr_files++;
 			return name === field_for_file
 		},
-		//fileWriteStreamHandler: aaa // function who receive files data and save it
+		//fileWriteStreamHandler: aaa // TODO function who receive files data and save it. (no intermediate file in hard disk)
 	});
 
 	form.parse(req, async (err,fields,files) => {
@@ -46,12 +46,14 @@ export default async function endpoint(req, res) {
 
 		let post = {
 			game: fields.game,
+			check: fields.check ?? null,
 		}
 
 		let file = files.file.map(x => {
 			return {ext, newFilename, originalFilename} = x
 		})
 
+		req.body = { ...post } // alter req.body for giving access to the legacy handler
 		insert_post(post, file)
 	})
 

@@ -28,25 +28,25 @@ export default function(props) {
 		<section>
 			<h2>Participez !</h2>
 			<div>
-				<label htmlFor="file">
+				<label htmlFor="form_file">
 					<span>Choisissez une capture d'écran:</span>
 					<input type="file" id="form_file" name="file" /*accept=".jpg, .jpeg, .png, .bmp"*/ multiple={ false }/>
 				</label>
 			</div>
 			<div>
-				<label htmlFor="game">
+				<label htmlFor="form_game">
 					<span>Choisissez un jeu ou inscrivez un nouveau nom:</span>
 					<input type="text" id="form_game" name="game" list="form_game_list" value={ props?.game } />
 				</label>
 			</div>
 			<div>
-				<label htmlFor="check">
+				<label htmlFor="form_check">
 					<input type="checkbox" id="form_check" name="check" value={ props?.check }/>
 					<span>En cochant cette case je déclare sur l'honneur que mon attention est bonne et qu'elle ne vise pas à discriminer, choqué ou porter atteinte à une communauté quelle qu'elle soit.</span>
 				</label>
 			</div>
 			<div>
-				<label htmlFor="mail">
+				<label htmlFor="form_mail">
 					<span>Entrez votre adresse email:</span>
 					<input type="email" id="form_mail" name="mail" autoComplete="email" required={true} value={ props?.mail } />
 					<br />
@@ -54,7 +54,7 @@ export default function(props) {
 				</label>
 			</div>
 			<div>
-				<input id="submit" type="submit" value="Envoyer" disabled={ props?.submited } />
+				<input id="form_submit" type="submit" value="Envoyer" disabled={ props?.submited } />
 			</div>
 			<datalist id="form_game_list">
 				<option value="Chrome" />
