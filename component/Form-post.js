@@ -3,7 +3,8 @@ import React from "react"
 export default function(props) {
 
 	const form_ref = React.createRef();
-	let error = props.error
+	const [error, setError] = React.useState(props.error);
+	const [submited, setSubmited] = React.useState(props.submited);
 	
 	const onSubmit = async event => {
 		event.preventDefault() // don't redirect the page
@@ -15,13 +16,20 @@ export default function(props) {
 		}).then((res) => {
 			if(res.ok)
 				//console.log("DONE")
-				submited = true
+				setSubmited(true)
 			else
 				//console.log("ERROR: "+res.status)
-				error = true
+				setError(true)
 		}).catch(
 			console.log("NETWORK ERROR")
 		)
+	}
+
+	function result(){
+		if(submited)
+			return onSuccess()
+		if(error)
+			return onFail()
 	}
 	
 	return <form ref={ form_ref } id="Form" method="POST" encType="multipart/form-data" action="/result/post" onSubmit={onSubmit}>
@@ -45,14 +53,14 @@ export default function(props) {
 					<span>En cochant cette case je déclare sur l'honneur que mon attention est bonne et qu'elle ne vise pas à discriminer, choqué ou porter atteinte à une communauté quelle qu'elle soit.</span>
 				</label>
 			</div>
-			<div>
+			{/*<div>
 				<label htmlFor="form_mail">
 					<span>Entrez votre adresse email:</span>
 					<input type="email" id="form_mail" name="mail" autoComplete="email" required={true} value={ props?.mail } />
 					<br />
 					<em>Vous devrez cliquez sur un lien envoyé par email pour validez le formulaire</em>
 				</label>
-			</div>
+			</div>*/}
 			<div>
 				<input id="form_submit" type="submit" value="Envoyer" disabled={ props?.submited } />
 			</div>
@@ -64,7 +72,7 @@ export default function(props) {
 				<option value="Safari" />
 				<option value="Microsoft Edge" />
 			</datalist>
-			{ props.error ? onSuccess() : onFail() }
+			{ result() }
 		</section>
 	</form>
 }

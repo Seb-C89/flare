@@ -1,8 +1,9 @@
-const formidable = require('formidable');
+//const formidable = require('formidable');
+import formidable from 'formidable';
 const os = require('os'); // remove
 import { fileTypeFromFile } from 'file-type'
 const fs = require('fs')
-import { insert_post } from '../../../utils/db.js'
+//import { insert_post } from '../../../utils/db.js'
 
 export const config = {
 	api: {
@@ -11,7 +12,6 @@ export const config = {
 };
 
 export default async function endpoint(req, res) {
-	let nbr_files;
 	let field_for_file = "file" // name of the field containing the files
 	
 	const form = formidable({ 
@@ -19,21 +19,23 @@ export default async function endpoint(req, res) {
 		uploadDir: "uploads/",
 		allowEmptyFiles: false,
 		filter: function ({name}) { // reject files not contained in the appropriate field
-			nbr_files++;
-			return name === field_for_file
+			console.log("name"+name+"=")
+			console.log(name === field_for_file)
+			return name == field_for_file
 		},
 		//fileWriteStreamHandler: aaa // TODO function who receive files data and save it. (no intermediate file in hard disk)
 	});
 
 	form.parse(req, async (err,fields,files) => {
-		console.log(err)
+		if(err)
+			console.log("PARSE ERROR")
 		console.log(fields)
 		console.log(files)
 		console.log(os.tmpdir())
 		
-		if(nbr_files === 1) // if there are only one file uploaded, the properties containing the files is not itterable...
-			files[field_for_file] = [files[field_for_file]] // so put it in an array
-		for(let f of files.file){
+		// Need formidable 3.x https://github.com/node-formidable/formidable/issues/400
+		// Else if there are one file, the files propertie is not an array with one file bur directly the file obj and break the while
+		for(const f of files[field_for_file] || []){
 			await fileTypeFromFile(f.filepath)
 			.then((res) => {
 				f["ext"] = res.ext
@@ -44,18 +46,14 @@ export default async function endpoint(req, res) {
 			})
 		}
 
-		let post = {
-			game: fields.game,
-			check: fields.check ?? null,
-		}
-
-		let file = files.file.map(x => {
+		let file/* = files[field_for_file]?.map(x => {
 			return {ext, newFilename, originalFilename} = x
-		})
+		})*/
 
-		req.body = { ...post } // alter req.body for giving access to the legacy handler
-		insert_post(post, file)
+		req.body = { ...fields, file } // add fields and files to req.body for giving access to the legacy handler
 	})
 
-	res.json('file recieved')
+	console.log(req.body)
+	//await insert_post(post, file)
+	res?.json('file recieved')
 }
