@@ -2,6 +2,7 @@ const os = require('os'); // remove
 import { fileTypeFromFile } from 'file-type'
 const fs = require('fs')
 const busboy = require('busboy');
+const path = require('path');
 //import { insert_post } from '../../../utils/db.js'
 
 export const config = {
@@ -12,11 +13,15 @@ export const config = {
 
 export default async function endpoint(req, res) {
 	let field_for_file = "file" // name of the field containing the files
+	let save_dir = "uploads/busboy/"
 	//console.log(req)
 	/*if(!(req.is("multipart/form-data"))){
 		res?.status(202).end()
 		return 
 	}*/
+
+	if(!req.hasOwnProperty('body'))
+		req.body = {}
 
 	const bb = busboy({ headers: req.headers });
 		
@@ -25,20 +30,18 @@ export default async function endpoint(req, res) {
 			
 			if(name === field_for_file ){
 				console.log(`File [${name}]: filename: %j, encoding: %j, mimeType: %j`, filename, encoding, mimeType);
-				/*const saveTo = path.join(os.tmpDir(), `busboy-upload-${random()}`);
-      			file.pipe(fs.createWriteStream(saveTo));*/
+				file.pipe(fs.createWriteStream(path.join(save_dir, Date.now().toString()+Math.trunc(Math.random()).toString())));
+				file.on('data', (data) => {
+					console.log(`File [${name}] got ${data.length} bytes`);
+				}).on('close', () => {
+					console.log(`File [${name}] done`);
+					
+				});
 			}
 			else{
 				console.log(`file ${name} discarded`)
 				file.resume()
 			}
-				
-			file.on('data', (data) => {
-				console.log(`File [${name}] got ${data.length} bytes`);
-			}).on('close', () => {
-				console.log(`File [${name}] done`);
-				console.log()
-			});
 		});
 			
 		bb.on('field', (name, val, info) => {

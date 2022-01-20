@@ -32,7 +32,7 @@ export default function(props) {
 			return onFail()
 	}
 	
-	return <form ref={ form_ref } id="Form" method="POST" encType="multipart/form-data" action="/result/post" onSubmit={onSubmit}>
+	return <form ref={ form_ref } id="Form" method="POST" encType="multipart/form-data" action="/form/post" onSubmit={onSubmit}>
 		<section>
 			<h2>Participez !</h2>
 			<div>
