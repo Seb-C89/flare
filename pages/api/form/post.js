@@ -13,7 +13,7 @@ export const config = {
 
 export default async function endpoint(req, res) {
 	let field_for_file = "file" // name of the field containing the files
-	let save_dir = "uploads/busboy/"
+	let save_dir = "uploads/"
 	//console.log(req)
 	/*if(!(req.is("multipart/form-data"))){
 		res?.status(202).end()
@@ -24,26 +24,55 @@ export default async function endpoint(req, res) {
 		req.body = {}
 
 	const bb = busboy({ headers: req.headers });
-		
+		// for each uploaded file
 		bb.on('file', (name, file, info) => {
 			const { filename, encoding, mimeType } = info;
 			
+			// save only file uploaded in the good field
 			if(name === field_for_file ){
 				console.log(`File [${name}]: filename: %j, encoding: %j, mimeType: %j`, filename, encoding, mimeType);
-				file.pipe(fs.createWriteStream(path.join(save_dir, Date.now().toString()+Math.trunc(Math.random()).toString())));
+				let filepath = path.join(save_dir, Date.now().toString()+Math.trunc(Math.random()).toString())
+				
+				//save file on hard drive
+				file.pipe(fs.createWriteStream(filepath))
+				
+				// listen file event
 				file.on('data', (data) => {
 					console.log(`File [${name}] got ${data.length} bytes`);
+				}).on('end', async () => {
+					// file attribut
+					let ext = null
+
+					// analyse file
+					await fileTypeFromFile(filepath)
+						.then((res) => {
+							ext = res.ext
+							//fs.rename(files.file.filepath, files.file.filepath+'_'+res.ext)
+						}).catch(() => {
+							console.log('Failled to detecte file type for'+f.filepath)
+						})
+					
+					// add file to the list
+					if(!Array.isArray(req.body[name]))
+						req.body[name] = []
+					req.body[name].push({
+						path: filepath,
+						ext: ext,
+						client_name: info.filename
+					})
+
 				}).on('close', () => {
 					console.log(`File [${name}] done`);
-					
+					console.log(file.read())
 				});
 			}
 			else{
 				console.log(`file ${name} discarded`)
-				file.resume()
+				file.resume() //ignore file
 			}
 		});
-			
+		
+		// for each field
 		bb.on('field', (name, val, info) => {
 			console.log(`Field [${name}]: value: %j`, val);
 			req.body[name] = val
