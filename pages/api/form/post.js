@@ -35,9 +35,9 @@ export default async function endpoint(req, res) {
 				
 			file.on('data', (data) => {
 				console.log(`File [${name}] got ${data.length} bytes`);
-			}).on('close', (a) => {
+			}).on('close', () => {
 				console.log(`File [${name}] done`);
-				console.log(a)
+				console.log()
 			});
 		});
 			
