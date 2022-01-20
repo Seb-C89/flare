@@ -1,8 +1,7 @@
-//const formidable = require('formidable');
-import formidable from 'formidable';
 const os = require('os'); // remove
 import { fileTypeFromFile } from 'file-type'
 const fs = require('fs')
+const busboy = require('busboy');
 //import { insert_post } from '../../../utils/db.js'
 
 export const config = {
@@ -13,45 +12,47 @@ export const config = {
 
 export default async function endpoint(req, res) {
 	let field_for_file = "file" // name of the field containing the files
-	
-	const form = formidable({ 
-		multiples: true,
-		uploadDir: "uploads/",
-		allowEmptyFiles: false,
-		filter: function ({name}) { // reject files not contained in the appropriate field
-			console.log("name"+name+"=")
-			console.log(name === field_for_file)
-			return name == field_for_file
-		},
-		//fileWriteStreamHandler: aaa // TODO function who receive files data and save it. (no intermediate file in hard disk)
-	});
+	//console.log(req)
+	/*if(!(req.is("multipart/form-data"))){
+		res?.status(202).end()
+		return 
+	}*/
 
-	form.parse(req, async (err,fields,files) => {
-		if(err)
-			console.log("PARSE ERROR")
-		console.log(fields)
-		console.log(files)
-		console.log(os.tmpdir())
+	const bb = busboy({ headers: req.headers });
 		
-		// Need formidable 3.x https://github.com/node-formidable/formidable/issues/400
-		// Else if there are one file, the files propertie is not an array with one file bur directly the file obj and break the while
-		for(const f of files[field_for_file] || []){
-			await fileTypeFromFile(f.filepath)
-			.then((res) => {
-				f["ext"] = res.ext
-				//fs.rename(files.file.filepath, files.file.filepath+'_'+res.ext)
-			})
-			.catch(() => {
-				console.log('Failled to detecte file type for'+f.filepath)
-			})
-		}
+		bb.on('file', (name, file, info) => {
+			const { filename, encoding, mimeType } = info;
+			
+			if(name === field_for_file ){
+				console.log(`File [${name}]: filename: %j, encoding: %j, mimeType: %j`, filename, encoding, mimeType);
+				/*const saveTo = path.join(os.tmpDir(), `busboy-upload-${random()}`);
+      			file.pipe(fs.createWriteStream(saveTo));*/
+			}
+			else{
+				console.log(`file ${name} discarded`)
+				file.resume()
+			}
+				
+			file.on('data', (data) => {
+				console.log(`File [${name}] got ${data.length} bytes`);
+			}).on('close', (a) => {
+				console.log(`File [${name}] done`);
+				console.log(a)
+			});
+		});
+			
+		bb.on('field', (name, val, info) => {
+			console.log(`Field [${name}]: value: %j`, val);
+			req.body[name] = val
+		});
+			
+		bb.on('close', () => {
+			console.log('Done parsing form!');
+			//res.writeHead(303, { Connection: 'close', Location: '/' });
+			//res.end();
+		});
 
-		let file/* = files[field_for_file]?.map(x => {
-			return {ext, newFilename, originalFilename} = x
-		})*/
-
-		req.body = { ...fields, file } // add fields and files to req.body for giving access to the legacy handler
-	})
+    req.pipe(bb);
 
 	console.log(req.body)
 	//await insert_post(post, file)
