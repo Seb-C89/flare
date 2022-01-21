@@ -40,7 +40,10 @@ export default async function endpoint(req, res) {
 				//concat file
 				var concatStream = concat({ encoding: 'buffer' }, (file)=>{
 					if(file.length)
-						console.log("file can be saved")
+						fs.writeFile(filepath, file, (err) => {
+							if (err) throw err;
+							console.log('The file has been saved!');
+						});
 					else
 						console.log("FILE IS EMPTY")
 				})
