@@ -49,7 +49,7 @@ export default async function endpoint(req, res) {
 							ext = res.ext
 							//fs.rename(files.file.filepath, files.file.filepath+'_'+res.ext)
 						}).catch(() => {
-							console.log('Failled to detecte file type for'+f.filepath)
+							console.log('Failled to detecte file type for'+filepath)
 						})
 					
 					// add file to the list
