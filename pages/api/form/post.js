@@ -3,6 +3,7 @@ import { fileTypeFromFile } from 'file-type'
 const fs = require('fs')
 const busboy = require('busboy');
 const path = require('path');
+var concat = require('concat-stream')
 //import { insert_post } from '../../../utils/db.js'
 
 export const config = {
@@ -34,13 +35,22 @@ export default async function endpoint(req, res) {
 				let filepath = path.join(save_dir, Date.now().toString()+Math.trunc(Math.random()).toString())
 				
 				//save file on hard drive
-				file.pipe(fs.createWriteStream(filepath))
+				//file.pipe(fs.createWriteStream(filepath))
+				
+				//concat file
+				var concatStream = concat({ encoding: 'buffer' }, (file)=>{
+					if(file.length)
+						console.log("file can be saved")
+					else
+						console.log("FILE IS EMPTY")
+				})
+				file.pipe(concatStream)
 				
 				// listen file event
 				file.on('data', (data) => {
 					console.log(`File [${name}] got ${data.length} bytes`);
 				}).on('end', async () => {
-					// file attribut
+					/*// file attribut
 					let ext = null
 
 					// analyse file
@@ -59,11 +69,11 @@ export default async function endpoint(req, res) {
 						path: filepath,
 						ext: ext,
 						client_name: info.filename
-					})
+					})*/
 
 				}).on('close', () => {
 					console.log(`File [${name}] done`);
-					console.log(file.read())
+					/*console.log(file.read())*/
 				});
 			}
 			else{
