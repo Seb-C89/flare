@@ -8,8 +8,8 @@ export default function(props) {
 	</Fullframe>
 }
 
-export async function getServerSideProps(context) {
-	await post_api(context.req, null)
+export async function getServerSideProps(context) {	// handle legacy "action" param of <form> in case user not have javascript
+	await post_api(context.req, null)	// call the interne api route
 
 	console.log(context.req.body)
 	

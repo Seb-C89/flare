@@ -9,7 +9,7 @@ export default function (props){
 			<li style={{order: 3}}>
 				<Link href="/about"><a>A propos</a></Link></li>
 			<li style={{order: 3}}>
-				<Link href="/contact"><a>Contact</a></Link></li>
+				<Link href="form/contact"><a>Contact</a></Link></li>
 		</ul>
 	</header>
 }

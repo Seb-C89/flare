@@ -49,11 +49,10 @@ export function insert_message(message, reply_to) {
 export async function insert_post(post, files) {
 	return sql_query("START TRANSACTION")
 		.then(async () => {
-	 		return await sql_query("INSERT INTO post SET ?", post)
+	 		return await sql_query("INSERT INTO post SET ?", post) // must be returned to passe the insertId to the next .then()
 		})
 		.then(async (r) => {
 			for(const f of files){
-				console.log(r)
 				f["post"] = r.insertId
 				await sql_query("INSERT INTO file SET ?", f)
 			}

@@ -38,7 +38,7 @@ export default function(props) {
 			<div>
 				<label htmlFor="form_file">
 					<span>Choisissez une capture d'écran:</span>
-					<input type="file" id="form_file" name="file" /*accept=".jpg, .jpeg, .png, .bmp"*/ multiple={ false }/>
+					<input type="file" id="form_file" name="file" /*accept=".jpg, .jpeg, .png, .bmp"*/ multiple={ true }/>
 				</label>
 			</div>
 			<div>

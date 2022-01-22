@@ -20,7 +20,7 @@ export function send_mail(message, reply_to, subject) {
 		/^[^@ ]+@[^@ ]+$/.test(reply_to)
 	){
 		// TODO do not create transporter each time
-		/*let transporter = nodemailer.createTransport({ // TODO add all param
+		let transporter = nodemailer.createTransport({ // TODO add all param
 			service: "Outlook365",
 			auth: {
 				user: process.env.MAIL_USER,
@@ -37,10 +37,10 @@ export function send_mail(message, reply_to, subject) {
 			//html: "<p>HTML version of the message</p>"
 		};
 
-		return transporter.sendMail(mail)*/
-		return new Promise((resolve, reject) => {
+		return transporter.sendMail(mail)
+		/*return new Promise((resolve, reject) => { // testing purpose
 			resolve()
-		})
+		})*/
 	} 
 	else 
 		return new Promise((resolve, reject) => {
@@ -63,13 +63,13 @@ if( message && reply_to)
 */
 	
 
-	/*
-	// Verify if transporter params works
-	transporter.verify(function (error, success) {
-		if (error) {
-			console.log(error);
-		} else {
-			console.log("Server is ready to take our messages");
-		}
-	});
-	*/
+/*
+// Verify if transporter params works
+transporter.verify(function (error, success) {
+	if (error) {
+		console.log(error);
+	} else {
+		console.log("Server is ready to take our messages");
+	}
+});
+*/

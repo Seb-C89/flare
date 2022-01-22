@@ -4,7 +4,7 @@ const busboy = require('busboy');
 const path = require('path');
 var concat = require('concat-stream') // entiere file in buffer, like in Multer
 import { insert_post } from '../../../utils/db.js'
-import { CheckContentType } from "type-is" // Expresse req.is()
+import { default as CheckContentType } from "type-is" // Expresse req.is()
 
 export const config = {
 	api: {
@@ -13,9 +13,9 @@ export const config = {
 };
 
 export default async function endpoint(req, res) {
-	if(CheckContentType(context.req, ["multipart/form-data"])){ // busboy throw exeption if not
+	if(CheckContentType(req, ["multipart/form-data"])){ // busboy throw exeption if not
 		let field_for_file = "file" // name of the field containing the files
-		let save_dir = "uploads/"
+		let save_dir = "uploads/busboy/"
 		
 		if(!req.hasOwnProperty('body'))
 			req.body = {}
@@ -31,7 +31,7 @@ export default async function endpoint(req, res) {
 				let filepath = path.join(save_dir, filename)
 							
 				//concat file
-				var concatStream = concat({ encoding: 'buffer' }, (file)=>{
+				var concatStream = concat({ encoding: 'buffer' }, async (file)=>{
 					if(file.length){
 						fs.writeFile(filepath, file, (err) => {
 							if (err) throw err;
@@ -54,7 +54,7 @@ export default async function endpoint(req, res) {
 						req.body.files.push({
 							name: filename,
 							ext: ext,
-							client_name: info.filename
+							name_client: info.filename
 						})
 					}
 					else
@@ -76,7 +76,7 @@ export default async function endpoint(req, res) {
 		bb.on('close', async () => {
 			console.log('Done parsing form!');
 			// MYSQL
-			await insert_post(req.body.game, req.body.files)
+			await insert_post({game: req.body.game}, req.body.files)
 				.then(()=>{
 					res?.status(202).end()
 				})
