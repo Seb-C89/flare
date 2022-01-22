@@ -1,10 +1,10 @@
-const os = require('os'); // remove
 import { fileTypeFromBuffer } from 'file-type'
 const fs = require('fs')
 const busboy = require('busboy');
 const path = require('path');
-var concat = require('concat-stream')
+var concat = require('concat-stream') // entiere file in buffer, like in Multer
 import { insert_post } from '../../../utils/db.js'
+import { CheckContentType } from "type-is" // Expresse req.is()
 
 export const config = {
 	api: {
@@ -13,32 +13,23 @@ export const config = {
 };
 
 export default async function endpoint(req, res) {
-	let field_for_file = "file" // name of the field containing the files
-	let save_dir = "uploads/"
-	//console.log(req)
-	/*if(!(req.is("multipart/form-data"))){
-		res?.status(202).end()
-		return 
-	}*/
+	if(CheckContentType(context.req, ["multipart/form-data"])){ // busboy throw exeption if not
+		let field_for_file = "file" // name of the field containing the files
+		let save_dir = "uploads/"
+		
+		if(!req.hasOwnProperty('body'))
+			req.body = {}
+		req.body.files = []
 
-	if(!req.hasOwnProperty('body'))
-		req.body = {}
-	req.body.files = []
-
-	const bb = busboy({ headers: req.headers });
+		const bb = busboy({ headers: req.headers });
 		// for each uploaded file
 		bb.on('file', (name, file, info) => {
-			const { filename, encoding, mimeType } = info;
-			
+
 			// save only file uploaded in the good field
 			if(name === field_for_file ){
-				console.log(`File [${name}]: filename: %j, encoding: %j, mimeType: %j`, filename, encoding, mimeType);
 				let filename = Date.now().toString()+Math.trunc(Math.random()).toString()
 				let filepath = path.join(save_dir, filename)
-				
-				//save file on hard drive
-				//file.pipe(fs.createWriteStream(filepath))
-				
+							
 				//concat file
 				var concatStream = concat({ encoding: 'buffer' }, (file)=>{
 					if(file.length){
@@ -70,15 +61,6 @@ export default async function endpoint(req, res) {
 						console.log("FILE IS EMPTY")
 				})
 				file.pipe(concatStream)
-				
-				// listen file event
-				/*file.on('data', (data) => {
-					console.log(`File [${name}] got ${data.length} bytes`);
-				}).on('end', async () => {
-
-				}).on('close', () => {
-					console.log(`File [${name}] done`);
-				});*/
 			}
 			else{
 				console.log(`file ${name} discarded`)
@@ -86,7 +68,6 @@ export default async function endpoint(req, res) {
 			}
 		});
 		
-		// for each field
 		bb.on('field', (name, val, info) => {
 			console.log(`Field [${name}]: value: %j`, val);
 			req.body[name] = val
@@ -104,14 +85,11 @@ export default async function endpoint(req, res) {
 				})
 		});
 
-    try {
-		req.pipe(bb);
-	} catch (e) {
-		console.log("BUSBOY EXECPTION")
-		res?.status(500).end()
+		try {
+			req.pipe(bb);
+		} catch (e) {
+			console.log("BUSBOY EXECPTION")
+			res?.status(500).end()
+		}
 	}
-
-	console.log(req.body)
-	//await insert_post(post, file)
-	res?.json('file recieved')
 }
