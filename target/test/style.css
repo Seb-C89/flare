@@ -6,9 +6,10 @@ html, body {
 
 #wrap {
 	display: grid;
-	grid-template-columns: 25% 75%;
-	grid-template-rows: 0fr auto 0fr;
+	overflow: hidden;
 	height: 100%;
+	grid-template-columns: 25% 75%;
+	grid-template-rows: 0fr 1fr 0fr;
 }
 
 #un {
@@ -29,8 +30,19 @@ html, body {
 
 #quatre {
 	background-color: blue;
+	border: 2px solid rgb(255, 0, 212);
 	grid-area: 2 / 2 / 3 / 3;
-	/*grid-area: 1 / 2 / 2 / 2;*/
+	align-self: start;
+	height: 100%;
+}
+
+#quatre * {
+	border: 1px solid black;
+}
+
+.layout {
+	border: 2px green solid;
+	margin: auto;
 }
 
 #flex {
