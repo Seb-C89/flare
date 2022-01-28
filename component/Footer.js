@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function (props){
 	return <footer className="flex_menu">
 		<ul>
