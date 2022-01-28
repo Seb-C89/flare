@@ -8,6 +8,8 @@ export default async function endpoint(req, res) {
 	return 
 }
 
+// https://medium.com/@greg.farrow1/nextjs-https-for-a-local-dev-server-98bb441eabd7
+
 /*export async function getServerSideProps(context) {	// handle legacy "action" param of <form> in case user not have javascript
 	//console.log(context.req.headers['authorization'])
 
