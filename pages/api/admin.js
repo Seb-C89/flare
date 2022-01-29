@@ -1,10 +1,13 @@
-import { BASIC, buildWWWAuthenticateHeader, mechanisms } from 'http-auth-utils' // or https://www.npmjs.com/package/basic-auth
-const safecomp = require('tsscmp'); // Prevents timing attacks
+//import { BASIC, buildWWWAuthenticateHeader, mechanisms } from 'http-auth-utils' // or https://www.npmjs.com/package/basic-auth
+import { setCookies } from "cookies-next";
+//const safecomp = require('tsscmp'); // Prevents timing attacks
 
 export default async function endpoint(req, res) {
 	
-	res.setHeader('WWW-Authenticate', buildWWWAuthenticateHeader(BASIC, {realm: "paper pls"}))
-	res.status(401).end()
+	//res.setHeader('WWW-Authenticate', buildWWWAuthenticateHeader(BASIC, {realm: "paper pls"}))
+	//res.status(401).end()
+	setCookies('admin', 'true', {req, res})
+	res.status(202).end()
 	return 
 }
 

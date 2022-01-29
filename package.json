@@ -10,6 +10,7 @@
   "dependencies": {
     "busboy": "^1.4.0",
     "concat-stream": "^2.0.0",
+    "cookies-next": "^2.0.3",
     "file-type": "^17.1.1",
     "http-auth-utils": "^3.0.2",
     "mysql2": "^2.3.3",
