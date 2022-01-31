@@ -25,3 +25,12 @@ export default async function endpoint(req, res) {
 		props: {}
 	}
 }*/
+
+//var token = crypto.randomBytes(64).toString('hex');
+
+/*crypto.pbkdf2(password, row.salt, 310000, 32, 'sha256', function(err, hashedPassword) {
+	if (err) { return cb(err); }
+	if (!crypto.timingSafeEqual(row.hashed_password, hashedPassword)) {
+	  return cb(null, false, { message: 'Incorrect username or password.' });
+	}
+	return cb(null, row);*/
