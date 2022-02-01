@@ -9,7 +9,7 @@ export default function(props) {
 	async function onSubmit(event) {
 		event.preventDefault() // don't redirect the page
 		var formData = new URLSearchParams(new FormData(form_ref.current))  // ?key=value&key2=value2
-		fetch("http://localhost:3000/api/admin", {
+		fetch("http://localhost:3000/api/logout", {
 			method: 'POST', // URLSearchParams passed in the body of the POST request, not in the url
 			body: formData
 		}).then((res) => {
@@ -31,23 +31,11 @@ export default function(props) {
 			return onFail()
 	}
 
-	return <form ref={ form_ref } id="Form" method="POST" action="/login" onSubmit={onSubmit}>
+	return <form ref={ form_ref } id="Form" method="POST" action="/contact" onSubmit={onSubmit}>
 		<section>
-			<h2>Contact</h2>
+			<h2>Déconnexion</h2>
 			<div>
-				<label htmlFor="user">
-					<span>Utilisateur:</span>
-					<input id="user" name="user" autoComplete="username" required={ true } />
-				</label>
-			</div>
-			<div>
-				<label htmlFor="password">
-					<span>Password:</span>
-					<input id="password" name="password" type="password" autoComplete="current-password" required={ true } />
-				</label>
-			</div>
-			<div>
-				<input id="submit" type="submit" value="Envoyer" disabled={ submited }/>
+				<input id="submit" type="submit" value="Se déconnecter" disabled={ submited }/>
 			</div>
 			{ result() }
 		</section>
@@ -55,9 +43,9 @@ export default function(props) {
 }
 
 export function onSuccess(){
-	return <p>Vous avez était authentifier</p>
+	return <p>Vous êtes déconnecter</p>
 }
 
 export function onFail(){
-	return <p>Utilisateur ou mot de passe erroné</p>
+	return <p>Une erreur est survenu</p>
 }

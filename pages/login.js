@@ -3,7 +3,7 @@ import { get_profil } from "../utils/auth"
 import { Login } from "../component/Form-login"
 
 export default function(props) {
-	return props.profil ? <p>SHOW ADMIN PANEL</p> : <Login />
+	return <Login />
 }
 
 export async function getServerSideProps({req, res}) {	// handle legacy "action" param of <form> in case user not have javascript

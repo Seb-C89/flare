@@ -8,20 +8,25 @@ export default async function endpoint(req, res) {
 		console.log(hashedPassword, hashedPassword.length)
 	})*/
 
-	let {token, user, password} = getCookies({ req, res})
+	let token = getCookies({ req, res})
 
 	if(!(get_profil(token) === "admin"))
-		if(is_admin("admin", "admin")){
+		if(is_admin(req.body.user, req.body.password)){
 			let t = generate_token("admin")
 			setCookies("token",t.token , {req, res, expires: t.expires})
+			res.body
+			res.status(202).end() 
 		}
-		else
+		else {
 			console.log("bad credential")
-	else
+			res.status(403).end()
+		}
+	else {
 		console.log("already admin")
+		res.status(202).end()
+	}
 
 	//print_all_tokens()
-	res.status(202).end()
 	return 
 }
 

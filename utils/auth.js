@@ -2,7 +2,7 @@ const crypto = require('crypto')
 
 let tokens = []
 let admin_password = Buffer.from(process.env.ADMIN_PASSWORD, "hex") // 99f7f6e3447e591417568d1dc6e31ba2da460d1bc7b931a91b2448ec2b67de0e
-console.log(process.env.ADMIN_PASSWORD, admin_password, admin_password.length)
+//console.log(process.env.ADMIN_PASSWORD, admin_password, admin_password.length)
 
 export function generate_token(profil) {
 	let token = crypto.randomBytes(12).toString('hex');
@@ -27,10 +27,12 @@ export function generate_token(profil) {
 export function is_admin(user, password){
 	let check1 = false, check2 = false
 	
-	check1 = crypto.timingSafeEqual(Buffer.from(process.env.ADMIN_USER), Buffer.from(user))
+	if(user && password){
+		check1 = crypto.timingSafeEqual(Buffer.from(process.env.ADMIN_USER), Buffer.from(user))
 
-	let hashedPassword = crypto.pbkdf2Sync(password, '::salt::', 100000, 32, 'sha256')
-	check2 = crypto.timingSafeEqual(admin_password, hashedPassword)
+		let hashedPassword = crypto.pbkdf2Sync(password, '::salt::', 100000, 32, 'sha256')
+		check2 = crypto.timingSafeEqual(admin_password, hashedPassword)
+	}
 	
 	console.log(check1)
 	console.log(check2)
