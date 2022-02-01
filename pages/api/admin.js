@@ -1,30 +1,34 @@
 //import { BASIC, buildWWWAuthenticateHeader, mechanisms } from 'http-auth-utils' // or https://www.npmjs.com/package/basic-auth
-import { setCookies } from "cookies-next";
-//const safecomp = require('tsscmp'); // Prevents timing attacks
+import { setCookies, getCookie } from "cookies-next";
+import { generate_token, add_token, get_profil, print_all_tokens } from "../../utils/auth";
 
 export default async function endpoint(req, res) {
-	
-	//res.setHeader('WWW-Authenticate', buildWWWAuthenticateHeader(BASIC, {realm: "paper pls"}))
-	//res.status(401).end()
-	setCookies('admin', 'true', {req, res})
+	let cookie = getCookie('token', { req, res})
+	//if(!cookie){
+		console.log(cookie)
+		if(!(get_profil(cookie) === "admin"))
+		{
+			let expiration = new Date()
+				expiration.setDate(expiration.getDate() +1)
+			let token = {
+				expire: expiration,
+				token: generate_token(),
+				profil: "admin"
+			}
+
+			add_token(token)
+			setCookies("token", token.token, {req, res, expires: expiration})
+
+			print_all_tokens()
+		} else
+			console.log("already admin")
+	//}
+
 	res.status(202).end()
 	return 
 }
 
 // https://medium.com/@greg.farrow1/nextjs-https-for-a-local-dev-server-98bb441eabd7
-
-/*export async function getServerSideProps(context) {	// handle legacy "action" param of <form> in case user not have javascript
-	//console.log(context.req.headers['authorization'])
-
-	//console.log(parseAuthorizationHeader(context.req.headers['authorization']))
-	
-	if(context.req.headers.hasOwnProperty('authorization'))
-		else
-
-	return {
-		props: {}
-	}
-}*/
 
 //var token = crypto.randomBytes(64).toString('hex');
 
