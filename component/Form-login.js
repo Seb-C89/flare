@@ -33,7 +33,7 @@ export default function(props) {
 
 	return <form ref={ form_ref } id="Form" method="POST" action="/login" onSubmit={onSubmit}>
 		<section>
-			<h2>Contact</h2>
+			<h2>Connexion</h2>
 			<div>
 				<label htmlFor="user">
 					<span>Utilisateur:</span>

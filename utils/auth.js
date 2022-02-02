@@ -41,9 +41,11 @@ export function is_admin(user, password){
 
 export function get_profil(token) {
 	if (tokens.hasOwnProperty(token))
-		return tokens[token].profil
+		{console.log("HASOWNPROPS", tokens[token].profil)
+		 return tokens[token].profil}
 	else
-		return null
+		{console.log("NOTHINK")
+		return null}
 }
 
 export function print_all_tokens(){
