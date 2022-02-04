@@ -10,7 +10,7 @@ export default function(props) {
 }
 
 export async function getServerSideProps({req, res}) {	// handle legacy "action" param of <form> in case user not have javascript
-	console.log(auth_apim)
+	//console.log(auth_apim)
 	console.log(await parseBody(req, '1mb'))
 	let { profil } = await auth_apim(req, null)
 

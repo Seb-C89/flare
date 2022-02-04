@@ -1,5 +1,5 @@
 //import { BASIC, buildWWWAuthenticateHeader, mechanisms } from 'http-auth-utils' // or https://www.npmjs.com/package/basic-auth
-import { setCookies, getCookies } from "cookies-next";
+import { setCookies, getCookie } from "cookies-next";
 import { generate_token, get_profil, is_admin, print_all_tokens } from "../../utils/auth";
 
 export default async function(req, res) {
@@ -7,7 +7,7 @@ export default async function(req, res) {
 		console.log(hashedPassword, hashedPassword.length)
 	})*/
 
-	let token = getCookies({ req, res})
+	let token = getCookie('token', { req, res})
 
 	if(!(get_profil(token) === "admin"))
 		if(is_admin(req.body?.user, req.body?.password)){
@@ -26,6 +26,7 @@ export default async function(req, res) {
 		res?.status(202).end()
 		return {profil: get_profil(token)} 
 	}
+	//print_all_tokens()
 }
 
 // https://medium.com/@greg.farrow1/nextjs-https-for-a-local-dev-server-98bb441eabd7

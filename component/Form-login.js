@@ -47,7 +47,7 @@ export default function(props) {
 				</label>
 			</div>
 			<div>
-				<input id="submit" type="submit" value="Envoyer" disabled={ submited }/>
+				<input id="submit" type="submit" value="Envoyer" /*disabled={ submited }*//>
 			</div>
 			{ result() }
 		</section>
