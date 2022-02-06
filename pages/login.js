@@ -1,18 +1,27 @@
-import { getCookie } from "cookies-next"
-import { get_profil } from "../utils/auth"
-import { Login } from "../component/Form-login"
+import { parseBody }  from "next/dist/server/api-utils" // https://github.com/vercel/next.js/discussions/14979
+import auth_api from "./api/auth.js"
+import Login from "../component/Form-login.js"
+import Fullframe from "../component/Layout-fullframe.js"
 
 export default function(props) {
-	return <Login />
+	return <Fullframe>
+		{ props.profil ? <p><a href="">Logout</a></p> : <Login /> }
+	</Fullframe>
 }
 
 export async function getServerSideProps({req, res}) {	// handle legacy "action" param of <form> in case user not have javascript
-	
-	let { token } = getCookie('token', {req, res})
 
+	await parseBody(req, '1mb')
+	await auth_api(req, res)	// iron-session require valid res object (can not pass null)
+								// and iron-session automatically load the session into req.session 
+	
+	// if user is not admin do not redirect, else redirect to the admin pannel
+	/*let redirect = !req.session.admin ? null : {	permanent: false,
+													destination: "/test" }*/
 	return {
+		/*redirect: redirect ?? null,*/
 		props: {
-			profil: get_profil(token)
+			profil: req.session.admin ?? null
 		}
 	}
 }
