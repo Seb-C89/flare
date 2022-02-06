@@ -2,10 +2,11 @@ import { parseBody }  from "next/dist/server/api-utils" // https://github.com/ve
 import auth_api from "./api/auth.js"
 import Login from "../component/Form-login.js"
 import Fullframe from "../component/Layout-fullframe.js"
+import Link from 'next/link'
 
 export default function(props) {
 	return <Fullframe>
-		{ props.profil ? <p><a href="">Logout</a></p> : <Login /> }
+		{ props.profil ? <p><Link href="/logout"><a>Logout</a></Link></p> : <Login /> }
 	</Fullframe>
 }
 
