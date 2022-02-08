@@ -1,6 +1,7 @@
 import { withSessionSsr } from "../utils/withIronSession.js"
 import Fullframe from "../component/Layout-fullframe.js"
 import { get_files_without_post, get_posts_without_files } from "../utils/db.js"
+import { readdir } from 'fs/promises';
 
 export default function(props){
 	return <Fullframe>
@@ -39,6 +40,13 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 			posts_without_files = data
 			console.log("posts_without_files", posts_without_files)
 		}).catch((x) => error.concat(x))
+
+		
+		let files = await readdir("uploads/", {withFileTypes:true})
+			.then((file_array) => file_array)
+			.catch((x) => error.concat(x))
+		console.log(files)
+
 	} else
 		console.log("not admin")
 
