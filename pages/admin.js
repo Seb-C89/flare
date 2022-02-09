@@ -35,7 +35,6 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 		files_without_post = await get_files_without_post()
 			.then(data => data)
 			.catch(x => error.concat(x))
-		//console.log("files_without_post", files_without_post)
 
 		posts_without_files = await get_posts_without_files()
 			.then(data => {
@@ -43,17 +42,14 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 				return data
 			}) 
 			.catch(x => error.concat(x))
-		//console.log("posts_without_files", posts_without_files)
 
-		files_in_uploads = await readdir("uploads/busboy/", {withFileTypes:true})
+		files_in_uploads = await readdir("uploads/old", {withFileTypes:true})
 			.then((file_array) => file_array)
 			.catch(x => error.concat(x))
-		//console.log(files_in_uploads)
 
 		files_in_public = await readdir("public/img/", {withFileTypes:true})
 			.then((file_array) => file_array)
 			.catch(x => error.concat(x))
-		//console.log(files_in_public)
 
 		files_in_db = await get_files()
 			.then(data => {
@@ -61,32 +57,37 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 				return data
 			})
 			.catch(x => error.concat(x))
-		//console.log(files_in_db)
 
-		files_lost = files_in_db.filter(f => {
-			return !(files_in_public.some(g => {
-				console.log("public", g.name, f.name + "." + f.ext, g.isFile())
-				let t = (g.name == (f.name + "." + f.ext) && g.isFile())
-				console.log(t)
+		files_lost = files_in_db.filter(db => {
+			return !(files_in_public.some(f => {
+				let t = (f.isFile() && f.name == (db.name + "." + db.ext)) // public file have extension, so db.ext must be added to db.name
 				return t
 			})
 
-			|| files_in_uploads.some(g => {
-				console.log("uploads", g.name, f.name + "." + f.ext, g.isFile())
-				let t = (g.name == (f.name) && g.isFile())
-				console.log(t)
+			|| files_in_uploads.some(f => {
+				let t = (f.isFile() && f.name == db.name)
 				return t
 			}))
 		})
 		console.log("LOST", files_lost)
 
-		file_not_registered = files_in_public.filter(f => {
-			!files_in_db.some(g => {
-				let t = (g.name == (f.name + "." + f.ext) && g.isFile())
+		let public_files_not_registered = files_in_public.filter(f => {
+			return !files_in_db.some(db => {
+				let t = (f.name == (db.name + "." + db.ext) && f.isFile()) // public file have extension, so db.ext must be added to db.name
 				return t
-			}
+			})
 		})
-		console.log("UNKNOW", files_lost)
+		console.log("UNKNOW PUB", public_files_not_registered)
+
+		let upload_files_not_registered = files_in_uploads.filter(f => {
+			return !files_in_db.some(db => {
+				let t = (f.isFile() && db.name == f.name)
+				return t
+			})
+		})
+		console.log("UNKNOW UP", upload_files_not_registered)
+
+		let file_not_registered = public_files_not_registered.concat(upload_files_not_registered)
 
 	} else
 		console.log("not admin")
@@ -96,10 +97,8 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 				files_without_post: files_without_post ?? null,
 				posts_without_files: posts_without_files ?? null,
 				error: error ?? null,
-				//files_lost : files_lost ?? null,
-				//files_in_db : files_in_db ?? null,
-				//files_in_public : files_in_public ?? null,
-				//files_in_uploads : files_in_uploads ?? null,
+				files_lost : files_lost ?? null,
+				file_not_registered : file_not_registered ?? null,
 			}
 		}
 })
