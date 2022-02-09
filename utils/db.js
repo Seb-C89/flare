@@ -74,4 +74,8 @@ export function get_posts_without_files(){
 	return sql_query("SELECT * FROM post WHERE post.id NOT IN (SELECT file.post FROM file)")
 }
 
+export function get_files(){
+	return sql_query("SELECT * FROM file")
+}
+
 export default sql_query;
