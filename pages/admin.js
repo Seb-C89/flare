@@ -1,6 +1,6 @@
 import { withSessionSsr } from "../utils/withIronSession.js"
 import Fullframe from "../component/Layout-fullframe.js"
-import { get_files_without_post, get_posts_without_files } from "../utils/db.js"
+import { get_files_without_post, get_posts_without_files, get_files } from "../utils/db.js"
 import { readdir } from 'fs/promises';
 
 export default function(props){
@@ -21,31 +21,66 @@ export default function(props){
 						<label htmlFor="other">{x.game}</label></li>
 			}) }
 		</ul>
+		<p>file in public</p>
+		{ console.log(props.files_in_public) }
+		{ console.log(props.files_in) }
 	</form>
 	</Fullframe>
 }
 
 export const getServerSideProps = withSessionSsr(async (context) => {
-	let files_without_post, posts_without_files
+	let files_without_post, posts_without_files, files_lost
 	let error = ""
+	let files_in_db, files_in_public, files_in_uploads
 
 	if(context.req?.session?.admin){
-		await get_files_without_post().then((data) => {
-			files_without_post = data
-			console.log("files_without_post", files_without_post)
-		}).catch((x) => error.concat(x))
+		files_without_post = await get_files_without_post()
+			.then(data => data)
+			.catch(x => error.concat(x))
+		//console.log("files_without_post", files_without_post)
 
-		await get_posts_without_files().then((data) => {
-			data.forEach((element) => element.date = element.date.getTime()) // nextjs do not serialize date object.
-			posts_without_files = data
-			console.log("posts_without_files", posts_without_files)
-		}).catch((x) => error.concat(x))
+		posts_without_files = await get_posts_without_files()
+			.then(data => {
+				data.forEach((element) => element.date = element.date.getTime()) // nextjs do not serialize date object.
+				return data
+			}) 
+			.catch(x => error.concat(x))
+		//console.log("posts_without_files", posts_without_files)
 
-		
-		let files = await readdir("uploads/", {withFileTypes:true})
+		files_in_uploads = await readdir("uploads/busboy/", {withFileTypes:true})
 			.then((file_array) => file_array)
-			.catch((x) => error.concat(x))
-		console.log(files)
+			.catch(x => error.concat(x))
+		//console.log(files_in_uploads)
+
+		files_in_public = await readdir("public/img/", {withFileTypes:true})
+			.then((file_array) => file_array)
+			.catch(x => error.concat(x))
+		//console.log(files_in_public)
+
+		files_in_db = await get_files()
+			.then(data => {
+				data.forEach((element) => element.date = element.date.getTime()) // nextjs do not serialize date object.
+				return data
+			})
+			.catch(x => error.concat(x))
+		//console.log(files_in_db)
+
+		files_lost = files_in_db.filter(f => {
+			return (!files_in_public.some(g => {
+				console.log("public", g.name, f.name + "." + f.ext, g.isFile())
+				let t = (g.name == (f.name + "." + f.ext) && g.isFile())
+				console.log(t)
+				return t
+			})
+
+			|| !files_in_uploads.some(g => {
+				console.log("uploads", g.name, f.name + "." + f.ext, g.isFile())
+				let t = (g.name == (f.name + "." + f.ext) && g.isFile())
+				console.log(t)
+				return t
+			}))
+		})
+		console.log("LOST", files_lost)
 
 	} else
 		console.log("not admin")
@@ -54,7 +89,11 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 			props: {
 				files_without_post: files_without_post ?? null,
 				posts_without_files: posts_without_files ?? null,
-				error: error ?? null
+				error: error ?? null,
+				//files_lost : files_lost ?? null,
+				//files_in_db : files_in_db ?? null,
+				//files_in_public : files_in_public ?? null,
+				//files_in_uploads : files_in_uploads ?? null,
 			}
 		}
 })
