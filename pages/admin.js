@@ -22,14 +22,12 @@ export default function(props){
 			}) }
 		</ul>
 		<p>file in public</p>
-		{ console.log(props.files_in_public) }
-		{ console.log(props.files_in) }
 	</form>
 	</Fullframe>
 }
 
 export const getServerSideProps = withSessionSsr(async (context) => {
-	let files_without_post, posts_without_files, files_lost
+	let files_without_post, posts_without_files, files_lost, file_not_registered
 	let error = ""
 	let files_in_db, files_in_public, files_in_uploads
 
@@ -66,21 +64,29 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 		//console.log(files_in_db)
 
 		files_lost = files_in_db.filter(f => {
-			return (!files_in_public.some(g => {
+			return !(files_in_public.some(g => {
 				console.log("public", g.name, f.name + "." + f.ext, g.isFile())
 				let t = (g.name == (f.name + "." + f.ext) && g.isFile())
 				console.log(t)
 				return t
 			})
 
-			|| !files_in_uploads.some(g => {
+			|| files_in_uploads.some(g => {
 				console.log("uploads", g.name, f.name + "." + f.ext, g.isFile())
-				let t = (g.name == (f.name + "." + f.ext) && g.isFile())
+				let t = (g.name == (f.name) && g.isFile())
 				console.log(t)
 				return t
 			}))
 		})
 		console.log("LOST", files_lost)
+
+		file_not_registered = files_in_public.filter(f => {
+			!files_in_db.some(g => {
+				let t = (g.name == (f.name + "." + f.ext) && g.isFile())
+				return t
+			}
+		})
+		console.log("UNKNOW", files_lost)
 
 	} else
 		console.log("not admin")
