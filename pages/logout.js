@@ -1,7 +1,7 @@
 import logout_api from "./api/logout.js"
 
 export default function(props) {
-	return props.profil ? <></> : <p>you are logged out</p>
+	return props.profil ? <p>you are NOT logged out</p> : <p>you are logged out</p>
 }
 
 

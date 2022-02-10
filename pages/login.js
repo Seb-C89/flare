@@ -11,11 +11,10 @@ export default function(props) {
 }
 
 export async function getServerSideProps({req, res}) {	// handle legacy "action" param of <form> in case user not have javascript
-	await parseBody(req, '1mb')
 
-	if (req.method === "POST")		// if the user attempt to connect
-		await auth_api(req, res)	// iron-session require valid res object (can not pass null)
-									// and iron-session automatically load the session into req.session 
+	await parseBody(req, '1mb')
+	await auth_api(req, res)	// iron-session require valid res object (can not pass null)
+								// and iron-session automatically load the session into req.session 
 	
 	// if user is not admin do not redirect, else redirect to the admin pannel
 	/*let redirect = !req.session.admin ? null : {	permanent: false,
@@ -23,7 +22,7 @@ export async function getServerSideProps({req, res}) {	// handle legacy "action"
 	return {
 		/*redirect: redirect ?? null,*/
 		props: {
-			profil: req.session?.admin ?? null
+			profil: req.session.admin ?? null
 		}
 	}
 }
