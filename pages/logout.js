@@ -1,7 +1,7 @@
 import logout_api from "./api/logout.js"
 
 export default function(props) {
-	return <></>
+	return props.profil ? <></> : <p>you are logged out</p>
 }
 
 
@@ -11,6 +11,7 @@ export async function getServerSideProps({req, res}) {	// handle legacy "action"
 
 	return {
 		props: {
+			profil: req.session?.admin ?? null
 		}
 	}
 }
