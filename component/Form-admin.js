@@ -62,6 +62,10 @@ export default function(props) {
 							<label htmlFor="files_lost">{x.name}</label></li>
 				}) }
 			</ul>
+			<div>
+				<p>Valider les posts séléctionnés et supprimer les fichiers séléctionnés:</p>
+				<input id="submit" type="submit" value="Valider et Supprimer" disabled={ submited }/>
+			</div>
 			{ result() }
 		</section>
 	</form>
