@@ -22,6 +22,10 @@ body {
 	display: contents;
 }
 
+footer {
+	margin: 20px;
+}
+
 #Main {
 	display: grid;
 	grid-template-columns: 1fr 5fr;
@@ -294,4 +298,16 @@ html, body, #Main {
 	overflow: scroll;
 	margin: auto;
 	max-height: 100%; /* without scroll bar doesn't appear */
+}
+
+.layout-twocol {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: auto;
+	height: 100%;
+	overflow: auto;
+}
+
+.layout-twocol .twocol {
+	grid-column: 1 / span 2;
 }
