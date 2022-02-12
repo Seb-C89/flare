@@ -12,6 +12,8 @@ export default async function(req, res) {
 				req.body.error = true
 				res?.status(503).end()
 			})
+	else
+		res?.status(503).end()
 }
 
 export function send_mail(message, reply_to, subject) {
