@@ -1,7 +1,7 @@
 const crypto = require('crypto')
 
 let admin_password = Buffer.from(process.env.ADMIN_PASSWORD, "hex") // 99f7f6e3447e591417568d1dc6e31ba2da460d1bc7b931a91b2448ec2b67de0e = admin
-let admin_user = Buffer.from(process.env.ADMIN_PASSWORD, "hex") // 99f7f6e3447e591417568d1dc6e31ba2da460d1bc7b931a91b2448ec2b67de0e = admin
+let admin_user = Buffer.from(process.env.ADMIN_USER, "hex") // 99f7f6e3447e591417568d1dc6e31ba2da460d1bc7b931a91b2448ec2b67de0e = admin
 
 export function is_admin(user, password){
 	let check1 = false, check2 = false
