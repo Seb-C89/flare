@@ -34,3 +34,11 @@ select * from post where post.id not in (select file.post from file)
 				</tbody>
 				</table>
 			</fieldset>
+
+			var file = fs.readFile(filePath, 'binary');
+
+res.setHeader('Content-Length', stat.size);
+res.setHeader('Content-Type', 'audio/mpeg');
+res.setHeader('Content-Disposition', 'attachment; filename=your_file_name');
+res.write(file, 'binary');
+res.end();
