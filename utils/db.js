@@ -83,11 +83,11 @@ export function get_files(){
 }
 
 export function get_files_from_post(post_id){
-	return sql_query("SELECT * FROM file WHERE post=?", [post_id])
+	return sql_query("SELECT * FROM file WHERE post=?", post_id)
 }
 
-export function get_file_from_id(id){
-	return sql_query("SELECT * FROM file WHERE id=?", [id])
+export function get_file_by_name(name){
+	return sql_query("SELECT * FROM file WHERE name=?", name)
 }
 
 export default sql_query;
