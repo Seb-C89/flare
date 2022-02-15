@@ -1,12 +1,15 @@
 import { withSessionRoute } from "../../../utils/withIronSession"
 const fs = require('fs')
+const path = require('path')
+import { fileTypeFromFile } from 'file-type'
 
 export default withSessionRoute(async (req, res) => {
 	let { name } = req.query
 
-	let files_in_uploads = fs.readdirSync("uploads")
+	name = path.basename(name) // ensure that the client do not request file in other directory
+	const { mime } = fileTypeFromFile("./uploads/"+name)
 
-	if(files_in_uploads.includes(name)){ // ensure that the file requested is in the desired directory and avoid requesting other file
+	if(/^image\//.test(mime)) // send only image/* MIME
 		try {
 			const file = fs.openSync("./uploads/"+name)
 			const stat = fs.fstatSync(file)
@@ -14,14 +17,15 @@ export default withSessionRoute(async (req, res) => {
 				stream.on('finish', () => {
 					res.end()
 				})
+			
 			res.setHeader('Content-Length', stat.size);
-			res.setHeader('Content-Type', 'image/jpg'); // TODO MIME
+			res.setHeader('Content-Type', mime); // TODO MIME
 			stream.pipe(res)
 		} catch(e){
 			console.log(e)
 			res.status(404).end()
 		}
-	} else
+	else
 		res.status(404).end()
 	
 	//res.setHeader('Content-Disposition', 'attachment; filename=your_file_name');
