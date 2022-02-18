@@ -36,34 +36,32 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 async function get_props_admin(){
 	let files_without_post, posts_without_files, files_lost, files_not_registered
 	let error = ""
-	let files_in_db, files_in_public, files_in_uploads
 
 	files_without_post = await get_files_without_post()
 		.then(data => data)
-		.catch(x => error.concat(x))
+		.catch(x => { error.concat(x); return [] })
 
 	posts_without_files = await get_posts_without_files()
 		.then(data => {
 			data.forEach((element) => element.date = element.date.getTime()) // nextjs do not serialize date object.
 			return data
 		}) 
-		.catch(x => error.concat(x))
+		.catch(x => { error.concat(x); return [] })
 
-	files_in_uploads = await readdir("uploads/old", {withFileTypes:true})
+	let files_in_uploads = await readdir("uploads/old", {withFileTypes:true})
 		.then((file_array) => file_array.filter(f => f.isFile()))
-		.catch(x => error.concat(x))
+		.catch(x => { error.concat(x); return [] })
 
-	files_in_public = await readdir("public/img/", {withFileTypes:true})
+	let files_in_public = await readdir("public/img/", {withFileTypes:true})
 		.then((file_array) => file_array.filter(f => f.isFile()))
-		.catch(x => error.concat(x))
-	//console.log(files_in_public)
+		.catch(x => { error.concat(x); return [] })
 
-	files_in_db = await get_files()
+	let files_in_db = await get_files()
 		.then(data => {
 			data.forEach((element) => element.date = element.date.getTime()) // nextjs do not serialize date object.
 			return data
 		})
-		.catch(x => error.concat(x))
+		.catch(x => { error.concat(x); return [] })
 
 	files_lost = files_in_db.filter(db => {
 		return !(files_in_public.some(f => {
@@ -83,6 +81,7 @@ async function get_props_admin(){
 			let t = (f.name == (db.name + "." + db.ext)) // public file have extension, so db.ext must be added to db.name
 			return t
 		})
+		.map(f => f.name)
 	})
 	//console.log("UNKNOW PUB", public_files_not_registered)
 
@@ -91,11 +90,12 @@ async function get_props_admin(){
 			let t = (db.name == f.name)
 			return t
 		})
+		.map(f => f.name)
 	})
 	//console.log("UNKNOW UP", upload_files_not_registered)
 
-	files_not_registered = [].concat(public_files_not_registered, upload_files_not_registered).map(f => f.name)
+	//files_not_registered = [].concat(public_files_not_registered, upload_files_not_registered).map(f => f.name)
 	//console.log(files_not_registered)
 
-	return { error, files_without_post, posts_without_files, files_lost, files_not_registered }
+	return { error, files_without_post, posts_without_files, files_lost, upload_files_not_registered, public_files_not_registered }
 }

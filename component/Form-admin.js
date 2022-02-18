@@ -55,16 +55,6 @@ export default function(props) {
 				</ul>
 			</fieldset>
 			<fieldset>
-				<legend>Files on Disk <em>(publique or uploads directory)</em> but not regitered in Database</legend>
-				<p>Sélectionner les fichiers à supprimer</p>
-				<ul>
-				{ props.files_not_registered?.map((x) => {
-						return <li key={x}><input type="checkbox" id={x} name="files_not_registered" value={x} />
-								<label htmlFor="files_not_registered">{x}</label></li>
-					}) }
-				</ul>
-			</fieldset>
-			<fieldset>
 				<legend>Files in Database but not on Disk <em>(publique or uploads directory)</em></legend>
 				<p>Sélectionner les fichiers à supprimer</p>
 				<ul>
@@ -74,8 +64,28 @@ export default function(props) {
 					}) }
 				</ul>
 			</fieldset>
+			<fieldset>
+				<legend>Files in Public directory but not in Database</legend>
+				<p>Sélectionner les fichiers à supprimer</p>
+				<ul>
+				{ props.public_files_not_registered?.map((x) => {
+						return <li key={x.id}><input type="checkbox" id={x.id} name="files_lost" value={x.name} />
+								<label htmlFor="files_lost">{x.name}</label></li>
+					}) }
+				</ul>
+			</fieldset>
+			<fieldset>
+				<legend>Files in Uploads directory but not in Database</legend>
+				<p>Sélectionner les fichiers à supprimer</p>
+				<ul>
+				{ props.upload_files_not_registered?.map((x) => {
+						return <li key={x.id}><input type="checkbox" id={x.id} name="files_lost" value={x.name} />
+								<label htmlFor="files_lost">{x.name}</label></li>
+					}) }
+				</ul>
+			</fieldset>
 			<div>
-				<input id="submit" type="submit" value="Sauvegarder les changements" disabled={ submited }/>
+				<input id="submit" type="submit" value="Supprimer les fichiers sélectionnés" disabled={ submited }/>
 			</div>
 			{ result() }
 		</section>
