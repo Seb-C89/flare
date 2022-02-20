@@ -9,15 +9,15 @@ export default withSessionRoute(async (req, res) => {
 	name = path.basename(name) // ensure that the client do not request file in other directory
 
 	if(directory === "public")
-		file_path = process.env.DIR_PUBLIC+"/img/"+name
+		file_path = process.env.DIR_PUBLIC_IMG+name
 	else if(directory === "upload")
 		if(req.session.admin)
-			file_path = process.env.DIR_UPLOAD+"/img/"+name
+			file_path = process.env.DIR_UPLOAD_IMG+name
 	
 	try {
-		const { mime } = await fileTypeFromFile("./"+file_path)
+		const { mime } = await fileTypeFromFile(file_path)
 		if(/^image\//.test(mime)){ // send only MIME: image/*
-			const file = fs.openSync("./"+file_path)
+			const file = fs.openSync(file_path)
 			const { size } = fs.fstatSync(file)
 			const stream = fs.createReadStream(null, {fd: file})
 				stream.on('finish', () => {
