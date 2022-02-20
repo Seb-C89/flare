@@ -6,7 +6,6 @@ import { fileTypeFromFile } from 'file-type'
 export default withSessionRoute(async (req, res) => {
 	let { name, directory } = req.query
 	let file_path
-	console.log(name)
 	name = path.basename(name) // ensure that the client do not request file in other directory
 
 	if(directory === "public")
@@ -16,10 +15,9 @@ export default withSessionRoute(async (req, res) => {
 			file_path = process.env.DIR_UPLOAD+"/img/"+name
 	
 	try {
-		const { mime } = fileTypeFromFile("../../../../"+file_path)
-		console.log(mime)
+		const { mime } = await fileTypeFromFile("./"+file_path)
 		if(/^image\//.test(mime)){ // send only MIME: image/*
-			const file = fs.openSync("../../../../"+file_path)
+			const file = fs.openSync("./"+file_path)
 			const { size } = fs.fstatSync(file)
 			const stream = fs.createReadStream(null, {fd: file})
 				stream.on('finish', () => {
