@@ -48,13 +48,17 @@ async function get_props_admin(){
 		}) 
 		.catch(x => { error.concat(x); return [] })
 
-	let files_in_uploads = await readdir("uploads/old", {withFileTypes:true})
-		.then((file_array) => file_array.filter(f => f.isFile()))
+	let files_in_upload = await readdir(process.env.DIR_UPLOAD_IMG, {withFileTypes:true})
+		.then((file_array) => file_array.filter(f => f.isFile())
+										.map(f => {return {name: f.name, directory: "upload"}}))
 		.catch(x => { error.concat(x); return [] })
 
-	let files_in_public = await readdir("public/img/", {withFileTypes:true})
-		.then((file_array) => file_array.filter(f => f.isFile()))
+	let files_in_public = await readdir(process.env.DIR_PUBLIC_IMG, {withFileTypes:true})
+		.then((file_array) => file_array.filter(f => f.isFile())
+										.map(f => {return {name: f.name, directory: "public"}}))
 		.catch(x => { error.concat(x); return [] })
+
+	let file_in_disk = [].concat(files_in_public, files_in_upload)
 
 	let files_in_db = await get_files()
 		.then(data => {
@@ -69,7 +73,7 @@ async function get_props_admin(){
 			return t
 		})
 
-		|| files_in_uploads.some(f => {
+		|| files_in_upload.some(f => {
 			let t = (f.name == db.name)
 			return t
 		}))
@@ -85,7 +89,7 @@ async function get_props_admin(){
 	})
 	//console.log("UNKNOW PUB", public_files_not_registered)
 
-	let upload_files_not_registered = files_in_uploads.filter(f => {
+	let upload_files_not_registered = files_in_upload.filter(f => {
 		return !files_in_db.some(db => {
 			let t = (db.name == f.name)
 			return t
