@@ -38,12 +38,15 @@ async function get_props_admin(){
 	let error = ""
 
 	files_without_post = await get_files_without_post()
-		.then(data => data)
+		.then(data => {
+			data.forEach((element) => element.date = element.date.valueOf()) // nextjs do not serialize date object.
+			return data
+		}) 
 		.catch(x => { error.concat(x); return [] })
 
 	posts_without_files = await get_posts_without_files()
 		.then(data => {
-			data.forEach((element) => element.date = element.date.getTime()) // nextjs do not serialize date object.
+			data.forEach((element) => element.date = element.date.valueOf()) // nextjs do not serialize date object.
 			return data
 		}) 
 		.catch(x => { error.concat(x); return [] })
@@ -58,7 +61,8 @@ async function get_props_admin(){
 										.map(f => {return {name: f.name, directory: "public"}}))
 		.catch(x => { error.concat(x); return [] })
 
-	let file_in_disk = [].concat(files_in_public, files_in_upload)
+	let files_in_disk = [].concat(files_in_public, files_in_upload)
+	// TODO delete files_in_public, files_in_upload
 
 	let files_in_db = await get_files()
 		.then(data => {
@@ -67,39 +71,11 @@ async function get_props_admin(){
 		})
 		.catch(x => { error.concat(x); return [] })
 
-	files_lost = files_in_db.filter(db => {
-		return !(files_in_public.some(f => {
-			let t = (f.name == (db.name + "." + db.ext)) // public file have extension, so db.ext must be added to db.name
-			return t
-		})
+	files_lost = files_in_db.filter(db => !files_in_disk.some(f => f.name == db.nam)) // public file have extension, so db.ext must be added to db.name
 
-		|| files_in_upload.some(f => {
-			let t = (f.name == db.name)
-			return t
-		}))
-	})
-	//console.log("LOST", files_lost)
+	files_not_registered = files_in_disk.filter(f => !files_in_db.some(db => (db.name == f.name)))
 
-	let public_files_not_registered = files_in_public.filter(f => {
-		return !files_in_db.some(db => {
-			let t = (f.name == (db.name + "." + db.ext)) // public file have extension, so db.ext must be added to db.name
-			return t
-		})
-		.map(f => f.name)
-	})
-	//console.log("UNKNOW PUB", public_files_not_registered)
+	// TODO file in bad directory
 
-	let upload_files_not_registered = files_in_upload.filter(f => {
-		return !files_in_db.some(db => {
-			let t = (db.name == f.name)
-			return t
-		})
-		.map(f => f.name)
-	})
-	//console.log("UNKNOW UP", upload_files_not_registered)
-
-	//files_not_registered = [].concat(public_files_not_registered, upload_files_not_registered).map(f => f.name)
-	//console.log(files_not_registered)
-
-	return { error, files_without_post, posts_without_files, files_lost, upload_files_not_registered, public_files_not_registered }
+	return { error, files_without_post, posts_without_files, files_lost, files_not_registered }
 }
