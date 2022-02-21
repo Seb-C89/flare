@@ -71,7 +71,7 @@ export async function insert_post(post, files) {
 }
 
 export function get_files_without_post(){
-	return sql_query("SELECT * FROM file LEFT JOIN post ON post.id = file.post WHERE post.id IS NULL")
+	return sql_query("SELECT file.* FROM file LEFT JOIN post ON post.id = file.post WHERE post.id IS NULL")
 }
 
 export function get_posts_without_files(){
