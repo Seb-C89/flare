@@ -38,19 +38,19 @@ export default function(props) {
 				<legend>File without related post</legend>
 				<p>Sélectionner les fichiers à supprimer</p>
 				<ul>
-					{ props.files_without_post?.map((x) => {
+					{ props.files_without_post?.map(x => {
 						return <li key={x.id}><input type="checkbox"  id={x.id} name="files_without_post" value={x.name} />
-								<label htmlFor="files_without_post">{x.name}</label></li>
+								<label htmlFor="files_without_post"><b>{x.name}</b> <i>({x.ext ? "."+x.ext : ""}) {new Date(x.date).toLocaleString()}</i></label></li>
 					}) }
 				</ul>
 			</fieldset>
 			<fieldset>
 				<legend>Post without related file</legend>
-				<p>Sélectionner les fichiers à supprimer</p>
+				<p>Sélectionner les posts à supprimer</p>
 				<ul>
-					{ props.posts_without_files?.map((x) => {
+					{ props.posts_without_files?.map(x => {
 						return <li key={x.id}><input type="checkbox" id={x.id} name="posts_without_files" value={x.game} />
-								<label htmlFor="posts_without_files">{x.game}</label></li>
+								<label htmlFor="posts_without_files"><b>{x.game}</b> ({new Date(x.date).toLocaleString()})</label></li>
 					}) }
 				</ul>
 			</fieldset>
@@ -60,29 +60,23 @@ export default function(props) {
 				<ul>
 				{ props.files_lost?.map((x) => {
 						return <li key={x.id}><input type="checkbox" id={x.id} name="files_lost" value={x.name} />
-								<label htmlFor="files_lost">{x.name}</label></li>
+								<label htmlFor="files_lost"><b>{x.name}</b> <i>({x.ext ? "."+x.ext : ""}) {new Date(x.date).toLocaleString()}</i></label></li>
 					}) }
 				</ul>
 			</fieldset>
 			<fieldset>
-				<legend>Files in Public directory but not in Database</legend>
+				<legend>Files in Disk but not in Database <em>(publique or uploads directory)</em></legend>
 				<p>Sélectionner les fichiers à supprimer</p>
 				<ul>
-				{ props.public_files_not_registered?.map((x) => {
-						return <li key={x.id}><input type="checkbox" id={x.id} name="files_lost" value={x.name} />
-								<label htmlFor="files_lost">{x.name}</label></li>
+				{ props.files_not_registered?.map((x, id) => {
+						return <li key={id}><input type="checkbox" id={id} name="files_lost" value={JSON.stringify(x)} />
+								<label htmlFor="files_lost">{x.directory}/{x.name}</label></li>
 					}) }
 				</ul>
 			</fieldset>
 			<fieldset>
-				<legend>Files in Uploads directory but not in Database</legend>
-				<p>Sélectionner les fichiers à supprimer</p>
-				<ul>
-				{ props.upload_files_not_registered?.map((x) => {
-						return <li key={x.id}><input type="checkbox" id={x.id} name="files_lost" value={x.name} />
-								<label htmlFor="files_lost">{x.name}</label></li>
-					}) }
-				</ul>
+				<legend>Files in bad directory</legend>
+				<p>Disponible Bientôt</p>
 			</fieldset>
 			<div>
 				<input id="submit" type="submit" value="Supprimer les fichiers sélectionnés" disabled={ submited }/>
