@@ -39,7 +39,7 @@ export default function(props) {
 				<p>Sélectionner les fichiers à supprimer</p>
 				<ul>
 					{ props.files_without_post?.map(x => {
-						return <li key={x.id}><input type="checkbox"  id={x.id} name="files_without_post" value={x.name} />
+						return <li key={x.id}><input type="checkbox"  id={x.id} name="files_without_post" value={JSON.stringify({id: x.id, name:x.name})} />
 								<label htmlFor="files_without_post"><b>{x.name}</b> <i>({x.ext ? "."+x.ext : ""}) {new Date(x.date).toLocaleString()}</i></label></li>
 					}) }
 				</ul>
@@ -49,7 +49,7 @@ export default function(props) {
 				<p>Sélectionner les posts à supprimer</p>
 				<ul>
 					{ props.posts_without_files?.map(x => {
-						return <li key={x.id}><input type="checkbox" id={x.id} name="posts_without_files" value={x.game} />
+						return <li key={x.id}><input type="checkbox" id={x.id} name="posts_without_files" value={JSON.stringify({id: x.id, game:x.game})} />
 								<label htmlFor="posts_without_files"><b>{x.game}</b> ({new Date(x.date).toLocaleString()})</label></li>
 					}) }
 				</ul>
@@ -59,7 +59,7 @@ export default function(props) {
 				<p>Sélectionner les fichiers à supprimer</p>
 				<ul>
 				{ props.files_lost?.map((x) => {
-						return <li key={x.id}><input type="checkbox" id={x.id} name="files_lost" value={x.name} />
+						return <li key={x.id}><input type="checkbox" id={x.id} name="files_lost" value={JSON.stringify({id: x.id, name:x.name})} />
 								<label htmlFor="files_lost"><b>{x.name}</b> <i>({x.ext ? "."+x.ext : ""}) {new Date(x.date).toLocaleString()}</i></label></li>
 					}) }
 				</ul>
@@ -69,7 +69,7 @@ export default function(props) {
 				<p>Sélectionner les fichiers à supprimer</p>
 				<ul>
 				{ props.files_not_registered?.map((x, id) => {
-						return <li key={id}><input type="checkbox" id={id} name="files_lost" value={JSON.stringify(x)} />
+						return <li key={id}><input type="checkbox" id={id} name="files_not_registered" value={JSON.stringify(x)} />
 								<label htmlFor="files_lost">{x.directory}/{x.name}</label></li>
 					}) }
 				</ul>
