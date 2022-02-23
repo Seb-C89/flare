@@ -3,8 +3,14 @@ import React from "react"
 export default function(props) {
 
 	const form_ref = React.createRef();
+	const autofocus_ref = React.createRef();
 	const [error, setError] = React.useState(props.error);
 	const [submited, setSubmited] = React.useState(props.submited);
+
+	React.useEffect(() => {
+		autofocus_ref.current.focus();
+		console.log("FOCUS")
+	});
 
 	async function onSubmit(event) {
 		event.preventDefault() // don't redirect the page
@@ -37,7 +43,7 @@ export default function(props) {
 			<div>
 				<label htmlFor="user">
 					<span>Utilisateur:</span>
-					<input id="user" name="user" autoComplete="username" required={ true } />
+					<input id="user" name="user" ref={ autofocus_ref } autoFocus={ true } autoComplete="username" required={ true } />
 				</label>
 			</div>
 			<div>
