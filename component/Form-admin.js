@@ -9,7 +9,7 @@ export default function(props) {
 	async function onSubmit(event) {
 		event.preventDefault() // don't redirect the page
 		var formData = new URLSearchParams(new FormData(form_ref.current))  // ?key=value&key2=value2
-		fetch("http://localhost:3000/api/form/admin", {
+		fetch("http://localhost:3000/api/file", {
 			method: 'POST', // URLSearchParams passed in the body of the POST request, not in the url
 			body: formData
 		}).then((res) => {
@@ -39,8 +39,9 @@ export default function(props) {
 				<p>Sélectionner les fichiers à supprimer</p>
 				<ul>
 					{ props.files_without_post?.map(x => {
-						return <li key={x.id}><input type="checkbox"  id={x.id} name="files_without_post" value={JSON.stringify({id: x.id, name:x.name})} />
-								<label htmlFor="files_without_post"><b>{x.name}</b> <i>({x.ext ? "."+x.ext : ""}) {new Date(x.date).toLocaleString()}</i></label></li>
+						let id=x.id+"files_without_post"
+						return <li key={id}><input type="checkbox" id={id} name={"files_without_post"} value={JSON.stringify({id: x.id, name:x.name})} />
+								<label htmlFor={id}><b>{x.name}</b> <i>({x.ext ? "."+x.ext : ""}) {new Date(x.date).toLocaleString()}</i></label></li>
 					}) }
 				</ul>
 			</fieldset>
@@ -49,8 +50,9 @@ export default function(props) {
 				<p>Sélectionner les posts à supprimer</p>
 				<ul>
 					{ props.posts_without_files?.map(x => {
-						return <li key={x.id}><input type="checkbox" id={x.id} name="posts_without_files" value={JSON.stringify({id: x.id, game:x.game})} />
-								<label htmlFor="posts_without_files"><b>{x.game}</b> ({new Date(x.date).toLocaleString()})</label></li>
+						let id=x.id+"posts_without_files"
+						return <li key={id}><input type="checkbox" id={id} name="posts_without_files" value={JSON.stringify({id: x.id, game:x.game})} />
+								<label htmlFor={id}><b>{x.game}</b> ({new Date(x.date).toLocaleString()})</label></li>
 					}) }
 				</ul>
 			</fieldset>
@@ -59,8 +61,9 @@ export default function(props) {
 				<p>Sélectionner les fichiers à supprimer</p>
 				<ul>
 				{ props.files_lost?.map((x) => {
-						return <li key={x.id}><input type="checkbox" id={x.id} name="files_lost" value={JSON.stringify({id: x.id, name:x.name})} />
-								<label htmlFor="files_lost"><b>{x.name}</b> <i>({x.ext ? "."+x.ext : ""}) {new Date(x.date).toLocaleString()}</i></label></li>
+					let id=x.id+"files_lost"
+						return <li key={id}><input type="checkbox" id={id} name="files_lost" value={JSON.stringify({id: x.id, name:x.name})} />
+								<label htmlFor={id}><b>{x.name}</b> <i>({x.ext ? "."+x.ext : ""}) {new Date(x.date).toLocaleString()}</i></label></li>
 					}) }
 				</ul>
 			</fieldset>
@@ -68,9 +71,10 @@ export default function(props) {
 				<legend>Files in Disk but not in Database <em>(publique or uploads directory)</em></legend>
 				<p>Sélectionner les fichiers à supprimer</p>
 				<ul>
-				{ props.files_not_registered?.map((x, id) => {
+				{ props.files_not_registered?.map((x, index) => {
+					let id=index+"files_not_registered"
 						return <li key={id}><input type="checkbox" id={id} name="files_not_registered" value={JSON.stringify(x)} />
-								<label htmlFor="files_lost">{x.directory}/{x.name}</label></li>
+								<label htmlFor={id}>{x.directory}/{x.name}</label></li>
 					}) }
 				</ul>
 			</fieldset>
