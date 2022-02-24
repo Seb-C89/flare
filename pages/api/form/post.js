@@ -15,7 +15,7 @@ export const config = {
 export default async function endpoint(req, res) {
 	if(CheckContentType(req, ["multipart/form-data"])){ // busboy throw exeption if not
 		let field_for_file = "file" // name of the field containing the files
-		let save_dir = "uploads/busboy/"
+		let save_dir = process.env.DIR_UPLOAD_IMG
 		
 		if(!req.hasOwnProperty('body'))
 			req.body = {}
