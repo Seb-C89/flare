@@ -19,7 +19,7 @@ export default withSessionRoute(async (req, res) => {
 			sql_query("SELECT * FROM post WHERE id=? AND game=?", [x.id, x.game])
 			//sql_query("DELETE FROM file WHERE id=? AND name=?", [x.id, x.name])
 				.then(data => console.log("POST DELETED", data))
-				.catch(e => {console.log(e); return res.status(404).end()})
+				.catch(e => {console.log(e); /*return res.status(404).end()*/})
 		}
 		
 		/* files_without_post */
@@ -32,7 +32,7 @@ export default withSessionRoute(async (req, res) => {
 					//console.log(`${path} removed`)
 					//rmSync(f.path)
 				})
-				.catch(e => {console.log(e); return res.status(404).end()})
+			.catch(e => {console.log(e); /*return res.status(404).end()*/})
 		}
 
 		/* files_lost */
@@ -40,7 +40,7 @@ export default withSessionRoute(async (req, res) => {
 			sql_query("SELECT * FROM file WHERE id=? AND name=?", [x.id, x.name])
 			//sql_query("DELETE FROM file WHERE id=? AND name=?", [x.id, x.name])
 				.then(data => console.log("FILE LOST DELETED", data))
-				.catch(e => {console.log(e); return res.status(404).end()})
+				.catch(e => {console.log(e); /*return res.status(404).end()*/})
 		}
 
 		/* files_not_registered */
@@ -61,7 +61,7 @@ export default withSessionRoute(async (req, res) => {
 			}
 		}catch(e){
 			console.log(e)
-			return res.status(404).end()
+			//return res.status(404).end()
 		}
 
 		res.status(202).end()
