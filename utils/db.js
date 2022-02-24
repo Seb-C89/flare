@@ -16,7 +16,7 @@ connection.connect(
 	}
 );
 
-function sql_query(sql, arg){
+export function sql_query(sql, arg){
 	return new Promise((resolve, reject) => {
 		let aaa = connection.query(sql, arg, (e, r) => {
 			if(e){
