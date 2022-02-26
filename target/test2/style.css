@@ -17,6 +17,13 @@ body {
 	overflow: auto; /* permit scroll when zoom  */
 }
 
+#ABS {
+	background-color: red;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+
 #__next {
 	display: contents;
 }
@@ -53,10 +60,18 @@ footer {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-template-rows: auto;
-	height: 100%;
-	overflow: auto;
+	/*height: 100%;
+	overflow: auto;*/
 }
 
 .layout-twocol .twocol {
 	grid-column: 1 / span 2;
+}
+
+.img {
+	overflow: auto;
+}
+
+.img img{
+	width: 100%;
 }
