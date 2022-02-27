@@ -31,15 +31,15 @@ export function sql_query(sql, arg){
 }
 
 export function get_recent(){	
-	return sql_query("SELECT user_name, game, image, UNIX_TIMESTAMP(date) AS date FROM post WHERE status='OK'", null)
+	return sql_query("SELECT user_name, game, UNIX_TIMESTAMP(date) AS date FROM post WHERE status='OK'", null)
 }
 
 export function get_posts_from_status(status){	
-	return sql_query("SELECT user_name, game, image, UNIX_TIMESTAMP(date) AS date FROM post WHERE status=?", [status])
+	return sql_query("SELECT * FROM post WHERE status=?", [status])
 }
 
 export function get_by_game(where){	
-	return sql_query("SELECT user_name, game, image, UNIX_TIMESTAMP(date) AS date FROM post WHERE game = ?", [where])
+	return sql_query("SELECT user_name, game, UNIX_TIMESTAMP(date) AS date FROM post WHERE game = ?", [where])
 }
 
 export function get_games(){	
@@ -82,12 +82,12 @@ export function get_files(){
 	return sql_query("SELECT * FROM file")
 }
 
-export function get_files_from_post(post_id){
-	return sql_query("SELECT * FROM file WHERE post=?", post_id)
+export function get_file_from_post(post_id){
+	return sql_query("SELECT * FROM file WHERE post=? LIMIT 1", post_id)
 }
 
-export function get_file_by_name(name){
-	return sql_query("SELECT * FROM file WHERE name=?", name)
+export function get_file_by_id(id){
+	return sql_query("SELECT * FROM file WHERE id=?", id)
 }
 
 export default sql_query;
