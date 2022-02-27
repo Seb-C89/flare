@@ -3,7 +3,7 @@ import Fullframe from "../component/Layout-fullframe.js"
 import { get_files_without_post, get_posts_without_files, get_files } from "../utils/db.js"
 import { readdir } from 'fs/promises';
 import Form from '../component/Form-admin.js'
-import api_admin from './api/form/admin.js'
+import api_file from './api/file'
 
 export default function(props){
 	return <Fullframe>
@@ -18,7 +18,7 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 		if(context.req.method === "GET")
 			props_admin = await get_props_admin()
 		else if (req.method === "POST")
-			await api_admin(req, res)
+			await api_file(req, res)
 	} else {
 		console.log("not admin")
 		notFound = true
