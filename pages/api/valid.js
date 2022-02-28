@@ -1,9 +1,9 @@
 import { withSessionRoute } from "../../utils/withIronSession"
 
 export default withSessionRoute((req, res) => {
-	console.log("kjhgyfds", req.body)
 	if(req.session.admin){
-		
+		console.log("kjhgyfds", req.body)
+		res.status(202).end()
 	}
 	res.status(404).end()
 })

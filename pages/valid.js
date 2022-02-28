@@ -37,10 +37,11 @@ async function get_posts(){
 		.catch(e => [])
 
 	return Promise.all(posts.map(async x => {
+		x.date = x.date.valueOf()
+
 		let f = await get_file_from_post(x.id)
 			.catch(e => null)
-			if(f.date)
-				f.date = new Date(f.date.valueOf())
+			f[0]?.date = f[0].date.valueOf()
 
 		return { post: x, file: f}
 	}))

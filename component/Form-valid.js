@@ -36,14 +36,21 @@ export default function(props) {
 	return <form ref={ form_ref } id="Form" method="POST" action="/admin" onSubmit={onSubmit}>
 		<section>
 			{ props.error ? <p>{props.error}</p> : <></> }
-			<fieldset>
-			<label htmlFor="pet-select">Choose a pet:</label>
-			<select name="pets" id="pet-select">
-				<option value="">--Choisir une action--</option>
-				<option value="val">VALID</option>
-				<option value="del">DEL</option>
-			</select>
-			</fieldset>
+			{ props.posts.map(x => {
+				return <fieldset>
+				<label htmlFor={x.post.id}>Action: </label>
+				<select name={JSON.stringify({
+					id: x.post.id,
+					game: x.post.game,
+					date: x.post.date
+				})} id={x.post.id}>
+					<option value="">--Choisir une action--</option>
+					<option value="val">VALID</option>
+					<option value="del">DEL</option>
+				</select>
+				{x?.file[0] ? <img src={"/api/image/upload/"+x.file[0].name} alt={x.post.game}/> : <p>pas d'image</p>}
+				</fieldset>
+			})}
 			<div>
 				<input id="submit" type="submit" value="Sauvegarder les changements" disabled={ submited }/>
 			</div>
