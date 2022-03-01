@@ -38,15 +38,21 @@ export default function(props) {
 			{ props.error ? <p>{props.error}</p> : <></> }
 			{ props.posts.map(x => {
 				return <fieldset>
-				<label htmlFor={x.post.id}>Action: </label>
+				
+				<label htmlFor={x.post.id}>
+					<ul>
+						<li>Game: {x.post.game}</li>
+						<li>Date: { new Date(x.post.date).toLocaleDateString() }</li>
+					</ul>
+				</label>
 				<select name={JSON.stringify({
 					id: x.post.id,
 					game: x.post.game,
 					date: x.post.date
 				})} id={x.post.id}>
 					<option value="">--Choisir une action--</option>
-					<option value="val">VALID</option>
-					<option value="del">DEL</option>
+					<option value="VAL">VALID</option>
+					<option value="DEL">DEL</option>
 				</select>
 				{x?.file[0] ? <img src={"/api/image/upload/"+x.file[0].name} alt={x.post.game}/> : <p>pas d'image</p>}
 				</fieldset>
