@@ -13,5 +13,4 @@ select * from post where post.id not in (select file.post from file)
 
 UPDATE post SET status="OK" WHERE id=23;
 
-
-			
+SELECT * FROM post WHERE id > $lastid LIMIT 10
