@@ -15,13 +15,12 @@ export async function getServerSideProps(context) {
 	const { last_index } = context.query
 	console.log("query", last_index)
 
-	let posts = await api_recent({query: context.query}, null)
+	let posts = await api_recent({query: {id:last_index}}, null)
 						.then(data => data.map(x => {
 							x.post.date = x.post.date.valueOf()
-							if(x?.file)
-								console.log("date", x.file.date)
-							//	x.file.date = x.file.date.valueOf()
-							return x.post
+							if(x.file[0])
+								x.file[0].date = x.file[0].date.valueOf()
+							return x
 						}))
 	let games = await get_games()
 

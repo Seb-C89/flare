@@ -9,7 +9,9 @@ export default function({ posts }) {
 	})
 
 	const [cards, addCards] = React.useState(initial_cards);
-	const [last_id, setError] = React.useState(posts[posts.length-1].id);
+	const [last_id, setError] = React.useState(posts[posts.length-1].post.id);
+	console.log(posts)
+	console.log("last_id", last_id, "cards length", cards.length)
 
 	function get_more(){
 		fetch(`http://localhost:3000/api/recent/${last_id}`, {
@@ -26,6 +28,6 @@ export default function({ posts }) {
 
 	return <section id="Gallery">
 		{ cards }
-		<a href={"/index/"+last_id}>Next</a>
+		{ cards.length == 10 ? <a href={"/index/"+last_id}>Next</a> : <></> }
 	</section>
 }
