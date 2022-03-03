@@ -4,10 +4,10 @@ import Layout from "../../component/Layout-sidemenu"
 import { get_games } from "../../utils/db"
 import api_recent from "../api/recent/[id]"
 
-export default function({ posts, games }){
+export default function({ posts, games, post_per_page }){
 	return <Layout>
-		<Game_menu games={games} />
-		<Gallery posts={ posts } />
+		<Game_menu games={ games } />
+		<Gallery posts={ posts } post_per_page={ post_per_page } />
 	</Layout>
 }
 
@@ -27,7 +27,8 @@ export async function getServerSideProps(context) {
 	return {
 		props: { 
 			posts: posts ?? null,
-			games: games ?? null
+			games: games ?? null,
+			post_per_page: parseInt(process.env.POST_PER_PAGE || 10)
 		}
 	}
 }

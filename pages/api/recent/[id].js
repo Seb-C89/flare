@@ -2,10 +2,10 @@ import { sql_query, get_file_from_post } from "../../../utils/db"
 
 export default async function(req, res) {
 	let { id } = req.query
-	
+
 	//TODO add WHERE status OK
-	let data = id 	? await sql_query("SELECT * FROM post WHERE id > ? LIMIT 10", id)
-					: await sql_query("SELECT * FROM post LIMIT 10")
+	let data = id 	? await sql_query("SELECT * FROM post WHERE id > ? LIMIT ?", [id, parseInt(process.env.POST_PER_PAGE || 10)])
+					: await sql_query("SELECT * FROM post LIMIT ?", parseInt(process.env.POST_PER_PAGE || 10))
 	
 	let posts = await Promise.all(data.map(async x => {
 		x.date = x.date.valueOf()
