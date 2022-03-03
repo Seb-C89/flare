@@ -1,7 +1,5 @@
 import Card from "./Card.js"
 import React, { useEffect, useState, createRef } from 'react';
-import concat from "concat-stream";
-//import { get_recent, get_games } from '../utils/db.js'
 
 export default function({ posts }) {
 
@@ -11,14 +9,15 @@ export default function({ posts }) {
 											added_cards: posts.length });
 
 	function addCards(posts){
-		console.log("ADDDDDDDD")
 		let new_cards = posts.map(x => <Card post={x} />)
+		
 		setCards({	cards:cards.cards.concat(new_cards),
 					last_id: posts[posts.length-1].post.id,
-		added_cards: posts.length })
-	}
+					added_cards: posts.length })
 
-	console.log("eeeeeeeeeeeeeeeeeeeee")
+		if(posts.length == 10)
+			get_more_button_ref.current.disabled = false
+	}
 
 	function get_more(){
 		get_more_button_ref.current.disabled = true
@@ -28,12 +27,8 @@ export default function({ posts }) {
 			if(res.ok){
 				let r = await res.json()
 				addCards(r)
-				if(r.length == 10)
-					get_more_button_ref.current.disabled = false
-			}
-			else{
+			} else
 				console.log("ERROR: "+res.status)
-			}
 		}).catch(() => {
 			console.log("NETWORK ERROR")
 		})
