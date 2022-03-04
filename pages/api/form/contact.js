@@ -1,29 +1,38 @@
 //import { insert_message } from "../../../utils/db.js"
 const nodemailer = require("nodemailer");
+import { withSessionRoute } from "../../../utils/withIronSession";
 
-export default async function(req, res) {
-	if(req.body.message && req.body.reply_to)
-		await send_mail(req.body.message, req.body.reply_to, req.body.subject)
-			.then(() => {
-				req.body.submited = true
-				res?.status(202).end()
-			})
-			.catch(() => {
-				req.body.error = true
-				res?.status(503).end()
-			})
-	else
-		res?.status(503).end()
-}
+export default withSessionRoute(async (req, res) => {
+	if(req.query?.mail){
+		await unseal_mail_perm(req, res)
+	}
 
-export function send_mail(message, reply_to, subject) {
+	if(req.method === 'POST'){
+		if(req.body.message && req.body.reply_to)
+			await send_mail(req.body.message, req.body.reply_to, req.body.subject)
+				.then(() => {
+					req.body.submited = true
+					res.status?.(202).end()
+				})
+				.catch(e => {
+					req.body.error = true
+					res.status?.(503).end()
+					console.log(e)
+				})
+		else
+			res.status?.(503).end()
+	} else {
+		res.status?.(404).end()
+	}
+})
+
+function send_mail(message, reply_to, subject) {
 	if(
 		message &&
 		/^[^@ ]+@[^@ ]+$/.test(reply_to)
 	){
-		// TODO do not create transporter each time
 		let transporter = nodemailer.createTransport({ // TODO add all param
-			service: "Outlook365",
+			service: process.env.MAIL_HOST,
 			auth: {
 				user: process.env.MAIL_USER,
 				pass: process.env.MAIL_PASSWORD,
