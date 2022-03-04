@@ -49,6 +49,7 @@ export default function(props) {
 					<input id="email" name="email" type="email" ref={ autofocus_ref } autoFocus={ true } autoComplete="email" required={ true } />
 				</label>
 			</div>
+			<input name="from" type="hidden" value={props?.from} />
 			<div>
 				<input id="submit" type="submit" value="Envoyer" disabled={ submited }/>
 			</div>

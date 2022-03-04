@@ -1,4 +1,5 @@
 import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
+import { unsealData } from "iron-session"
 
 const sessionOptions = {
 	cookieName: "Gho4Re",
@@ -17,4 +18,14 @@ export function withSessionRoute(handler) {
 
 export function withSessionSsr(handler) {
   return withIronSessionSsr(handler, sessionOptions);
+}
+
+export async function unseal_mail_perm(req, res){
+	const { mail_perm } = await unsealData(req?.query?.mail, {
+		password: process.env.SEAL_PASSWORD,
+	});
+
+	req.session.mail_perm = mail_perm
+		
+	await req.session.save();
 }
