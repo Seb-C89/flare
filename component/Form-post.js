@@ -65,12 +65,7 @@ export default function(props) {
 				<input id="form_submit" type="submit" value="Envoyer" disabled={ props?.submited } />
 			</div>
 			<datalist id="form_game_list">
-				<option value="Chrome" />
-				<option value="Firefox" />
-				<option value="Internet Explorer" />
-				<option value="Opera" />
-				<option value="Safari" />
-				<option value="Microsoft Edge" />
+				{ props?.games.map(x => <option value={ x.game } />) }
 			</datalist>
 			{ result() }
 		</section>
