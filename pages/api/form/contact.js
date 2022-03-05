@@ -1,14 +1,15 @@
 //import { insert_message } from "../../../utils/db.js"
 const nodemailer = require("nodemailer");
-import { withSessionRoute } from "../../../utils/withIronSession";
+import { withSessionRoute, unseal_mail_perm } from "../../../utils/withIronSession";
 
 export default withSessionRoute(async (req, res) => {
-	if(req.query?.mail){
-		await unseal_mail_perm(req, res)
-	}
+	/* unseal mail_perm */
+	if(!req.session?.mail_perm === true)
+		if(req.query?.mail)
+			await unseal_mail_perm(req, res)
 
-	if(req.method === 'POST'){
-		if(req.body.message && req.body.reply_to)
+	if(req.method === 'POST' && req.session?.mail_perm === true){
+		if(req.body.message && req.body.reply_to) {
 			await send_mail(req.body.message, req.body.reply_to, req.body.subject)
 				.then(() => {
 					req.body.submited = true
@@ -19,11 +20,10 @@ export default withSessionRoute(async (req, res) => {
 					res.status?.(503).end()
 					console.log(e)
 				})
-		else
+		} else
 			res.status?.(503).end()
-	} else {
+	} else
 		res.status?.(404).end()
-	}
 })
 
 function send_mail(message, reply_to, subject) {

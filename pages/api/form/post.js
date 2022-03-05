@@ -13,15 +13,13 @@ export const config = {
 };
 
 export default withSessionRoute(async (req, res) => {
-	if(req.query?.mail){
-		await unseal_mail_perm(req, res)
-	}
+	/* unseal mail_perm */
+	if(!req.session?.mail_perm === true)
+		if(req.query?.mail)
+			await unseal_mail_perm(req, res)
 
-	if(req.method === 'POST'){
+	if(req.method === 'POST' && req.session?.mail_perm === true){
 		try{
-			if(!req.session?.mail_perm || req.session.mail_perm !== true)
-				throw 'not allowed to post'
-
 			let field_for_file = "file" // name of the field containing the files
 			let save_dir = process.env.DIR_UPLOAD_IMG
 			
@@ -98,5 +96,6 @@ export default withSessionRoute(async (req, res) => {
 			res.status?.(500).end()
 			console.log(e)
 		}
-	}
+	} else
+		res.status?.(404).end()
 })

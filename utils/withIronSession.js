@@ -21,6 +21,7 @@ export function withSessionSsr(handler) {
 }
 
 export async function unseal_mail_perm(req, res){
+	console.log("UNSEAL")
 	const { mail_perm } = await unsealData(req?.query?.mail, {
 		password: process.env.SEAL_PASSWORD,
 	});
