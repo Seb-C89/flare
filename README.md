@@ -9,6 +9,7 @@
 [] internasionalization
 [] add query string to form in ssr
 [] auto load next post in gallery
+[] post par game
 
 ## A propos
 
@@ -19,3 +20,8 @@ Le site a été construit avec pour philosophie de pouvoir fonctionner sans Java
 # Les Formulaires
 
 # La Gallery
+
+# Security
+upload
+404
+formulaire
