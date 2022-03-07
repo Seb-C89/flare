@@ -1,17 +1,16 @@
 import Card from "./Card.js"
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from '../styles/Gallery.module.css'
 
-export default function({ posts, post_per_page }) {
-
+export default function({ posts, post_per_page, viewer_func }) {
 	const [get_more_button_ref] = React.useState(React.createRef());
 	const [get_more_link_ref] = React.useState(React.createRef());
-	const [cards, setCards] = React.useState({	cards: posts.map(x => <Card post={x} />),
+	const [cards, setCards] = React.useState({	cards: posts.map(x => <Card post={x} viewer_func={viewer_func} lol={"lol"}/>),
 												last_id: posts[posts.length-1]?.post.id,
 												added_cards: posts.length });
 
 	function addCards(posts){
-		let new_cards = posts.map(x => <Card post={x} />)
+		let new_cards = posts.map(x => <Card post={x} viewer_func={viewer_func} lol={"lol"}/>)
 		
 		setCards({	cards:cards.cards.concat(new_cards),
 					last_id: posts[posts.length-1]?.post.id,
@@ -38,8 +37,8 @@ export default function({ posts, post_per_page }) {
 
 	/*	effect to hide/reveal the good button
 		link to the next page if no javascript,
-		button to get more post if javascript */
-	useEffect(()=>{
+		button to get more post if javascript	*/
+	React.useEffect(()=>{
 		get_more_button_ref.current.style.display = 'initial'
 		get_more_link_ref.current.style.display = 'none'
 	}, [get_more_link_ref]) // block the hook, so it will be executed only once
