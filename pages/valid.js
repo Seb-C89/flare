@@ -5,9 +5,10 @@ import api_valid from './api/valid'
 import { get_posts_from_status, get_file_from_post } from "../utils/db.js"
 
 export default function(props){
-	return <Fullframe>
-		{ props.admin ? <Form { ...props } /> : <></> }
-	</Fullframe>
+	if(props.admin)
+		return <Fullframe><Form { ...props } /></Fullframe>
+	else
+		return <></>
 }
 
 export const getServerSideProps = withSessionSsr(async (context) => {

@@ -6,9 +6,10 @@ import Form from '../component/Form-admin.js'
 import api_file from './api/file'
 
 export default function(props){
-	return <Fullframe>
-		{ props.admin ? <Form { ...props } /> : <></> }
-	</Fullframe>
+	if(props.admin)
+		return <Fullframe><Form { ...props } /></Fullframe>
+	else
+		return <></>
 }
 
 export const getServerSideProps = withSessionSsr(async (context) => {

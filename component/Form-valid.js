@@ -1,4 +1,6 @@
 import React from "react"
+import Layout from './Layout-twocol'
+import style from '../styles/Form-valid.module.css'
 
 export default function(props) {
 
@@ -33,31 +35,32 @@ export default function(props) {
 
 	console.log(props.posts)
 
-	return <form ref={ form_ref } id="Form" method="POST" action="/admin" onSubmit={onSubmit}>
+	return <form ref={ form_ref } id="Form" className={style.form} method="POST" action="/admin" onSubmit={onSubmit}>
 		<section>
 			{ props.error ? <p>{props.error}</p> : <></> }
 			{ props.posts.map(x => {
-				return <fieldset>
-				
-				<label htmlFor={x.post.id}>
-					<ul>
-						<li>Game: {x.post.game}</li>
-						<li>Date: { new Date(x.post.date).toLocaleDateString() }</li>
-					</ul>
-				</label>
-				<select name={JSON.stringify({
-					id: x.post.id,
-					game: x.post.game,
-					date: x.post.date
-				})} id={x.post.id}>
-					<option value="">--Choisir une action--</option>
-					<option value="VAL">VALID</option>
-					<option value="DEL">DEL</option>
-				</select>
+				return <>
+				<div>
+					<label htmlFor={x.post.id}>
+						<ul>
+							<li>Game: {x.post.game}</li>
+							<li>Date: { new Date(x.post.date).toLocaleDateString() }</li>
+						</ul>
+					</label>
+					<select name={JSON.stringify({
+						id: x.post.id,
+						game: x.post.game,
+						date: x.post.date
+					})} id={x.post.id}>
+						<option value="">--Choisir une action--</option>
+						<option value="VAL">VALID</option>
+						<option value="DEL">DEL</option>
+					</select>
+				</div>
 				{x?.file[0] ? <img src={"/api/image/upload/"+x.file[0].name} alt={x.post.game}/> : <p>pas d'image</p>}
-				</fieldset>
+				</>
 			})}
-			<div>
+			<div className="submit">
 				<input id="submit" type="submit" value="Sauvegarder les changements" disabled={ submited }/>
 			</div>
 			{ result() }

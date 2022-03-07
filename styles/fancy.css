@@ -1,0 +1,14 @@
+form h2 {
+	text-align: center;
+}
+
+form div {
+	margin: 5px 0px 5px 0px;
+	padding: 5px;
+	transition:	background-color 0.1s ease-out;
+}
+
+form div:hover {
+	background-color: lightgray;
+	border-radius: 5px;
+}

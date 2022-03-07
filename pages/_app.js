@@ -1,13 +1,13 @@
 //import '../target/style.css'
 import '../styles/globals.css'
 import '../styles/viewer.css'
+import '../styles/fancy.css'
 import Header from '../component/Header'
 import Footer from '../component/Footer'
 import React from 'react'
 
 function MyApp({ Component, pageProps }) {
 	const viewer_ref = React.createRef()
-		pageProps.viewer_ref = viewer_ref
 	const viewport_ref = React.createRef()
 	
 	function show_viewer(ref){
@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }) {
 		viewer_ref.current.classList.toggle("fade_out", false);
 	
 		viewer_ref.current.addEventListener("click", hide_viewer);
-	} pageProps.viewer_func = show_viewer
+	} 
 	
 	function hide_viewer(){
 		console.log("fade_out", this)
@@ -36,6 +36,8 @@ function MyApp({ Component, pageProps }) {
 		viewer_ref.current.style.display = "none";
 		viewer_ref.current.removeEventListener("animationend", remove_viewer);
 	}
+	
+	pageProps.viewer_func = show_viewer // give acces to the other page and component especially <Gallery>
 
 	return <>
 		<Header />
