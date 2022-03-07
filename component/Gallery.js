@@ -1,5 +1,6 @@
 import Card from "./Card.js"
 import React, { useEffect } from 'react';
+import styles from '../styles/Gallery.module.css'
 
 export default function({ posts, post_per_page }) {
 
@@ -44,7 +45,7 @@ export default function({ posts, post_per_page }) {
 	}, [get_more_link_ref]) // block the hook, so it will be executed only once
 
 	console.log(cards.added_cards, post_per_page)
-	return <section id="Gallery">
+	return <section className={styles.gallery}>
 		{ cards.cards }
 		{ cards.added_cards == post_per_page ? <a href={"/index/"+cards.last_id} ref={ get_more_link_ref } >Next</a> : <></> }
 		{ cards.added_cards == post_per_page ? <button onClick={get_more} ref={ get_more_button_ref } style={{display: 'none'}}>Get More</button> : <></> }

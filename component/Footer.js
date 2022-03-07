@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export default function (props){
-	return <footer className="flex_menu">
+	return <footer className="flex_menu" id="footer">
 		<ul>
 			<li><Link href="form/post"><a>Participez!</a></Link></li>
 			<li>Confidentialité</li>

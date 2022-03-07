@@ -1,16 +1,122 @@
-html,
+html, body, #__next {
+	padding: 0%;
+	margin: 0%;
+	height: 100%;
+	max-height: 100%;
+	overflow: hidden;
+}
+
+html {
+	padding: 0 5% 0 5%;
+}
+
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2), -2px -2px 2px 1px rgba(0, 0, 0, 0.2);
+	display: grid;
+	grid-template-columns: 100%;
+	grid-template-rows: 0fr 1fr 0fr;
+	grid-auto-rows: 0fr;
+	overflow: auto; /* permit scroll when zoom  */
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+#__next {
+	display: contents;
 }
 
-* {
-  box-sizing: border-box;
+#footer {
+	padding: 20px 0px;
+	border-top: 2px solid lightgray;
+}
+
+#header {
+	border-bottom: 2px solid lightgray;
+}
+
+#Viewer {
+	display: none;	
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	top: 0px;
+	left: 0px;
+	opacity: 0;
+	overflow: auto;
+	background-color: rgba(100, 100, 100 , 0.95);
+}
+
+#Viewer #Viewport {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@keyframes fade_in {
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fade_out {
+	to {
+		opacity: 1;
+	}
+}
+
+.fade_in {
+	animation: fade_in 0.25s ease-out 0s 1 normal forwards;
+}
+
+.fade_out {
+	animation: fade_out 0.25s ease-in 0s 1 reverse backwards;
+}
+
+.flex_menu {
+	display: flex;
+	justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.flex_menu ul {
+	display: contents;
+}
+
+.layout{
+	/*min-height: 100%;
+	min-width: 100%;*/
+	max-height: 100%;
+	max-width: 100%;
+	overflow: auto;
+}
+
+.layout-fullframe {
+	margin: auto;
+}
+
+.layout-sidemenu {
+	display: grid;
+	grid-template-columns: 2fr 5fr;
+	grid-template-rows: auto;
+	grid-template-areas: "side main";
+}
+
+.layout-sidemenu .side {
+	grid-area: side;
+	overflow: auto;
+}
+
+.layout-sidemenu .main {
+	grid-area: main;
+	overflow: hidden;
+}
+
+.layout-twocol {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: auto;
+}
+
+.layout-twocol .twocol {
+	grid-column: 1 / span 2;
 }

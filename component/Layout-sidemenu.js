@@ -1,5 +1,5 @@
 export default function({ children }) {
-	return <div className='layout-sidemenu'>
+	return <div className='layout-sidemenu layout'>
 		{ children }
 	</div>
 }

@@ -298,6 +298,7 @@ html, body, #Main {
 	overflow: scroll;
 	margin: auto;
 	max-height: 100%; /* without scroll bar doesn't appear */
+	
 }
 
 .layout-twocol {
