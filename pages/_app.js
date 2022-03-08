@@ -7,12 +7,18 @@ import Footer from '../component/Footer'
 import React from 'react'
 
 function MyApp({ Component, pageProps }) {
-	const viewer_ref = React.createRef()
-	const viewport_ref = React.createRef()
-	
+	const [viewer_ref] = React.useState(React.createRef())
+	const [viewport_ref] = React.useState(React.createRef())
+	// execute only once
+	const [] = React.useState(() => {
+		console.log("SET PAGES PROPS")
+		Object.assign(pageProps, {viewer_func: show_viewer})
+	})
+
 	function show_viewer(ref){
 		console.log("SHOW", ref.current.src)
 		console.log("fade_in")
+
 		viewer_ref.current.style.display = "block";
 		viewport_ref.current.src = ref.current.src;
 		
@@ -20,6 +26,7 @@ function MyApp({ Component, pageProps }) {
 		viewer_ref.current.classList.toggle("fade_out", false);
 	
 		viewer_ref.current.addEventListener("click", hide_viewer);
+		
 	} 
 	
 	function hide_viewer(){
@@ -36,14 +43,11 @@ function MyApp({ Component, pageProps }) {
 		viewer_ref.current.style.display = "none";
 		viewer_ref.current.removeEventListener("animationend", remove_viewer);
 	}
-	
-	pageProps.viewer_func = show_viewer // give acces to the other page and component especially <Gallery>
 
-	return <>
+	return <><div id="Viewer" ref={ viewer_ref }><img id="Viewport" ref={ viewport_ref }/></div>
 		<Header />
 			<Component {...pageProps} />
-		<Footer />
-		<div id="Viewer" ref={ viewer_ref }><img id="Viewport" ref={ viewport_ref }/></div>
+		<Footer />	
 	</>
 }
 
