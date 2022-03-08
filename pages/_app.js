@@ -11,13 +11,13 @@ function MyApp({ Component, pageProps }) {
 	const [viewport_ref] = React.useState(React.createRef())
 	// execute only once
 	React.useState(() => {
-		console.log("SET PAGES PROPS")
+		//console.log("SET PAGES PROPS")
 		Object.assign(pageProps, {viewer_func: show_viewer})
 	})
 
 	function show_viewer(ref){
-		console.log("SHOW", ref.current.src)
-		console.log("fade_in")
+		//console.log("SHOW", ref.current.src)
+		//console.log("fade_in")
 
 		viewer_ref.current.style.display = "block";
 		viewport_ref.current.src = ref.current.src;
@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }) {
 	} 
 	
 	function hide_viewer(){
-		console.log("fade_out", this)
+		//console.log("fade_out", this)
 		viewer_ref.current.removeEventListener("click", hide_viewer);
 		viewer_ref.current.addEventListener("animationend", remove_viewer);
 	
@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }) {
 	}
 	
 	function remove_viewer() {
-		console.log("animation end", this)
+		//console.log("animation end", this)
 		viewer_ref.current.style.display = "none";
 		viewer_ref.current.removeEventListener("animationend", remove_viewer);
 	}

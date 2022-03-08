@@ -1,4 +1,8 @@
-import { default as index, getServerSideProps as getprops } from "./index/[last_index]"
+/*
+	This emulate redirecting / to recent/
+*/
+
+import { default as index, getServerSideProps as getprops } from "./recent/[last_index]"
 
 export const getServerSideProps = getprops
 
