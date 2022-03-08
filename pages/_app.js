@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
 	const [viewer_ref] = React.useState(React.createRef())
 	const [viewport_ref] = React.useState(React.createRef())
 	// execute only once
-	const [] = React.useState(() => {
+	React.useState(() => {
 		console.log("SET PAGES PROPS")
 		Object.assign(pageProps, {viewer_func: show_viewer})
 	})
