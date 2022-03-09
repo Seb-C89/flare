@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="21.632mm" height="21.632mm" version="1.1" viewBox="0 0 21.632 21.632" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <radialGradient id="radialGradient7840" cx="152.23" cy="290.43" r="10.816" gradientTransform="matrix(1.2656 0 0 1.7042 -352.56 -644.06)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fff" stop-opacity=".73494" offset="0"/>
+   <stop stop-color="#fff" stop-opacity="0" offset="1"/>
+  </radialGradient>
+ </defs>
+ <g transform="translate(-142.64 -152.56)">
+  <circle transform="rotate(182.23)" cx="-159.69" cy="-157.29" r="10.816" fill="url(#radialGradient7840)" fill-rule="evenodd" stroke-width=".26458"/>
+ </g>
+</svg>

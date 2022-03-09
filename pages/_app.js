@@ -9,6 +9,7 @@ import React from 'react'
 function MyApp({ Component, pageProps }) {
 	const [viewer_ref] = React.useState(React.createRef())
 	const [viewport_ref] = React.useState(React.createRef())
+	const [isload, setIsload] = React.useState(false) // avoid multiple window.addEventListener('click'
 	// execute only once
 	React.useState(() => {
 		//console.log("SET PAGES PROPS")
@@ -51,7 +52,7 @@ function MyApp({ Component, pageProps }) {
 		let center = {	x: window.innerWidth / 2,
 						y: window.innerHeight / 2	}
 		
-		let flares = ["light", "flare1", "flare2", "flare3"]
+		let flares = ["flare1", "light", "flare2", "flare3", "flare4", "flare5", "flare6"] // flare1 embed an bitmap, it is the larger file
 		
 		for(let id of flares){
 			flares[id] = document.getElementById(id)
@@ -84,6 +85,13 @@ function MyApp({ Component, pageProps }) {
 			function find_source_positionX_by_point_reflection(){ // symetrie central
 				return center.x + (center.x - e.clientX)
 			}
+
+			function client_angle(){
+				var firstAngle = Math.atan2(e.clientY, e.clientX-x);
+				var secondAngle = Math.atan2(1, 0);
+
+				return firstAngle - secondAngle;
+			}
 		
 			let x = find_source_positionX_by_point_reflection()
 		
@@ -91,32 +99,47 @@ function MyApp({ Component, pageProps }) {
 			let length = {	x: e.clientX - x,
 							y: e.clientY - 0	}
 			
+			console.log(client_angle()*(180/Math.PI))
 			flares.light.style.left = `${ x -flares.light.halfClientWidth}px`
 			flares.light.style.top = `${ 0 -flares.light.halfClientHeight}px`
 			console.log("source", flares.light.style.left, flares.light.style.top)
 
-			flares.flare1.style.left = `${x + length.x * 0.1 -flares.flare1.halfClientWidth}px`
-			flares.flare1.style.top = `${length.y * 0.1 -flares.flare1.halfClientHeight}px`
+			flares.flare1.style.left = `${x + length.x * 0.15 -flares.flare1.halfClientWidth}px`
+			flares.flare1.style.top = `${length.y * 0.15 -flares.flare1.halfClientHeight}px`
 
-			flares.flare2.style.left = `${x + length.x * 0.5 -flares.flare2.halfClientWidth}px`
-			flares.flare2.style.top = `${length.y * 0.5 -flares.flare2.halfClientHeight}px`
+			flares.flare2.style.left = `${x + length.x * 0.55 -flares.flare2.halfClientWidth}px`
+			flares.flare2.style.top = `${length.y * 0.55 -flares.flare2.halfClientHeight}px`
 
-			flares.flare3.style.left = `${x + length.x * 0.6 -flares.flare3.halfClientWidth}px`
-			flares.flare3.style.top = `${length.y * 0.6 -flares.flare3.halfClientHeight}px`
+			flares.flare3.style.left = `${x + length.x * 0.7 -flares.flare3.halfClientWidth}px`
+			flares.flare3.style.top = `${length.y * 0.7 -flares.flare3.halfClientHeight}px`
 
-			let angle = 60 * (Math.PI/180)
-			let rx = e.clientX - x
-			let xx = rx * Math.cos(angle) - e.clientY * Math.sin(angle);
-    		let yy = rx * Math.sin(angle) + e.clientY * Math.cos(angle);
-			xx += rx
-			flares.flare3.style.left = `${x + (xx-x) * 0.5 -flares.flare3.halfClientWidth}px`
-			flares.flare3.style.top = `${yy * 0.5 -flares.flare3.halfClientHeight}px`
+			let angle = { val: -20 * (Math.PI/180) }
+				angle.sin = Math.sin(angle.val)
+				angle.cos = Math.cos(angle.val)
+			let x2 = e.clientX - x
+				let xx = x2 * angle.cos - e.clientY * angle.sin	
+				let yy = x2 * angle.sin + e.clientY * angle.cos;
+			xx = xx + x	
+			
+			flares.flare4.style.left = `${x + + ((xx-x)) + 0.2 * length.x}px`
+			flares.flare4.style.top = `${0 + 0.2 * length.y}px`
+
+			flares.flare5.style.left = `${x + length.x * 0.8 -flares.flare5.halfClientWidth}px`
+			flares.flare5.style.top = `${length.y * 0.8 -flares.flare5.halfClientHeight}px`
+			flares.flare5.style.transform = `rotate(${client_angle()}rad)`
+
+			flares.flare6.style.left = `${x + length.x * 0.9 -flares.flare6.halfClientWidth}px`
+			flares.flare6.style.top = `${length.y * 0.9 -flares.flare6.halfClientHeight}px`
+			flares.flare6.style.transform = `rotate(${client_angle()}rad)`
+		
 		})
+		setIsload(true)
 	}
 
 	/* Because of onLoad trigger is fucked need to do ourselves... */
 	React.useEffect(() => {
-			flare();
+			if(!isload)
+				flare();
 	}, [])
 
 	return <><div id="Viewer" ref={ viewer_ref }><img id="Viewport" ref={ viewport_ref }/></div>
@@ -128,6 +151,9 @@ function MyApp({ Component, pageProps }) {
 		<img src="flare1.svg" className="flare" id="flare1"/>
 		<img src="flare2.svg" className="flare" id="flare2"/>
 		<img src="flare3.svg" className="flare" id="flare3"/>
+		<img src="flare4.svg" className="flare" id="flare4"/>
+		<img src="flare5.svg" className="flare" id="flare5"/>
+		<img src="flare6.svg" className="flare" id="flare6"/>
 	</>
 }
 //<object data="flares.svg" type="image/svg+xml" id="flares" width="100%" height="100%" onLoad={flare}/>
