@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="53.026mm" height="53.026mm" version="1.1" viewBox="0 0 53.026 53.026" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <radialGradient id="radialGradient7204" cx="178.03" cy="264.85" r="24.263" gradientTransform="translate(3.3313 -192.54)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#ff8200" stop-opacity="0" offset="0"/>
+   <stop stop-color="#fdc000" stop-opacity=".16829" offset=".71687"/>
+   <stop stop-color="#fcff00" stop-opacity=".64878" offset="1"/>
+  </radialGradient>
+  <radialGradient id="radialGradient13122" cx="178.03" cy="264.85" r="24.263" gradientTransform="translate(3.3313 -192.54)" gradientUnits="userSpaceOnUse">
+   <stop offset="0"/>
+   <stop stop-opacity="0" offset="1"/>
+  </radialGradient>
+ </defs>
+ <g transform="translate(-154.84 -45.793)">
+  <circle cx="181.36" cy="72.306" r="24.263" fill="url(#radialGradient7204)" stroke="url(#radialGradient13122)" stroke-width="4.5" style="paint-order:markers fill stroke"/>
+ </g>
+</svg>

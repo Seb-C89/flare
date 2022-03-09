@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="65.428mm" height="65.428mm" version="1.1" viewBox="0 0 65.428 65.428" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <radialGradient id="radialGradient4066" cx="95.513" cy="134.07" r="32.714" gradientTransform="translate(69.25 5.4973)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fcff00" stop-opacity="0" offset="0"/>
+   <stop stop-color="#ff5400" stop-opacity="0" offset=".44882"/>
+   <stop stop-color="#ff0f00" stop-opacity=".26275" offset=".89765"/>
+   <stop stop-color="#ff8200" stop-opacity=".23902" offset="1"/>
+  </radialGradient>
+ </defs>
+ <g transform="translate(-132.05 -106.85)">
+  <circle cx="164.76" cy="139.57" r="32.714" fill="url(#radialGradient4066)" style="paint-order:markers fill stroke"/>
+ </g>
+</svg>

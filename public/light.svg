@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="191.25mm" height="191.25mm" version="1.1" viewBox="0 0 191.25 191.25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <radialGradient id="radialGradient1188" cx="-45.851" cy="87.985" r="21.48" gradientTransform="matrix(4.4519 0 0 4.4519 398.27 -258.28)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fff" offset="0"/>
+   <stop stop-color="#ffe5c5" offset=".078165"/>
+   <stop stop-color="#ffcb8b" stop-opacity=".76863" offset=".15633"/>
+   <stop stop-color="#ffcb91" stop-opacity=".25" offset=".57817"/>
+   <stop stop-color="#fc9" stop-opacity="0" offset="1"/>
+  </radialGradient>
+ </defs>
+ <g transform="translate(-98.518 -37.796)">
+  <circle id="light" cx="194.14" cy="133.42" r="95.627" fill="url(#radialGradient1188)" fill-rule="evenodd" stroke-width="1.1779"/>
+ </g>
+</svg>

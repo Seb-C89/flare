@@ -40,3 +40,7 @@ border-radius: 10px;*/
 ::-webkit-scrollbar-button {
 	height: 5%;
 }
+
+.flare {
+	display: none;
+}
