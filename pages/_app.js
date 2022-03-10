@@ -49,9 +49,6 @@ function MyApp({ Component, pageProps }) {
 	function flare(){
 		console.log("FLAAAAAARE")
 		
-		let center = {	x: window.innerWidth / 2,
-						y: window.innerHeight / 2	}
-		
 		let flares = ["flare1", "light", "flare2", "flare3", "flare4", "flare5", "flare6"] // flare1 embed an bitmap, it is the larger file
 		
 		for(let id of flares){
@@ -68,8 +65,8 @@ function MyApp({ Component, pageProps }) {
 		
 		console.log("FLAAAAAARE LOADED", flares)
 		
-		window.addEventListener('click', e => {
-			console.log("clic", e.clientX, e.clientY)
+		window.addEventListener('mousemove', e => {
+			//console.log("clic", e.clientX, e.clientY)
 
 			function find_source_positionX_by_linear_function(){ // f(x) = ax + b
 				//console.log(e.clientX, e.clientY)
@@ -93,25 +90,39 @@ function MyApp({ Component, pageProps }) {
 				return firstAngle - secondAngle;
 			}
 		
+			let center = {	x: window.innerWidth / 2,
+							y: window.innerHeight / 2	}
+
 			let x = find_source_positionX_by_point_reflection()
-		
+
 			// length of x;0 -> e.clientX;e.clientY
 			let length = {	x: e.clientX - x,
 							y: e.clientY - 0	}
 			
-			console.log(client_angle()*(180/Math.PI))
+			let opacity = x * 100 / (window.innerWidth)
+				if(opacity < 50) opacity = 100 - opacity
+				opacity /= 100
+				opacity = 1 - opacity
+			//console.log("opacity", opacity)
+
+			let click_angle = client_angle()
+			
+
 			flares.light.style.left = `${ x -flares.light.halfClientWidth}px`
 			flares.light.style.top = `${ 0 -flares.light.halfClientHeight}px`
-			console.log("source", flares.light.style.left, flares.light.style.top)
+			//console.log("source", flares.light.style.left, flares.light.style.top)
 
-			flares.flare1.style.left = `${x + length.x * 0.15 -flares.flare1.halfClientWidth}px`
+			flares.flare1.style.left = `${x + length.x * 0.25 -flares.flare1.halfClientWidth}px`
 			flares.flare1.style.top = `${length.y * 0.15 -flares.flare1.halfClientHeight}px`
+			flares.flare1.style.opacity = opacity
 
 			flares.flare2.style.left = `${x + length.x * 0.55 -flares.flare2.halfClientWidth}px`
 			flares.flare2.style.top = `${length.y * 0.55 -flares.flare2.halfClientHeight}px`
+			flares.flare2.style.opacity = opacity
 
 			flares.flare3.style.left = `${x + length.x * 0.7 -flares.flare3.halfClientWidth}px`
 			flares.flare3.style.top = `${length.y * 0.7 -flares.flare3.halfClientHeight}px`
+			flares.flare3.style.opacity = opacity
 
 			let angle = { val: -20 * (Math.PI/180) }
 				angle.sin = Math.sin(angle.val)
@@ -123,23 +134,25 @@ function MyApp({ Component, pageProps }) {
 			
 			flares.flare4.style.left = `${x + + ((xx-x)) + 0.2 * length.x}px`
 			flares.flare4.style.top = `${0 + 0.2 * length.y}px`
+			flares.flare4.style.opacity = opacity
 
 			flares.flare5.style.left = `${x + length.x * 0.8 -flares.flare5.halfClientWidth}px`
 			flares.flare5.style.top = `${length.y * 0.8 -flares.flare5.halfClientHeight}px`
-			flares.flare5.style.transform = `rotate(${client_angle()}rad)`
+			flares.flare5.style.transform = `rotate(${click_angle}rad)`
+			flares.flare5.style.opacity = opacity
 
 			flares.flare6.style.left = `${x + length.x * 0.9 -flares.flare6.halfClientWidth}px`
 			flares.flare6.style.top = `${length.y * 0.9 -flares.flare6.halfClientHeight}px`
-			flares.flare6.style.transform = `rotate(${client_angle()}rad)`
+			flares.flare6.style.transform = `rotate(${click_angle}rad)`
+			flares.flare6.style.opacity = opacity
 		
 		})
 		setIsload(true)
 	}
 
-	/* Because of onLoad trigger is fucked need to do ourselves... */
 	React.useEffect(() => {
-			if(!isload)
-				flare();
+		if(!isload)
+			flare();
 	}, [])
 
 	return <><div id="Viewer" ref={ viewer_ref }><img id="Viewport" ref={ viewport_ref }/></div>
