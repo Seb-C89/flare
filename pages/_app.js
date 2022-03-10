@@ -47,7 +47,7 @@ function MyApp({ Component, pageProps }) {
 	}
 
 	function flare(){
-		console.log("FLAAAAAARE")
+		//console.log("FLAAAAAARE")
 		
 		let flares = ["flare1", "light", "flare2", "flare3", "flare4", "flare5", "flare6"] // flare1 embed an bitmap, it is the larger file
 		
@@ -62,8 +62,9 @@ function MyApp({ Component, pageProps }) {
 				flares[id].halfClientWidth = flares[id].clientWidth / 2.0
 				flares[id].halfClientHeight = flares[id].clientHeight / 2.0
 		}
-		
-		console.log("FLAAAAAARE LOADED", flares)
+
+		setIsload(true)
+		//console.log("FLAAAAAARE LOADED", flares)
 		
 		window.addEventListener('mousemove', e => {
 			//console.log("clic", e.clientX, e.clientY)
@@ -79,7 +80,7 @@ function MyApp({ Component, pageProps }) {
 				return solution
 			}
 		
-			function find_source_positionX_by_point_reflection(){ // symetrie central
+			function find_light_positionX_by_point_reflection(){ // symetrie central
 				return center.x + (center.x - e.clientX)
 			}
 
@@ -93,9 +94,9 @@ function MyApp({ Component, pageProps }) {
 			let center = {	x: window.innerWidth / 2,
 							y: window.innerHeight / 2	}
 
-			let x = find_source_positionX_by_point_reflection()
+			let x = find_light_positionX_by_point_reflection()
 
-			// length of x;0 -> e.clientX;e.clientY
+			// length of x;0(light) -> e.clientX;e.clientY
 			let length = {	x: e.clientX - x,
 							y: e.clientY - 0	}
 			
@@ -147,10 +148,9 @@ function MyApp({ Component, pageProps }) {
 			flares.flare6.style.opacity = opacity
 		
 		})
-		setIsload(true)
 	}
 
-	React.useEffect(() => {
+	React.useEffect(() => {	// because onLoad is not triggered on cached img and not triggered on window.onload
 		if(!isload)
 			flare();
 	}, [])
