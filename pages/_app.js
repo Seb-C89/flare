@@ -160,13 +160,13 @@ function MyApp({ Component, pageProps }) {
 			<Component {...pageProps} />
 		<Footer />
 		
-		<img src="light.svg" className="flare" id="light"/>
-		<img src="flare1.svg" className="flare" id="flare1"/>
-		<img src="flare2.svg" className="flare" id="flare2"/>
-		<img src="flare3.svg" className="flare" id="flare3"/>
-		<img src="flare4.svg" className="flare" id="flare4"/>
-		<img src="flare5.svg" className="flare" id="flare5"/>
-		<img src="flare6.svg" className="flare" id="flare6"/>
+		<img src="/light.svg" className="flare" id="light"/>
+		<img src="/flare1.svg" className="flare" id="flare1"/>
+		<img src="/flare2.svg" className="flare" id="flare2"/>
+		<img src="/flare3.svg" className="flare" id="flare3"/>
+		<img src="/flare4.svg" className="flare" id="flare4"/>
+		<img src="/flare5.svg" className="flare" id="flare5"/>
+		<img src="/flare6.svg" className="flare" id="flare6"/>
 	</>
 }
 //<object data="flares.svg" type="image/svg+xml" id="flares" width="100%" height="100%" onLoad={flare}/>
