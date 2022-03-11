@@ -33,8 +33,6 @@ export default function(props) {
 			return onFail()
 	}
 
-	console.log(props.posts)
-
 	return <form ref={ form_ref } id="Form" className={style.form} method="POST" action="/admin" onSubmit={onSubmit}>
 		<section>
 			{ props.error ? <p>{props.error}</p> : <></> }

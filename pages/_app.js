@@ -53,19 +53,28 @@ function MyApp({ Component, pageProps }) {
 		
 		for(let id of flares){
 			flares[id] = document.getElementById(id)
-			if(!flares[id].complete){
-				console.log("not loaded"); flares[id].onload = flare; return; } // recall flare() onload (avoid cas where onload is not trigered because image is in the cache)
+			
+			if(!flares[id].complete){	// recall flare() onload (avoid cas where onload is not trigered because image is in the cache)
+				//console.log("not loaded");
+				flares[id].onload = flare;
+				return;
+			}
+		}
+
+		setIsload(true) 
+		//console.log("FLAAAAAARE LOADED", flares)
+
+		window.addEventListener('mousemove', e => {	// display flares on first move
+			for(let id of flares){
 				flares[id].style.display = 'initial'
+				flares[id].halfClientWidth = flares[id].clientWidth / 2.0	// must be drawed for mesuring clientWidth and height
+				flares[id].halfClientHeight = flares[id].clientHeight / 2.0
 				flares[id].style.position = 'fixed'
 				flares[id].style.top = '0px'
 				flares[id].style.left = '0px'
-				flares[id].halfClientWidth = flares[id].clientWidth / 2.0
-				flares[id].halfClientHeight = flares[id].clientHeight / 2.0
-		}
+			}
+		}, {once: true})
 
-		setIsload(true)
-		//console.log("FLAAAAAARE LOADED", flares)
-		
 		window.addEventListener('mousemove', e => {
 			//console.log("clic", e.clientX, e.clientY)
 

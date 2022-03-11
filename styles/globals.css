@@ -1,4 +1,4 @@
-html, body, #__next {
+html, body {
 	padding: 0%;
 	margin: 0%;
 	height: 100%;
@@ -68,4 +68,26 @@ body {
 .layout-sidemenu .main {
 	grid-area: main;
 	overflow: hidden;
+}
+
+
+@media (orientation: portrait) {
+	.layout-sidemenu {
+		display: initial;
+	}
+
+	html, body {
+		padding: initial;
+		margin: initial;
+		height: initial;
+		max-height: initial;
+		overflow: initial;
+	}
+
+	.flex_menu {
+		display: initial;
+		justify-content: initial;
+		align-items: initial;
+		flex-wrap: initial;
+	}
 }
