@@ -1,5 +1,6 @@
 import { withSessionRoute } from "../../utils/withIronSession"
-import { sql_query } from "../../utils/db"
+import { sql_query, get_file_from_post } from "../../utils/db"
+import { renameSync } from 'fs'
 
 export default withSessionRoute(async (req, res) => {
 	if(req.session.admin){
@@ -9,7 +10,16 @@ export default withSessionRoute(async (req, res) => {
 				let post = JSON.parse(p)
 				switch(req.body[p]){
 					case 'VAL':
-						await sql_query("UPDATE post SET status='OK' WHERE id=? AND game=?;", [post.id, post.game])
+						await sql_query("SELECT * FROM post WHERE id=? AND game=?;", [post.id, post.game])
+							.then((data) => {
+								sql_query("UPDATE post SET status='OK' WHERE id=?", data[0].id).then(() => {
+									get_file_from_post(data[0].id)
+									.then((files) => {
+										for(let file of files)
+											renameSync(process.env.DIR_UPLOAD_IMG+file.name, process.env.DIR_PUBLIC_IMG+file.name) // TODO never fail...
+									})
+								})
+							})
 							.catch((e) => console.log(e))
 						break;
 					case 'DEL':

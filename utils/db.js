@@ -50,9 +50,9 @@ export function get_games_distinct(){
 	return sql_query("SELECT DISTINCT game FROM post", null)
 }
 
-export function insert_message(message, reply_to) {
+/*export function insert_message(message, reply_to) {
 	return sql_query("INSERT INTO message (message, `reply-to`) VALUES (?, ?)", [message, reply_to])
-}
+}*/
 
 export async function insert_post(post, files) {
 	return sql_query("START TRANSACTION")
@@ -87,7 +87,7 @@ export function get_files(){
 }
 
 export function get_file_from_post(post_id){
-	return sql_query("SELECT * FROM file WHERE post=? LIMIT 1", post_id)
+	return sql_query("SELECT * FROM file WHERE post=? LIMIT 1", post_id) // LIMIT 1 because the UI is not ready to have many image per post
 }
 
 export function get_file_by_id(id){
