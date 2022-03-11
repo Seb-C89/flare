@@ -38,18 +38,24 @@ export default function(props) {
 			<div>
 				<label htmlFor="form_file">
 					<span>Choisissez une capture d'écran:</span>
-					<input type="file" id="form_file" name="file" /*accept=".jpg, .jpeg, .png, .bmp"*/ multiple={ true }/>
+					<input type="file" id="form_file" name="file" accept=".jpg, .jpeg, .png, .bmp" multiple={ false } required={ true } />
 				</label>
 			</div>
 			<div>
 				<label htmlFor="form_game">
 					<span>Choisissez un jeu ou inscrivez un nouveau nom:</span>
-					<input type="text" id="form_game" name="game" list="form_game_list" value={ props?.game } />
+					<input type="text" id="form_game" name="game" list="form_game_list" value={ props?.game } required={ true } />
+				</label>
+			</div>
+			<div>
+				<label htmlFor="form_name">
+					<span>Signer avec un pseudo (facultatif):</span>
+					<input type="text" id="form_name" name="name" value={ props?.name } />
 				</label>
 			</div>
 			<div>
 				<label htmlFor="form_check">
-					<input type="checkbox" id="form_check" name="check" value={ props?.check }/>
+					<input type="checkbox" id="form_check" name="check" value={ true } checked={ props?.check } />
 					<span>En cochant cette case je déclare sur l'honneur que mon attention est bonne et qu'elle ne vise pas à discriminer, choqué ou porter atteinte à une communauté quelle qu'elle soit.</span>
 				</label>
 			</div>
@@ -65,7 +71,7 @@ export default function(props) {
 				<input id="form_submit" type="submit" value="Envoyer" disabled={ props?.submited } />
 			</div>
 			<datalist id="form_game_list">
-				{ props?.games.map(x => <option value={ x.game } />) }
+				{ props?.games.map(x => <option value={ x.game } key={ x.game } />) }
 			</datalist>
 			{ result() }
 		</section>

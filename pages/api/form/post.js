@@ -81,7 +81,12 @@ export default withSessionRoute(async (req, res) => {
 				bb.on('close', async () => {
 					console.log('Done parsing form!');
 					// MYSQL
-					await insert_post({game: req.body.game}, req.body.files, req.session.mail)
+					let post = {game: req.body.game}
+						if(req.body?.name) post.user_name = req.body.name
+						if(req.body?.check) post.check_box = true
+					console.log("CHEQEU", req.body?.check, req.body, post)
+
+					await insert_post(post, req.body.files, req.session.mail)
 						.then(()=>{
 							res.status?.(202).end()
 						})
