@@ -41,8 +41,9 @@ export default function(props) {
 				<div>
 					<label htmlFor={x.post.id}>
 						<ul>
-							<li>Game: {x.post.game}</li>
+							<li>Jeu: {x.post.game}</li>
 							<li>Date: { new Date(x.post.date).toLocaleDateString() }</li>
+							<li>Par: {x.post.user_name}</li>
 						</ul>
 					</label>
 					<select name={JSON.stringify({
@@ -55,7 +56,7 @@ export default function(props) {
 						<option value="DEL">DEL</option>
 					</select>
 				</div>
-				{x?.file[0] ? <img src={"/api/image/upload/"+x.file[0].name} alt={x.post.game}/> : <p>pas d'image</p>}
+				{x?.file[0] ? <img src={"/api/image/upload/"+x.file[0].name} alt={x.post.game} /> : <p>pas d'image</p>}
 				</>
 			})}
 			<div className="submit">

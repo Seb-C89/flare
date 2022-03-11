@@ -3,7 +3,7 @@ import styles from '../styles/Gallery.module.css'
 import React from 'react'
 
 export default function (props){
-	const { user_name, game, date, id } = props.post.post
+	const { user_name, game, date } = props.post.post
 	const name = props.post.file[0]?.name ?? ""
 	const [img_ref] = React.useState(React.createRef())
 	
@@ -11,7 +11,7 @@ export default function (props){
 	return <article className={styles.card} onClick={() => props.viewer_func(img_ref)}>
 		<img src={ "/api/image/public/"+name } alt="screenshoot" ref={ img_ref } />
 		<footer>
-			<p>In <span className="game">{ game }</span> posted by <span className="author">{ id }</span> at <span className="date">{ new Date(date).toLocaleDateString() }</span></p>
+			<p>In <span className="game">{ game }</span> posted by <span className="author">{ user_name ? user_name : "Anonyme" }</span> at <span className="date">{ new Date(date).toLocaleDateString() }</span></p>
 		</footer>
 	</article>
 }

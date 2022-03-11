@@ -13,7 +13,6 @@ function MyApp({ Component, pageProps }) {
 	// execute only once
 	React.useState(() => {
 		//console.log("SET PAGES PROPS")
-		//Object.assign(pageProps, {viewer_func: show_viewer})
 		pageProps.viewer_func = show_viewer
 	})
 

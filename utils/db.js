@@ -30,8 +30,9 @@ export function sql_query(sql, arg){
 	})
 }
 
-export function get_recent(){	
-	return sql_query("SELECT user_name, game, UNIX_TIMESTAMP(date) AS date FROM post WHERE status='OK'", null)
+export function get_recent(last_id){	
+	return last_id	? sql_query("SELECT * FROM post WHERE id > ? AND status='OK' LIMIT ?", [last_id, parseInt(process.env.POST_PER_PAGE || 10)])
+					: sql_query("SELECT * FROM post WHERE status='OK' LIMIT ?", parseInt(process.env.POST_PER_PAGE || 10))
 }
 
 export function get_posts_from_status(status){	
@@ -54,12 +55,24 @@ export function get_games_distinct(){
 	return sql_query("INSERT INTO message (message, `reply-to`) VALUES (?, ?)", [message, reply_to])
 }*/
 
-export async function insert_post(post, files) {
+export async function insert_post(post, files, mail) {
 	return sql_query("START TRANSACTION")
+		.then(async () => {
+			await sql_query("SELECT id FROM user WHERE mail=?", mail)
+				.then(async user => {
+					if(user[0]?.id)
+						post.user_id = user[0].id
+					else // Create user
+						await sql_query("INSERT INTO user SET ?", {mail: mail})
+							.then(r => {
+								post.user_id = r.insertId
+							})
+				})
+		})
 		.then(async () => {
 	 		return await sql_query("INSERT INTO post SET ?", post) // must be returned to passe the insertId to the next .then()
 		})
-		.then(async (r) => {
+		.then(async r => {
 			for(const f of files){
 				f["post"] = r.insertId
 				await sql_query("INSERT INTO file SET ?", f)
@@ -68,7 +81,7 @@ export async function insert_post(post, files) {
 		.then(async () => {
 			await sql_query("COMMIT")
 		})
-		.catch(async (e) => {
+		.catch(async e => {
 			await sql_query("ROLLBACK")
 			console.log(e)
 		})
