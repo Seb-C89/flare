@@ -31,17 +31,18 @@ export function sql_query(sql, arg){
 }
 
 export function get_recent(last_id){	
-	return last_id	? sql_query("SELECT * FROM post WHERE id > ? AND status='OK' LIMIT ?", [last_id, parseInt(process.env.POST_PER_PAGE || 10)])
-					: sql_query("SELECT * FROM post WHERE status='OK' LIMIT ?", parseInt(process.env.POST_PER_PAGE || 10))
+	console.log("LAST ID", last_id)
+	return last_id	? sql_query("SELECT id, user_name, date, game FROM post WHERE id > ? AND status='OK' LIMIT ?", [last_id, parseInt(process.env.POST_PER_PAGE || 10)])
+					: sql_query("SELECT id, user_name, date, game FROM post WHERE status='OK' LIMIT ?", parseInt(process.env.POST_PER_PAGE || 10))
 }
 
 export function get_posts_from_status(status){	
 	return sql_query("SELECT * FROM post WHERE status=?", [status])
 }
 
-export function get_by_game(where){	
+/*export function get_by_game(where){	
 	return sql_query("SELECT user_name, game, UNIX_TIMESTAMP(date) AS date FROM post WHERE game = ?", [where])
-}
+}*/
 
 export function get_games(){	
 	return sql_query("SELECT game, COUNT(game) AS count FROM post GROUP BY game", null)
