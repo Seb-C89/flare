@@ -61,7 +61,7 @@ export default function(props) {
 }
 
 export function onSuccess(){
-	return <p>Vous avez était authentifier</p>
+	return <p>Vous avez était authentifier. <Link href="/Gklm/files"><a>Gérer les fichiers</a></Link>. <Link href="/gKlm/valid"><a>Valider les nouveaux posts</a></Link>. <Link href="/gKlm/post"><a>Logout</a></Link></p>
 }
 
 export function onFail(){

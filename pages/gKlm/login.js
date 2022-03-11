@@ -1,7 +1,7 @@
 import { parseBody }  from "next/dist/server/api-utils" // https://github.com/vercel/next.js/discussions/14979
-import auth_api from "./api/auth.js"
-import Login from "../component/Form-login.js"
-import Fullframe from "../component/Layout-fullframe.js"
+import auth_api from "../api/auth.js"
+import Login from "../../component/Form-login.js"
+import Fullframe from "../../component/Layout-fullframe.js"
 import Link from 'next/link'
 
 export default function(props) {
