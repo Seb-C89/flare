@@ -1,5 +1,5 @@
-import { is_admin } from "../../utils/auth";
-import { withSessionRoute } from "../../utils/withIronSession.js"
+import { is_admin } from "../../../utils/auth";
+import { withSessionRoute } from "../../../utils/withIronSession.js"
 
 export default withSessionRoute(async (req, res) => {
 	

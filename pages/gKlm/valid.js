@@ -1,7 +1,7 @@
 import { withSessionSsr } from "../../utils/withIronSession.js"
 import Fullframe from "../../component/Layout-fullframe.js"
 import Form from '../../component/Form-valid.js'
-import api_valid from '../api/valid'
+import api_valid from '../api/gKlm/valid'
 import { get_posts_from_status, get_file_from_post } from "../../utils/db.js"
 
 export default function(props){

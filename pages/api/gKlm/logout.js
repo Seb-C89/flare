@@ -1,4 +1,4 @@
-import { withSessionRoute } from "../../utils/withIronSession.js"
+import { withSessionRoute } from "../../../utils/withIronSession.js"
 
 export default withSessionRoute(async (req, res) => {
 	

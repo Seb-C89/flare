@@ -1,3 +1,6 @@
+import { renameSync } from 'fs'
+// TODO close connection
+
 var mysql      = require('mysql2');
 var connection = mysql.createConnection({
 host     : process.env.MYSQL_HOST,
@@ -58,30 +61,39 @@ export function get_games_distinct(){
 
 export async function insert_post(post, files, mail) {
 	return sql_query("START TRANSACTION")
-		.then(async () => {
-			await sql_query("SELECT id FROM user WHERE mail=?", mail)
-				.then(async user => {
-					if(user[0]?.id)
-						post.user_id = user[0].id
-					else // Create user
-						await sql_query("INSERT INTO user SET ?", {mail: mail})
-							.then(r => {
-								post.user_id = r.insertId
-							})
-				})
-		})
-		.then(async () => {
-	 		return await sql_query("INSERT INTO post SET ?", post) // must be returned to passe the insertId to the next .then()
-		})
+		.then(async () => await sql_query("SELECT id FROM user WHERE mail=?", mail))
+			.then(async user => {
+				if(user[0]?.id)
+					post.user_id = user[0].id
+				else // Create user
+					await sql_query("INSERT INTO user SET ?", {mail: mail})
+						.then(r => {
+							post.user_id = r.insertId
+						})
+			})
+		.then(async () => await sql_query("INSERT INTO post SET ?", post)) // must be returned to passe the insertId to the next .then()
 		.then(async r => {
 			for(const f of files){
 				f["post"] = r.insertId
 				await sql_query("INSERT INTO file SET ?", f)
 			}
 		})
-		.then(async () => {
-			await sql_query("COMMIT")
+		.then(async () => await sql_query("COMMIT"))
+		.catch(async e => {
+			await sql_query("ROLLBACK")
+			console.log(e)
 		})
+}
+
+export function valid_post(id, game){
+	return sql_query("START TRANSACTION")
+		.then(async () => await sql_query("UPDATE post SET status='OK' WHERE id=? AND game=?", [post.id, post.game]))
+			.then(async () => await get_file_from_post(post.id))
+				.then(async files => {
+					for(let file of files)
+						renameSync(process.env.DIR_UPLOAD_IMG+file.name, process.env.DIR_PUBLIC_IMG+file.name)
+				})
+		.then(async () => await sql_query("COMMIT"))
 		.catch(async e => {
 			await sql_query("ROLLBACK")
 			console.log(e)

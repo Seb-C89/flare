@@ -2,8 +2,8 @@ import { withSessionSsr } from "../../utils/withIronSession.js"
 import Fullframe from "../../component/Layout-fullframe.js"
 import { get_files_without_post, get_posts_without_files, get_files } from "../../utils/db.js"
 import { readdir } from 'fs/promises';
-import Form from '../../component/Form-admin.js'
-import api_file from '../api/file'
+import Form from '../../component/Form-files.js'
+import api_file from '../api/gKlm/file'
 
 export default function(props){
 	if(props.admin)

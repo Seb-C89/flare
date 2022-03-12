@@ -1,6 +1,6 @@
-import { withSessionRoute } from "../../utils/withIronSession"
+import { withSessionRoute } from "../../../utils/withIronSession"
 //import { rmSync } from "fs"
-import { sql_query } from "../../utils/db"
+import { sql_query } from "../../../utils/db"
 
 export default withSessionRoute(async (req, res) => {
 	if(req.session.admin){
