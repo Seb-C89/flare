@@ -7,6 +7,8 @@
 [] internasionalization
 [] gallery: auto load on scroll
 [] post par game
+[] SQL requete with UNIXTIMESTANP() to avoid parsing Date()
+[] Utiliser un ORM (Sequelize)
 [] Meilleur gestion des fichiers. ajouter une extension aux fichier validé pour faciliter la detection du type mime dans api/image/ (detection du type mime par l'extension)
 
 ## A propos
