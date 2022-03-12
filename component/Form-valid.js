@@ -1,5 +1,4 @@
 import React from "react"
-import Layout from './Layout-twocol'
 import style from '../styles/Form-valid.module.css'
 
 export default function(props) {

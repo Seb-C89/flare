@@ -4,7 +4,7 @@ const busboy = require('busboy');
 const path = require('path');
 var concat = require('concat-stream') // entiere file in buffer, like in Multer
 import { insert_post } from '../../../utils/db.js'
-import { withSessionRoute, unsealData, unseal_mail_perm } from '../../../utils/withIronSession.js';
+import { withSessionRoute, unseal_mail_perm } from '../../../utils/withIronSession.js';
 
 export const config = {
 	api: {
@@ -84,7 +84,6 @@ export default withSessionRoute(async (req, res) => {
 					let post = {game: req.body.game}
 						if(req.body?.name) post.user_name = req.body.name
 						if(req.body?.check) post.check_box = true
-					console.log("CHEQEU", req.body?.check, req.body, post)
 
 					await insert_post(post, req.body.files, req.session.mail)
 						.then(()=>{
