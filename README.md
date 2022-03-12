@@ -1,3 +1,5 @@
+# Read Me
+
 ## TODO
 
 [] SQL: game col in post as join ?
@@ -10,10 +12,13 @@
 [] SQL requete with UNIXTIMESTANP() to avoid parsing Date()
 [] Utiliser un ORM (Sequelize)
 [] Meilleur gestion des fichiers. ajouter une extension aux fichier validé pour faciliter la detection du type mime dans api/image/ (detection du type mime par l'extension)
+[] Ne pas refaire vérifier les adresses mail qui l'on déjà était (les retrouver dans la bdd en cas de perte du cookies)
+[] déclaration de confidentialité
+[] crypté table user
 
 ## A propos
 
-# Choix du Framework
+### Choix du Framework
 
 Next.js a été choisi un peu au hasard, m'ayant était présenté comme LE framework révolutionnaire à la mode. Finalement il s'avére ne pas être le meilleur choix, car le site ne tire partie d'aucun de ses avantages et doit faire avec certaines restriction...
 
@@ -25,7 +30,7 @@ J'aurais souhaité que le site puisse fonctionner sans Javascript ni Cookies. Ce
 Pour l'heure seul les pages d'administration et le chargement du css dépendent du Javascript ou des cookies. Les pages d'administration fonctionnent avec une authentification via cookies (puisque [l'authentification HTTP](https://fr.wikipedia.org/wiki/Authentification_HTTP) est déprécié, certain navigateur refusant d'afficher la popup demandant le login et mot de passe). Quant au css je n'ai pas encore cherché de solution.
 Pour les formulaires j'ai conservé l'attribut `action` en plus d'ajouter un événement `onClick`. Ainsi si Javascript est activé le formulaire est envoyé via `fetch()` comme il est habituelle de le faire avec React. Dans le cas où Javascript est désactiver la requête est récupérer grâce à la fonction de Server Side Rendering qui passe la requête à l'api et permet son traitement.
 
-# Security
+### Security
 
 Les formulaires du site ne sont accessible que si l'utilisateur à vérifier son adresse mail afin d'éviter le spam par des personnes physique (pas efficace contre des bots évolués).
 
@@ -35,5 +40,14 @@ Beaucoup de page et de route de l'API renvoie un code 404, si leurs conditions n
 
 Pour éviter que les pages d'administration soit trouvées elles sont "cachées" derriére un dossier avec un nom aléatoire.
 
-# Dépendance
+### Messagerie
+
+En attandant de mettre en place un server mail, les messages sont envoyés sur une boite mail public (gmail, outlook, ...) avec le champ `replyTo` remplie avec le mail du destinataire et le champ `from` null. Il ne reste plus qu'à cliquer sur répondre ¯\\_(ツ)_/¯. Seul "bemol", s'il en est, le message initial est detecté comme indésirable mais pas sa réponse, l'utilisateur reçois donc la réponse comme il faut.
+
+### Base de données
+
+Le site ne nescesite pas d'inscription. Chaque post peut être signé avec un pseudo différent, voir déjà existant (c'est le champ `user_name`) mais chaque post est relié à une adresse mail (c'est le champ `user_id` qui fait la jontion avec la table `user`). Ainsi grâce a son adresse mail les posts d'un utilisateur peuvent être retrouvé.
+
+### Dépendance
+
 Next.js; React; busboy (formulaire); iron-session (session in cookie); mysql; nodemailer (envoie de mail);
