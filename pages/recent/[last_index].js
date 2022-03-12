@@ -4,7 +4,7 @@ import Game_menu from "../../component/Menu_game"
 import Gallery from "../../component/Gallery"
 import Layout from "../../component/Layout-sidemenu"
 
-export default function(props){
+export default function recent(props){
 	return <Layout>
 		<Game_menu games={ props.games } />
 		<Gallery posts={ props.posts } post_per_page={ props.post_per_page } viewer_func={ props.viewer_func } />

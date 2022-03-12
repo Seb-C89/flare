@@ -4,7 +4,7 @@ import Form from '../../component/Form-valid.js'
 import api_valid from '../api/gKlm/valid'
 import { get_posts_from_status, get_file_from_post } from "../../utils/db.js"
 
-export default function(props){
+export default function valid(props){
 	if(props.admin)
 		return <Fullframe><Form { ...props } /></Fullframe>
 	else
@@ -42,7 +42,9 @@ async function get_posts(){
 
 		let f = await get_file_from_post(x.id)
 			.catch(e => null)
-			f[0]?.date = f[0].date.valueOf()
+		
+		if(f[0]?.date)
+			f[0].date.valueOf()
 
 		return { post: x, file: f}
 	}))

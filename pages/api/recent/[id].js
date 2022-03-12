@@ -1,6 +1,6 @@
 import { get_recent, get_file_from_post } from "../../../utils/db"
 
-export default async function(req, res) {
+export default async function api_recent(req, res) {
 	let { id } = req.query
 
 	let data = await get_recent(id)

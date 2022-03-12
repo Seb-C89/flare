@@ -1,6 +1,6 @@
 import Fullframe from "../component/Layout-fullframe.js"
 
-export default function(props) {
+export default function about(props) {
 	return <Fullframe>
 		<h1>Lens Flare</h1>
 		<p>L'effet de "Lens-Flare" a pour but d'augmenter l'immersion et le rendu photoréalistique des jeux vidéos en reproduisant un phénoméne optique naturelle.<br />

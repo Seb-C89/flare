@@ -3,7 +3,7 @@ import Form from "../../component/Form-contact"
 import Form2 from "../../component/Form-mail"
 import contact_api from "../api/form/contact"
 
-export default function(props) {
+export default function form_contact(props) {
 	if(props.mail_perm === true)
 		return <Fullframe><Form { ...props } /></Fullframe>
 	else

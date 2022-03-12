@@ -1,6 +1,6 @@
 import logout_api from "../api/gKlm/logout.js"
 
-export default function(props) {
+export default function api_logout(props) {
 	return props.profil ? <p>you are NOT logged out</p> : <p>you are logged out</p>
 }
 

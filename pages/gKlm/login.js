@@ -4,7 +4,7 @@ import Login from "../../component/Form-login.js"
 import Fullframe from "../../component/Layout-fullframe.js"
 import Link from 'next/link'
 
-export default function(props) {
+export default function api_login(props) {
 	return <Fullframe>
 		{ props.profil ? <p><Link href="/gKlm/logout"><a>Logout</a></Link></p> : <Login /> }
 	</Fullframe>

@@ -4,7 +4,7 @@ import Form2 from "../../component/Form-mail"
 import post_api from "../api/form/post"
 import { get_games_distinct } from "../../utils/db"
 
-export default function(props) {
+export default function form_post(props) {
 	if(props.mail_perm === true)
 		return <Fullframe><Form { ...props } /></Fullframe>
 	else

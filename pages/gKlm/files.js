@@ -5,7 +5,7 @@ import { readdir } from 'fs/promises';
 import Form from '../../component/Form-files.js'
 import api_file from '../api/gKlm/file'
 
-export default function(props){
+export default function api_files(props){
 	if(props.admin)
 		return <Fullframe><Form { ...props } /></Fullframe>
 	else

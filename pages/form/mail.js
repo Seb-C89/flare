@@ -3,7 +3,7 @@ import Fullframe from "../../component/Layout-fullframe.js"
 import Form from "../../component/Form-mail.js"
 //import contact_api from "../api/form/mail.js"
 
-export default function(props) {
+export default function form_mail(props) {
 	return <Fullframe>
 		<Form { ...props }/>
 	</Fullframe>
