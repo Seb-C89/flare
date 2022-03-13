@@ -35,16 +35,16 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 
 async function get_posts(){
 	let posts = await get_posts_from_status('MOD')
-		.catch(e => [])
+		.catch(() => [])
 
 	return Promise.all(posts.map(async x => {
 		x.date = x.date.valueOf()
 
 		let f = await get_file_from_post(x.id)
-			.catch(e => null)
+			.catch(() => null)
 		
 		if(f[0]?.date)
-			f[0].date.valueOf()
+			f[0].date = f[0].date.valueOf()
 
 		return { post: x, file: f}
 	}))
