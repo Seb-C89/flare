@@ -48,11 +48,11 @@ export function get_posts_from_status(status){
 }*/
 
 export function get_games(){	
-	return sql_query("SELECT game, COUNT(game) AS count FROM post GROUP BY game", null)
+	return sql_query("SELECT game, COUNT(game) AS count FROM post WHERE status='OK' GROUP BY game", null)
 }
 
 export function get_games_distinct(){
-	return sql_query("SELECT DISTINCT game FROM post", null)
+	return sql_query("SELECT DISTINCT game FROM post WHERE status='OK'", null)
 }
 
 /*export function insert_message(message, reply_to) {

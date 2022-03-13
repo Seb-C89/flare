@@ -60,17 +60,6 @@ body {
 	grid-template-areas: "side main";
 }
 
-.layout-sidemenu .side {
-	grid-area: side;
-	overflow: auto;
-}
-
-.layout-sidemenu .main {
-	grid-area: main;
-	overflow: hidden;
-}
-
-
 @media (orientation: portrait) {
 	.layout-sidemenu {
 		display: initial;
