@@ -14,7 +14,7 @@
 [] Meilleur gestion des fichiers. ajouter une extension aux fichier validé pour faciliter la detection du type mime dans api/image/ (detection du type mime par l'extension)
 [] Ne pas refaire vérifier les adresses mail qui l'on déjà était (les retrouver dans la bdd en cas de perte du cookies)
 [] déclaration de confidentialité
-[] encrypt user table
+[] imrpove database connexion handling (pool)
 
 ## A propos
 
