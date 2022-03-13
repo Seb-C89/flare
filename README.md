@@ -15,6 +15,7 @@
 [] Ne pas refaire vérifier les adresses mail qui l'on déjà était (les retrouver dans la bdd en cas de perte du cookies)
 [] déclaration de confidentialité
 [] imrpove database connexion handling (pool)
+[] site map
 
 ## A propos
 
@@ -47,6 +48,28 @@ En attandant de mettre en place un server mail, les messages sont envoyés sur u
 ### Base de données
 
 Le site ne nécessite pas d'inscription. Chaque post peut être signé avec un pseudo différent, voir déjà existant (c'est le champ `user_name`) mais chaque post est relié à une adresse mail (c'est le champ `user_id` qui fait la jontion avec la table `user`). Ainsi grâce à l'adresse mail les posts d'un utilisateur peuvent être retrouvé.
+
+### Map
+
+#### Routes
+
+| Route | Fichier | Description |
+| --- | --- | --- |
+| `/` | `index.js` | Index du site, affiche les posts récent. Exporte les fonctions de `recent/[last_index].js` |
+| `/recent` | `recent.js` | Affiche les posts récent. Exporte les fonctions de `recent/[last_index].js` |
+| `/recent/56` | `recent/[last_index].js` | Affiche les posts récent depuis l'id `[last_index]` (pagination plus performante que d'utiliser `LIMIT + OFFSET`) |
+| `/about` |  | Page static qui décrit le site |
+| `/form/post` |  | - Permet de soumettre de nouveaux posts (admin ou utilisateur vérifié) ou de valider son email (si non vérifiée) |
+| `/form/contact` |  | - Permet d'envoyer un email à l'administrateur (admin ou utilisateur vérifié) ou de valider son email (si non vérifiée) |
+| `/gKlm/*` |  | Dossier derriére lequel sont "cachées" les pages d'administration |
+| `/gKlm/files` |  | Permet de gérer les fichiers qui sont perdue : Fichier présent sur le disque mais pas dans la bdd et inversement; posts qui ne sont plus reliés à des images dans la bdd et inversment ... |
+| `/gKlm/login` |  | S'authentifier comme admin |
+| `/gKlm/logout` |  | Déconnexion. Supprime les données du cookies |
+| `/gKlm/valid` |  | Permet de valider les nouveaux posts |
+| `/api/image/...` |  | Permet de servir les images |
+| `/api/recent/...` |  | Permet d'obtenir les nouveaux posts au format JSON |
+| `/api/gKlm/*` |  | Routes d'administration |
+| `/api/form/*` |  | Routes qui traites les données des formulaires |
 
 ### Dépendance
 
