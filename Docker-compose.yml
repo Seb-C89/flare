@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  mysite:
+    build:
+      context: .
+      dockerfile: Dockerfile-next
+    image: flare-snapshot
+    ports: 
+      - 3000:3000
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DB: flare
+
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - ./SQL/db.sql:/docker-entrypoint-initdb.d/db.sql
+    environment:
+        MYSQL_ROOT_PASSWORD: root
