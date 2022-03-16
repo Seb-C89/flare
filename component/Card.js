@@ -11,7 +11,7 @@ export default function (props){
 	return <article className={styles.card} onClick={() => props.viewer_func(img_ref)}>
 		<img src={ "/api/image/public/"+name } alt="screenshoot" ref={ img_ref } />
 		<footer>
-			<p>In <span className="game">{ game }</span> posted by <span className="author">{ user_name ? user_name : "Anonyme" }</span> at <span className="date">{ new Date(date).toLocaleDateString() }</span></p>
+			<p>In <span className={styles.game}>{ game }</span> posted by <span className="author">{ user_name ? user_name : "Anonyme" }</span> at <span className="date">{ new Date(date).toLocaleDateString() }</span></p>
 		</footer>
 	</article>
 }

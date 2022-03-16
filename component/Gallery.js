@@ -60,7 +60,7 @@ export default function({ posts, post_per_page, viewer_func }) {
 	return <section className={styles.gallery}>
 		{ cards.cards }
 		{ /* if it added less card than a complete page, it is that the end of the db is reach */ }
-		{ cards.added_cards == post_per_page ? <a href={"/recent/"+cards.last_id} ref={ get_more_link_ref } >Next</a> : <></> }
-		{ cards.added_cards == post_per_page ? <button onClick={get_more} ref={ get_more_button_ref } style={{display: 'none'}}>Get More</button> : <></> }
+		{ cards.added_cards == post_per_page ? <a href={"/recent/"+cards.last_id} ref={ get_more_link_ref } className={styles.get_more_button}>Next</a> : <></> }
+		{ cards.added_cards == post_per_page ? <button onClick={get_more} ref={ get_more_button_ref } style={{display: 'none'}} className={styles.get_more_button}>Get More</button> : <></> }
 	</section>
 }

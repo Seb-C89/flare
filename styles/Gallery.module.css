@@ -11,6 +11,10 @@
 	
 }
 
+.get_more_button {
+	font-size: 2em;
+}
+
 .card {
 	/*display: inline-block;*/
 	flex: 0 0 auto;
@@ -40,4 +44,8 @@
 	margin: auto;
 	max-height: 300px;
 	max-width: 100%;
+}
+
+.game {
+	font-weight: bold;
 }
