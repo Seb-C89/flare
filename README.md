@@ -18,6 +18,10 @@ Pour mettre à jour le code il faut donc reconstruire l'image (Se qui n'est pas 
 
 Autre spécificité, l'image MySQL initialise la base de donnée uniquement lors de la premiére utilisation. Il faut donc penser à supprimer le volume créé par défault pour redéclencher une initialisation. (Se n'est pas génant dans le cas de se docker de démonstration puisqu'il n'est pas censé être reconstruit)
 
+### Capture d'écran
+
+[![screenshoot](https://db3pap001files.storage.live.com/y4mmIPqG8H9yMM8O7MCsfQbwJnBeUeYHVc4AdKNrC4AihAaeNfNn9KRKlGDg4uDtZkkoZI9bGCaJJIDgQGVQVIpAC5ViFWLDnUdagNaaxQOzkjSwhm-NVpoJJvN5SEhNw3snxXb72BHVPs9yn2YQCwNYZ5IW4slkgXdqSNYCQmGTsQVqmoOz9GG2r1vmbNyPqJQ?width=256&height=124&cropmode=none)](https://db3pap001files.storage.live.com/y4mmIPqG8H9yMM8O7MCsfQbwJnBeUeYHVc4AdKNrC4AihAaeNfNn9KRKlGDg4uDtZkkoZI9bGCaJJIDgQGVQVIpAC5ViFWLDnUdagNaaxQOzkjSwhm-NVpoJJvN5SEhNw3snxXb72BHVPs9yn2YQCwNYZ5IW4slkgXdqSNYCQmGTsQVqmoOz9GG2r1vmbNyPqJQ?width=1919&height=933&cropmode=none) Plus de capture ici : https://1drv.ms/u/s!At9WEvfyjLgEhhPUQUvytRvNHUFd?e=qIsmUN
+
 ## A propos
 
 ### Choix du Framework
@@ -32,7 +36,7 @@ J'aurais souhaité que le site puisse fonctionner sans Javascript ni Cookies. Ce
 Pour l'heure seule les pages d'administration et le chargement du css dépend de Javascript ou des cookies. Les pages d'administration fonctionnent avec une authentification via cookies (puisque [l'authentification HTTP](https://fr.wikipedia.org/wiki/Authentification_HTTP) est dépréciée, certain navigateur refusant d'afficher la popup demandant le login et mot de passe). Quant au css je n'ai pas encore cherché de solution.
 Pour les formulaires j'ai conservé l'attribut `action` en plus d'ajouter un événement `onClick`. Ainsi si Javascript est activé le formulaire est envoyé via `fetch()` comme il est habituelle de le faire avec React. Dans le cas où Javascript est désactivé la requête est récupérée grâce à la fonction de Server Side Rendering qui passe la requête à l'api et permet son traitement.
 
-### Security
+### Securité
 
 Les formulaires du site ne sont accessibles que si l'utilisateur a vérifié son adresse mail afin d'éviter le spam (pas efficace contre des bots évolués).
 
