@@ -43,6 +43,7 @@ export default function(props) {
 							<li>Jeu: {x.post.game}</li>
 							<li>Date: { new Date(x.post.date).toLocaleDateString() }</li>
 							<li>Par: {x.post.user_name}</li>
+							<li>Ckeck_box: {x.post.check_box}</li>
 						</ul>
 					</label>
 					<select name={JSON.stringify({
