@@ -1,7 +1,25 @@
 # dependencies
-/node_modules
+node_modules/
 
 # next.js
-/.next/
+.next/
 
-/.git/
+# Git
+/.git
+.gitignore
+README.md
+
+# Docker
+Docker-compose.yml
+Dockerfile-next
+.dockerignore
+
+# Site
+del/*
+public/img/*
+uploads/*
+SQL/
+
+# Node
+.env
+package-lock.json
