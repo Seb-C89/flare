@@ -11,10 +11,10 @@ function MyApp({ Component, pageProps }) {
 	const [viewport_ref] = React.useState(React.createRef())
 	const [isload, setIsload] = React.useState(false) // avoid multiple window.addEventListener('click'
 	// execute only once
-	React.useState(() => {
-		//console.log("SET PAGES PROPS")
+	//React.useState(() => {
+		console.log("SET PAGES PROPS", show_viewer);
 		pageProps.viewer_func = show_viewer
-	})
+	//})
 
 	function show_viewer(ref){
 		//console.log("SHOW", ref.current.src)
