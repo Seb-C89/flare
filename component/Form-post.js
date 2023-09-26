@@ -10,7 +10,7 @@ export default function(props) {
 		event.preventDefault() // don't redirect the page
 		console.log("sending...")
 		var formData = new FormData(form_ref.current)
-		fetch("http://localhost:3000/api/form/post", {
+		fetch(process.env.NEXT_PUBLIC_API+"/form/post", {
 			method: 'POST',
 			body: formData
 		}).then((res) => {

@@ -15,7 +15,7 @@ export default function(props) {
 	async function onSubmit(event) {
 		event.preventDefault() // don't redirect the page
 		var formData = new URLSearchParams(new FormData(form_ref.current))  // ?key=value&key2=value2
-		fetch("http://localhost:3000/api/gKlm/auth", {
+		fetch(process.env.NEXT_PUBLIC_API_admin+"/auth", {
 			method: 'POST', // URLSearchParams passed in the body of the POST request, not in the url
 			body: formData
 		}).then((res) => {

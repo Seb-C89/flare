@@ -24,7 +24,7 @@ export default function({ posts, post_per_page, viewer_func }) {
 	function get_more(){
 		console.log("GETTING MORE CARDS")
 		get_more_button_ref.current.disabled = true
-		fetch(`http://localhost:3000/api/recent/${cards.last_id}`, {
+		fetch(process.env.NEXT_PUBLIC_API+"/recent/"+cards.last_id, {
 			method: 'GET',
 		}).then(async res => {
 			if(res.ok){
