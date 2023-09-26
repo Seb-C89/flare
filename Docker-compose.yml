@@ -19,6 +19,7 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: root
       MYSQL_DB: flare
+      NODE_ENV: production
     networks:
       - aves-network
       - backend-network
@@ -28,7 +29,7 @@ services:
   mysql:
     image: mysql:8.0
     volumes:
-      - ./SQL/db.sql:/docker-entrypoint-initdb.d/db.sql
+      - ./SQL/db.sql:/docker-entrypoint-initdb.d/db_structure_only.sql
     environment:
         MYSQL_ROOT_PASSWORD: root
     networks:
