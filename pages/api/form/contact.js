@@ -40,7 +40,7 @@ function send_mail(message, reply_to, subject) {
 		});
 
 		var mail = {
-			from: "",
+			from: process.env.MAIL_USER,
 			to: process.env.MAIL_USER,
 			replyTo: reply_to,
 			subject: subject,
