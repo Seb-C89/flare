@@ -1,5 +1,11 @@
 version: "3.7"
 
+networks:
+  backend-network:
+    driver: bridge
+  aves-network:
+    external: true
+
 services:
   mysite:
     build:
@@ -13,6 +19,11 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: root
       MYSQL_DB: flare
+    networks:
+      - aves-network
+      - backend-network
+    depends_on:
+      - mysql
 
   mysql:
     image: mysql:8.0
@@ -20,3 +31,5 @@ services:
       - ./SQL/db.sql:/docker-entrypoint-initdb.d/db.sql
     environment:
         MYSQL_ROOT_PASSWORD: root
+    networks:
+      - backend-network
