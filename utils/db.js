@@ -35,8 +35,8 @@ export function sql_query(sql, arg){
 
 export function get_recent(last_id){	
 	console.log("LAST ID", last_id)
-	return last_id	? sql_query("SELECT id, user_name, date, game FROM post WHERE id > ? AND status='OK' LIMIT ?", [last_id, parseInt(process.env.POST_PER_PAGE || 10)])
-					: sql_query("SELECT id, user_name, date, game FROM post WHERE status='OK' LIMIT ?", parseInt(process.env.POST_PER_PAGE || 10))
+	return last_id	? sql_query("SELECT id, user_name, date, game FROM post WHERE id < ? AND status='OK' ORDER BY date DESC LIMIT ?", [last_id, parseInt(process.env.POST_PER_PAGE || 10)])
+					: sql_query("SELECT id, user_name, date, game FROM post WHERE status='OK' ORDER BY date DESC LIMIT ?", parseInt(process.env.POST_PER_PAGE || 10))
 }
 
 export function get_posts_from_status(status){	
