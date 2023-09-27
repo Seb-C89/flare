@@ -48,7 +48,8 @@ Pour éviter que les pages d'administration soit trouvées elles sont "cachées"
 
 ### Messagerie
 
-En attandant de mettre en place un server mail, les messages sont envoyés sur une boite mail public (gmail, outlook, ...) avec le champ `replyTo` rempli avec le mail du destinataire et le champ `from` avec une chaine vide. Il ne reste plus qu'à cliquer sur répondre. Seul "bemol", s'il en est, le message initial est detecté comme indésirable mais pas sa réponse, l'utilisateur reçois donc la réponse comme il faut. ¯\\_(ツ)_/¯
+Les messages du formulaire de contacte s'envoi depuis une boite mail externe à elle même, avec le chanmp "reply-to" remplie adequatement.
+Ce qui permet d'utiliser l'interface web de la boite mail et d'utiliser simplement le bouton "répondre".  
 
 ### Base de données
 
@@ -95,5 +96,5 @@ Next.js; React; busboy (formulaire); iron-session (session in cookie); mysql; no
 - [ ] Meilleur gestion des fichiers. ajouter une extension aux fichier validé pour faciliter la detection du type mime dans api/image/ (detection du type mime par l'extension)
 - [ ] Ne pas refaire vérifier les adresses mail qui l'on déjà était (les retrouver dans la bdd en cas de perte du cookies)
 - [ ] déclaration de confidentialité
-- [ ] imrpove database connexion handling (pool?)
+- [ ] improve database connexion handling (pool?)
 - [ ] site map
