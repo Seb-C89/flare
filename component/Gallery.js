@@ -7,7 +7,7 @@ export default function({ posts, post_per_page, viewer_func }) {
 	const [get_more_link_ref] = React.useState(React.createRef());
 	const [cards, setCards] = React.useState({	cards: [],			// can't use addCards() here because it use setCards() and create infinite call between them
 												last_id: undefined,
-												addCards: undefined	});
+												added_cards: undefined	});
 	// Execute only one
 	React.useState(() => {
 		addCards(posts)	// add initial cards given by props
