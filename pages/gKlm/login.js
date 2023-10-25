@@ -6,8 +6,8 @@ import Link from 'next/link'
 
 export default function api_login(props) {
 	return <Fullframe>
-		{ props.profil ? <p><Link href="/gKlm/logout"><a>Logout</a></Link></p> : <Login /> }
-	</Fullframe>
+            { props.profil ? <p><Link href="/gKlm/logout">Logout</Link></p> : <Login /> }
+        </Fullframe>
 }
 
 export async function getServerSideProps({req, res}) {	// handle legacy "action" param of <form> in case user not have javascript
