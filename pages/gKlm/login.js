@@ -1,4 +1,4 @@
-import { parseBody }  from "next/dist/server/api-utils" // https://github.com/vercel/next.js/discussions/14979
+import { parseBody }  from "next/dist/server/api-utils/node" // https://github.com/vercel/next.js/discussions/14979
 import auth_api from "../api/gKlm/auth.js"
 import Login from "../../component/Form-login.js"
 import Fullframe from "../../component/Layout-fullframe.js"
