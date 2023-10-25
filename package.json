@@ -10,9 +10,9 @@
   "dependencies": {
     "busboy": "^1.4.0",
     "concat-stream": "^2.0.0",
-    "file-type": "^17.1.1",
+    "file-type": "^18.5.0",
     "iron-session": "^6.0.5",
-    "mysql2": "^2.3.3",
+    "mysql2": "^3.6.2",
     "next": "^12.0.3",
     "nodemailer": "^6.7.2",
     "react": "^17.0.2",
