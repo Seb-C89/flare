@@ -42,10 +42,9 @@ export default function({ posts, post_per_page, viewer_func }) {
 		button to get more post if javascript	*/
 	React.useEffect(()=>{
 		console.log("SET BUTTON DISPLAY")
-		get_more_button_ref.current?.style.display = 'initial'
-		get_more_link_ref.current?.style.display = 'none'
-
-		get_more_button_ref.current?.disabled = true
+		get_more_button_ref.current.style.display = 'initial'
+		get_more_link_ref.current.style.display = 'none'
+		get_more_button_ref.current.disabled = true
 	}, [])
 
 	/*	unlock the get more button if receive complete page,
@@ -53,7 +52,7 @@ export default function({ posts, post_per_page, viewer_func }) {
 	React.useEffect(()=>{
 		console.log("UNBLOCK BUTTON")
 		if(cards.added_cards == post_per_page)
-			get_more_button_ref.current?.disabled = false
+			get_more_button_ref.current.disabled = false
 	}, [cards])
 
 	//console.log(cards.added_cards, post_per_page)
