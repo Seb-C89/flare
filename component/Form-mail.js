@@ -40,9 +40,9 @@ export default function(props) {
 	return <form ref={ form_ref } id="Form" method="POST" action="/login" onSubmit={onSubmit}>
 		<section>
 			<h2>Connexion</h2>
-			<p>Pour accéder aux formulaire vous devez d'abord validez votre adresse e-mail, ceci à fin d'éviter les spam/bot.<br />
-			Vous recevrais un e-mail contenant le lien vous permettant de validez votre adresse e-mail.</p>
-			<p><i>L'adresse e-mail ne sera ni conservé, ni communiqué à quiconque, conformément à notre politique de confidentialité.</i></p>
+			<p>Pour accéder au formulaire vous devez d'abord valider votre adresse e-mail, ceci à fin d'éviter les spam/bot.<br />
+			Vous recevrez un e-mail contenant un lien vous permettant de valider votre adresse e-mail.</p>
+			<p><i>L'adresse e-mail ne sera ni conservée, ni communiquée à quiconque, conformément à notre politique de confidentialité.</i></p>
 			<div>
 				<label htmlFor="email">
 					<span>E-mail:</span>

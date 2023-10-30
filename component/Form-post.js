@@ -56,7 +56,7 @@ export default function(props) {
 			<div>
 				<label htmlFor="form_check">
 					<input type="checkbox" id="form_check" name="check" value={ true } checked={ props?.check } />
-					<span>En cochant cette case je déclare sur l'honneur que mon attention est bonne et qu'elle ne vise pas à discriminer, choqué ou porter atteinte à une communauté quelle qu'elle soit.</span>
+					<span>En cochant cette case je déclare sur l'honneur que mon attention est bonne et qu'elle ne vise pas à discriminer, choquer ou porter atteinte à une communauté quelle qu'elle soit.</span>
 				</label>
 			</div>
 			{/*<div>
