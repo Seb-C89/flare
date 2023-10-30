@@ -17,8 +17,8 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 	if(context.req?.session?.admin){
 		if(context.req.method === "GET")
 			posts = await get_posts()
-		else if (req.method === "POST")
-			await api_valid(req, res)
+		else if (context.req.method === "POST")
+			await api_valid(context.req, context.res)
 	} else {
 		console.log("not admin")
 		notFound = true
