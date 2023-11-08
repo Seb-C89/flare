@@ -12,10 +12,10 @@ export default function recent(props){
 }
 
 export async function getServerSideProps(context) {
-	const { last_index } = context.query || 0
-	console.log("query", last_index)
+	const { game, last_index } = context.query || 0
+	console.log("query", game, last_index)
 
-	let posts = await api_recent({query: [last_index]}, null)
+	let posts = await api_recent({query: [last_index, game]}, null)
 						.then(data => data.map(x => {
 							x.post.date = x.post.date.valueOf()
 							if(x.file[0])

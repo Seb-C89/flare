@@ -10,6 +10,7 @@ export default function({ posts, post_per_page, viewer_func }) {
 												added_cards: undefined	});
 	// Execute only one
 	React.useState(() => {
+		console.log("INITIAL ADD CARD")
 		addCards(posts)	// add initial cards given by props
 	})
 
@@ -42,16 +43,19 @@ export default function({ posts, post_per_page, viewer_func }) {
 		button to get more post if javascript	*/
 	React.useEffect(()=>{
 		console.log("SET BUTTON DISPLAY")
-		get_more_button_ref.current.style.display = 'initial'
-		get_more_link_ref.current.style.display = 'none'
-		get_more_button_ref.current.disabled = true
+		if(get_more_button_ref.current) {
+			get_more_button_ref.current.style.display = 'initial'
+			get_more_button_ref.current.disabled = true
+		}
+		if(get_more_link_ref.current)
+			get_more_link_ref.current.style.display = 'none'
 	}, [])
 
 	/*	unlock the get more button if receive complete page,
 		else it is that the end of database is reach			*/
 	React.useEffect(()=>{
 		console.log("UNBLOCK BUTTON")
-		if(cards.added_cards == post_per_page)
+		if(cards.added_cards == post_per_page && get_more_button_ref.current)
 			get_more_button_ref.current.disabled = false
 	}, [cards])
 

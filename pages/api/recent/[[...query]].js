@@ -1,9 +1,9 @@
-import { get_recent, get_file_from_post } from "../../../utils/db"
+import { get_recent, get_recent_by_game, get_file_from_post } from "../../../utils/db"
 
 export default async function api_recent(req, res) {
-	let { id } = req.query
+	let [ id, game ] = req.query.query || req.query
 
-	let data = await get_recent(id)
+	let data = game ? await get_recent_by_game(id, game) : await get_recent(id)
 	
 	let posts = await Promise.all(data.map(async x => {
 		x.date = x.date.valueOf()
