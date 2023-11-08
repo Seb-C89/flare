@@ -23,6 +23,17 @@ body {
 	display: contents;
 }
 
+a, a:visited {
+	color: inherit;
+	text-decoration: underline;
+	line-height: 2em;
+	text-underline-offset: 0.5em;
+}
+
+a:hover {
+	color: #444444;
+}
+
 #footer {
 	padding: 20px 0px;
 	border-top: 2px solid lightgray;
@@ -30,6 +41,10 @@ body {
 
 #header {
 	border-bottom: 2px solid lightgray;
+}
+
+#game_menu {
+	list-style-type: none;
 }
 
 .flex_menu {
@@ -41,6 +56,7 @@ body {
 
 .flex_menu ul {
 	display: contents;
+	list-style-type: none;
 }
 
 .layout{
