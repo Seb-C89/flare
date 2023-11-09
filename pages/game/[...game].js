@@ -28,7 +28,8 @@ export async function getServerSideProps(context) {
 		props: { 
 			posts: posts ?? null,
 			games: games ?? null,
-			post_per_page: parseInt(process.env.POST_PER_PAGE || 10)
+			post_per_page: parseInt(process.env.POST_PER_PAGE || 10),
+			key: game // https://github.com/vercel/next.js/issues/9992
 		}
 	}
 }
