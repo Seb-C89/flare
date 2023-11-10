@@ -7,15 +7,15 @@ import Layout from "../../component/Layout-sidemenu"
 export default function recent(props){
 	return <Layout>
 		<Game_menu games={ props.games } />
-		<Gallery posts={ props.posts } post_per_page={ props.post_per_page } viewer_func={ props.viewer_func } />
+		<Gallery posts={ props.posts } post_per_page={ props.post_per_page } viewer_func={ props.viewer_func } game={ props.game} />
 	</Layout>
 }
 
 export async function getServerSideProps(context) {
-	const { last_index } = context.query || 0
-	console.log("query", last_index)
+	const { game, last_index } = context.query || 0
+	console.log("query", game, last_index)
 
-	let posts = await api_recent({query: [last_index]}, null)
+	let posts = await api_recent({query: [last_index, game]}, null)
 						.then(data => data.map(x => {
 							x.post.date = x.post.date.valueOf()
 							if(x.file[0])
@@ -28,7 +28,9 @@ export async function getServerSideProps(context) {
 		props: { 
 			posts: posts ?? null,
 			games: games ?? null,
-			post_per_page: parseInt(process.env.POST_PER_PAGE || 10)
+			post_per_page: parseInt(process.env.POST_PER_PAGE || 10),
+			key: game, // https://github.com/vercel/next.js/issues/9992
+			game: game
 		}
 	}
 }
