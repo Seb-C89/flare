@@ -2,7 +2,7 @@ import Card from "./Card.js"
 import React from 'react';
 import styles from '../styles/Gallery.module.css'
 
-export default function({ posts, post_per_page, viewer_func }) {
+export default function({ posts, post_per_page, viewer_func, game }) {
 	const [get_more_button_ref] = React.useState(React.createRef());
 	const [get_more_link_ref] = React.useState(React.createRef());
 	const [cards, setCards] = React.useState({	cards: [],			// can't use addCards() here because it use setCards() and create infinite call between them
@@ -25,7 +25,7 @@ export default function({ posts, post_per_page, viewer_func }) {
 	function get_more(){
 		console.log("GETTING MORE CARDS")
 		get_more_button_ref.current.disabled = true
-		fetch(process.env.NEXT_PUBLIC_API+"/recent/"+cards.last_id, {
+		fetch(process.env.NEXT_PUBLIC_API+"/recent/"+cards.last_id+(game ? "/"+game : ""), {
 			method: 'GET',
 		}).then(async res => {
 			if(res.ok){
@@ -63,7 +63,7 @@ export default function({ posts, post_per_page, viewer_func }) {
 	return <section className={styles.gallery}>
 		{ cards.cards }
 		{ /* if it added less card than a complete page, it is that the end of the db is reach */ }
-		{ cards.added_cards == post_per_page ? <a href={"/recent/"+cards.last_id} ref={ get_more_link_ref } className={styles.get_more_button}>Next</a> : <></> }
+		{ cards.added_cards == post_per_page ? <a href={"/"+(game ? game : "recent")+"/"+cards.last_id} ref={ get_more_link_ref } className={styles.get_more_button}>Next</a> : <></> }
 		{ cards.added_cards == post_per_page ? <button onClick={get_more} ref={ get_more_button_ref } style={{display: 'none'}} className={styles.get_more_button}>Get More</button> : <></> }
 	</section>
 }

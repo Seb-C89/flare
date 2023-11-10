@@ -7,7 +7,7 @@ import Layout from "../../component/Layout-sidemenu"
 export default function recent(props){
 	return <Layout>
 		<Game_menu games={ props.games } />
-		<Gallery posts={ props.posts } post_per_page={ props.post_per_page } viewer_func={ props.viewer_func } />
+		<Gallery posts={ props.posts } post_per_page={ props.post_per_page } viewer_func={ props.viewer_func } game={ props.game} />
 	</Layout>
 }
 
@@ -29,7 +29,8 @@ export async function getServerSideProps(context) {
 			posts: posts ?? null,
 			games: games ?? null,
 			post_per_page: parseInt(process.env.POST_PER_PAGE || 10),
-			key: game // https://github.com/vercel/next.js/issues/9992
+			key: game, // https://github.com/vercel/next.js/issues/9992
+			game: game
 		}
 	}
 }
