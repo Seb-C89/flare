@@ -5,6 +5,7 @@ import '../styles/fancy.css'
 import Header from '../component/Header'
 import Footer from '../component/Footer'
 import React from 'react'
+import Head from 'next/head'
 
 function MyApp({ Component, pageProps }) {
 	const [viewer_ref] = React.useState(React.createRef())
@@ -163,7 +164,16 @@ function MyApp({ Component, pageProps }) {
 			flare();
 	}, [])
 
-	return <><div id="Viewer" ref={ viewer_ref }><img id="Viewport" ref={ viewport_ref }/></div>
+	return <>
+		<Head>
+			<title>Lensflare</title>
+			<meta property="og:title" content="Lensflare" />
+			<meta property="og:type" content="website" />
+			<meta property="og:url" content="https://lensflare.aves.photography" />
+			<meta property="og:image" content="https://lensflare.aves.photography/lensflare.thumbnail.webp" />
+			<meta property="og:description" content="Recensement des effets de 'lensflare' dans les jeux vidéos" />
+		</Head>
+		<div id="Viewer" ref={ viewer_ref }><img id="Viewport" ref={ viewport_ref }/></div>
 		<Header />
 			<Component {...pageProps} />
 		<Footer />
