@@ -5,7 +5,8 @@ export default function (props){
             <ul>
                 <li><Link href="/form/post">Participez!</Link></li>
                 <li>Confidentialité</li>
-                <li>Inspiré par: <a href="https://vgsmproject.com/">The video game soda machin project</a></li>
+                <li>Mon autre projet: <Link href="/picross.html">Nonogram</Link></li>
+                <li>Inspiré par: <Link href="https://vgsmproject.com/">The video game soda machin project</Link></li>
             </ul>
         </footer>
 }
