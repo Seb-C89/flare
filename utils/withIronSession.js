@@ -22,11 +22,12 @@ export function withSessionSsr(handler) {
 
 export async function unseal_mail_perm(req, res){
 	console.log("UNSEAL")
-	const { mail_perm } = await unsealData(req?.query?.mail, {
+	const { mail_perm, mail } = await unsealData(req?.query?.mail, {
 		password: process.env.SEAL_PASSWORD,
 	});
 
 	req.session.mail_perm = mail_perm
+	req.session.mail = mail
 		
 	await req.session.save();
 }
