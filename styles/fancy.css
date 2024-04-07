@@ -45,3 +45,40 @@ border-radius: 10px;*/
 	display: none;
 	pointer-events: none;
 }
+
+#Oauth_section {
+	width: 50%;
+	margin:auto;
+}
+
+#Oauth_section h2 {
+	text-align: center;
+}
+
+.Oauth {
+	display: block;
+	width: 100%;
+	background-color: white;
+	padding: 15px;
+	margin: 5px 0px;
+	border-radius: 15px;
+	border: 2px solid black;
+	text-align: center;
+}
+
+.Oauth * {
+	vertical-align: middle;
+}
+.Oauth :first-child {
+	padding-right: 8px;
+}
+
+.Oauth.Outlook {
+	background-color: #0f72cc;
+	color: white;
+}
+
+.Oauth.GitHub {
+	background-color: black;
+	color: white;
+}
