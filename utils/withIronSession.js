@@ -2,8 +2,8 @@ import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
 import { unsealData } from "iron-session"
 
 const sessionOptions = {
-	cookieName: "Gho4Re",
-	password: "_can you smell what The Rock is cooking ?_",
+	cookieName: process.env.COOKIES_NAME,
+	password: process.env.COOKIES_PASSWORD,
 	
 	// secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
 	cookieOptions: {
