@@ -21,7 +21,7 @@ export default async function api_recent(req, res) {
 		const { code } = req.query;
 		const options = {
 			code,
-			redirect_uri: "http://localhost:3000/api/Oauth/Outlook"
+			redirect_uri: "http://localhost:3000/api/Oauth/Outlook" // MICROSOFT REQUIRE REDIRECT_URI HERE TOO !!!
 		};
 		try {
 			const accessToken = await oauth.getToken(options);

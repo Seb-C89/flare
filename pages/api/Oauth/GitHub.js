@@ -1,3 +1,5 @@
+//https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps
+
 const { /*ClientCredentials, ResourceOwnerPassword,*/ AuthorizationCode } = require('simple-oauth2');
 
 export default async function api_recent(req, res) {
