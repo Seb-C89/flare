@@ -1,7 +1,7 @@
-import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
+import { getIronSession } from "iron-session";
 import { unsealData } from "iron-session"
 
-const sessionOptions = {
+const options = {
 	cookieName: "Gho4Re",
 	password: "_can you smell what The Rock is cooking ?_",
 	
@@ -13,11 +13,29 @@ const sessionOptions = {
 };
 
 export function withSessionRoute(handler) {
-  return withIronSessionApiRoute(handler, sessionOptions);
+  return async (req, res) => {
+	const session = await getIronSession(req, res, options);
+	req.session = session
+
+	return handler(req, res);
+  }
 }
 
 export function withSessionSsr(handler) {
-  return withIronSessionSsr(handler, sessionOptions);
+  return async (context) => {
+	console.log(context.req.cookies[options.cookieName])
+	context.req.cookies.get = function(name) {
+		return (context.req.cookies[name]) ? {value: context?.req?.cookies[name], name: name} : undefined
+	}
+	/*context.req.cookies.set = function(name, value) {
+		context.req.cookies[name] = value
+	}*/
+
+	context.req.session = await getIronSession(context.req.cookies, options);
+	console.log("SESSION", context.req.session)
+	
+	return handler(context);
+  }
 }
 
 export async function unseal_mail_perm(req, res){
