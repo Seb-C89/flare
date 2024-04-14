@@ -60,9 +60,9 @@ export default function(props) {
 	<section id="Oauth_section">
 		<h2>Ou utilisez votre compte</h2>
 		<p>Seule votre adresse mail sera consulter et utiliser pour enregistrez vos post ou message.</p>
-			<button class="Oauth Gmail" formMethod="get" formAction="/api/Oauth/Gmail"><img src="https://www.gstatic.com/images/branding/product/2x/gmail_2020q4_16dp.png" /><span>Gmail</span></button>
-			<button class="Oauth Outlook" formMethod="get" formAction="/api/Oauth/Outlook"><img src="https://res.cdn.office.net/owamail/20240329006.06/resources/images/favicons/mail-seen.ico" /><span>Outlook</span></button>
-			<button class="Oauth GitHub" formMethod="get" formAction="/api/Oauth/GitHub"><img src="https://github.githubassets.com/favicons/favicon-dark.png" /><span>GitHub</span></button>
+			<button className="Oauth Gmail" formMethod="get" formAction="/api/Oauth/Google"><img src="https://www.gstatic.com/images/branding/product/2x/gmail_2020q4_16dp.png" /><span>Gmail</span></button>
+			<button className="Oauth Outlook" formMethod="get" formAction="/api/Oauth/Outlook"><img src="https://res.cdn.office.net/owamail/20240329006.06/resources/images/favicons/mail-seen.ico" /><span>Outlook</span></button>
+			<button className="Oauth GitHub" formMethod="get" formAction="/api/Oauth/GitHub"><img src="https://github.githubassets.com/favicons/favicon-dark.png" /><span>GitHub</span></button>
 		</section>
 	</form>
 	</>

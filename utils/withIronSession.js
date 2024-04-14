@@ -49,3 +49,13 @@ export async function unseal_mail_perm(req, res){
 		
 	await req.session.save();
 }
+
+export async function create_user_session(req, mail, mail_perm) {
+	if(mail) { // TODO better check 
+		req.session.mail = mail
+		req.session.mail_perm = (mail_perm) ? mail_perm : true
+
+		await req.session.save()
+	} else
+		console.error("can not create session. Email is: ", mail)
+}
