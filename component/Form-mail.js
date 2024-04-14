@@ -37,11 +37,11 @@ export default function(props) {
 			return onFail()
 	}
 
-	return <form ref={ form_ref } id="Form" method="POST" action="/login" onSubmit={onSubmit}>
+	return <><form ref={ form_ref } id="Form" method="POST" action="/login" onSubmit={onSubmit}>
 		<section>
 			<h2>Connexion</h2>
 			<p>Pour accéder au formulaire vous devez d'abord valider votre adresse e-mail, ceci à fin d'éviter les spam/bot.<br />
-			Vous recevrez un e-mail contenant un lien vous permettant de valider votre adresse e-mail.</p>
+			Vous recevrez un e-mail contenant un lien vous permettant de vous connecter.</p>
 			<p><i>L'adresse e-mail ne sera ni conservée, ni communiquée à quiconque, conformément à notre politique de confidentialité.</i></p>
 			<div>
 				<label htmlFor="email">
@@ -56,6 +56,16 @@ export default function(props) {
 			{ result() }
 		</section>
 	</form>
+	<form>
+	<section id="Oauth_section">
+		<h2>Ou utilisez votre compte</h2>
+		<p>Seule votre adresse mail sera consulter et utiliser pour enregistrez vos post ou message.</p>
+			<button class="Oauth Gmail" formMethod="get" formAction="/api/Oauth/Gmail"><img src="https://www.gstatic.com/images/branding/product/2x/gmail_2020q4_16dp.png" /><span>Gmail</span></button>
+			<button class="Oauth Outlook" formMethod="get" formAction="/api/Oauth/Outlook"><img src="https://res.cdn.office.net/owamail/20240329006.06/resources/images/favicons/mail-seen.ico" /><span>Outlook</span></button>
+			<button class="Oauth GitHub" formMethod="get" formAction="/api/Oauth/GitHub"><img src="https://github.githubassets.com/favicons/favicon-dark.png" /><span>GitHub</span></button>
+		</section>
+	</form>
+	</>
 }
 
 export function onSuccess(){

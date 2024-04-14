@@ -11,12 +11,14 @@
     "busboy": "^1.4.0",
     "concat-stream": "^2.0.0",
     "file-type": "^18.5.0",
+    "googleapis": "^134.0.0",
     "iron-session": "^8.0.1",
     "mysql2": "^3.6.2",
     "next": "^13.0.7",
     "nodemailer": "^6.7.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "simple-oauth2": "^5.0.0"
   },
   "devDependencies": {
     "eslint": "latest",
