@@ -5,7 +5,7 @@ import { withSessionRoute, create_user_session } from '../../../utils/withIronSe
 
 export default withSessionRoute(async (req, res) => {
 	if(!req.session.mail_perm){
-		const { callback } = req.query
+		const { code } = req.query
 
 		const oauth = new AuthorizationCode({
 			client: {
@@ -19,8 +19,7 @@ export default withSessionRoute(async (req, res) => {
 			}
 		})
 
-		if (callback == "true") {
-			const { code } = req.query;
+		if (code) {
 			const options = {
 				code,
 			};
