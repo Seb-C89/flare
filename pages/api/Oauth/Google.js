@@ -34,6 +34,6 @@ export default withSessionRoute(async (req, res) => {
 			res.redirect(oauth2Client.generateAuthUrl({
 				scope: "https://www.googleapis.com/auth/userinfo.email"
 			}))
-	}
-	res.redirect("/")
+	} else 
+		res.redirect("/")
 })

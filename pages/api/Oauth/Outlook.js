@@ -58,6 +58,6 @@ export default withSessionRoute(async (req, res) => {
 				scope: "User.Read",
 				state: "hsiudgh" // TODO make it random
 			}))
-	}
-	res.redirect("/")
+	} else
+		res.redirect("/")
 })
