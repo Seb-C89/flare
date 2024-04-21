@@ -10,11 +10,13 @@ import Head from 'next/head'
 function MyApp({ Component, pageProps }) {
 	const [viewer_ref] = React.useState(React.createRef())
 	const [viewport_ref] = React.useState(React.createRef())
+	const [isAuth, setAuth] = React.useState(false)
 	const [isload, setIsload] = React.useState(false) // avoid multiple window.addEventListener('click'
 	// execute only once
 	//React.useState(() => {
 		console.log("SET PAGES PROPS", show_viewer);
 		pageProps.viewer_func = show_viewer
+		pageProps.setAuth = setAuth
 	//})
 
 	function show_viewer(ref){
@@ -176,7 +178,7 @@ function MyApp({ Component, pageProps }) {
 		<div id="Viewer" ref={ viewer_ref }><img id="Viewport" ref={ viewport_ref }/></div>
 		<Header />
 			<Component {...pageProps} />
-		<Footer />
+		<Footer isAuth={isAuth} />
 		
 		<img src="/light.svg" className="flare" id="light"/>
 		<img src="/flare1.svg" className="flare" id="flare1"/>
