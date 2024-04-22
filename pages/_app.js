@@ -164,6 +164,12 @@ function MyApp({ Component, pageProps }) {
 	React.useEffect(() => {	// because onLoad is not triggered on cached img and not triggered on window.onload
 		if(!isload)
 			flare();
+		
+		// Call Logged api to know if user is connected on his "first" visit, and set the connected states. It can't be done by getServerSideProps() here (_app.js) ¯\_(ツ)_/¯
+		fetch('/api/logged').then(async res => {
+			const { logged } = await res.json()
+			setAuth(logged)
+		})
 	}, [])
 
 	return <>

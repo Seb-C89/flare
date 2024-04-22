@@ -2,6 +2,9 @@ import { useRouter } from 'next/navigation'
 
 import { withSessionSsr } from "../utils/withIronSession"
 
+/* Landing page from connection, change the react state to connected  */
+// TODO change adresse in mail
+
 export default function form_post(props) {
 	//console.log(props)
 	props.setAuth(props.logged);
@@ -20,7 +23,7 @@ export const getServerSideProps = withSessionSsr(async (context) => {
 	console.log("session", context?.session)
 	return {
 		props: {
-			redirect: context?.query?.to,
+			redirect: context?.query?.to || "/",
 			logged: (context?.session) ? true : false
 		}
 	}
