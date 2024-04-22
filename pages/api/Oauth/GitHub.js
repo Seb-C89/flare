@@ -4,7 +4,7 @@ const { /*ClientCredentials, ResourceOwnerPassword,*/ AuthorizationCode } = requ
 import { withSessionRoute, create_user_session } from '../../../utils/withIronSession.js';
 
 export default withSessionRoute(async (req, res) => {
-	if(!req.session.mail_perm){
+	if(!req?.session?.mail_perm){
 		const { code } = req.query
 
 		const oauth = new AuthorizationCode({
@@ -56,7 +56,7 @@ export default withSessionRoute(async (req, res) => {
 			} catch (e) {
 				console.error(e);
 			}
-			res.redirect("/").end()
+			res.redirect("/auth?logged=true").end()
 		} else
 			res.redirect(oauth.authorizeURL({	// like `https://github.com/login/oauth/authorize?` + new URLSearchParams({})
 				client_id: `${process.env.OAUTH_GITHUB_CLIENT}`,

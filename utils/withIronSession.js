@@ -15,7 +15,8 @@ const options = {
 export function withSessionRoute(handler) {
   return async (req, res) => {
 	const session = await getIronSession(req, res, options);
-	req.session = session
+	if(Object.keys(session).length !== 0) // req.session can be {} empty object and empty object is true...
+		req.session = session
 
 	return handler(req, res);
   }
@@ -31,8 +32,10 @@ export function withSessionSsr(handler) {
 		context.req.cookies[name] = value
 	}*/
 
-	context.req.session = await getIronSession(context.req.cookies, options);
-	console.log("SESSION", context.req.session)
+	const session = await getIronSession(context.req.cookies, options);
+	if(Object.keys(session).length !== 0) // req.session can be {} empty object and empty object is true...
+		context.req.session = session
+	console.log("SESSION", context.req?.session)
 	
 	return handler(context);
   }

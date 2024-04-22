@@ -4,7 +4,7 @@ import { withSessionRoute, create_user_session } from '../../../utils/withIronSe
 /* TODO Microsoft do not allow redirect_uri with query_string. So the routing strategy need to be reviewed */
 
 export default withSessionRoute(async (req, res) => {
-	if(!req.session.mail_perm){
+	if(!req?.session?.mail_perm){
 		const { code } = req.query
 		
 		const oauth = new AuthorizationCode({
@@ -50,7 +50,7 @@ export default withSessionRoute(async (req, res) => {
 			} catch (e) {
 				console.error(e);
 			}
-			res.redirect("/").end()
+			res.redirect("/auth?logged=true").end()
 		} else
 			res.redirect(oauth.authorizeURL({
 				client_id: `${process.env.OAUTH_OUTLOOK_CLIENT}`,
