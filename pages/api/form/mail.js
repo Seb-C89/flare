@@ -39,8 +39,8 @@ export async function send_mail(email, from) {
 			from: process.env.MAIL_USER,
 			to: email,
 			subject: process.env.ADRESSE,
-			text: `Ce lien permet de vérifier votre adresse et d'accéder aux formulaires du site (contact / participez): ${process.env.ADRESSE}${from}?mail=${seal}\nMerci de l'interet que vous nous portez.`,
-			html: `<p>Ce lien permet de vérifier votre adresse et d'accéder aux formulaires du site (contact / participez): <a href="${process.env.ADRESSE}${from}?mail=${seal}">${process.env.ADRESSE}</a></p><p>Merci de l'interet que vous nous portez.</p>`
+			text: `Ce lien permet de vérifier votre adresse et d'accéder aux formulaires du site (contact / participez): ${process.env.ADRESSE}auth?mail=${seal}&to=${from}\nMerci de l'interet que vous nous portez.`,
+			html: `<p>Ce lien permet de vérifier votre adresse et d'accéder aux formulaires du site (contact / participez): <a href="${process.env.ADRESSE}auth?mail=${seal}&to=${from}">${process.env.ADRESSE}</a></p><p>Merci de l'interet que vous nous portez.</p>`
 		};
 
 		return transporter.sendMail(mail)

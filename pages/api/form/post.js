@@ -14,9 +14,9 @@ export const config = {
 
 export default withSessionRoute(async (req, res) => {
 	/* unseal mail_perm */
-	if(!req.session?.mail_perm === true)
+	/*if(!req.session?.mail_perm === true)
 		if(req.query?.mail)
-			await unseal_mail_perm(req, res)
+			await unseal_mail_perm(req, res)*/
 
 	if(req.method === 'POST' && req.session?.mail_perm === true && req.session?.mail){
 		try{

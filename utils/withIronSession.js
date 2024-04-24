@@ -14,7 +14,7 @@ const options = {
 
 export function withSessionRoute(handler) {
   return async (req, res) => {
-	const session = await getIronSession(req, res, options);
+	const session = (req?.session) ? req.session : await getIronSession(req, res, options);
 	if(Object.keys(session).length !== 0) // req.session can be {} empty object and empty object is true...
 		req.session = session
 
@@ -32,7 +32,7 @@ export function withSessionSsr(handler) {
 		context.req.cookies[name] = value
 	}*/
 
-	const session = await getIronSession(context.req.cookies, options);
+	const session = (req?.session) ? req.session : await getIronSession(context.req.cookies, options);
 	if(Object.keys(session).length !== 0) // req.session can be {} empty object and empty object is true...
 		context.req.session = session
 	console.log("SESSION", context.req?.session)
@@ -47,10 +47,7 @@ export async function unseal_mail_perm(req, res){
 		password: process.env.SEAL_PASSWORD,
 	});
 
-	req.session.mail_perm = mail_perm
-	req.session.mail = mail
-		
-	await req.session.save();
+	await create_user_session(req, mail, mail_perm);
 }
 
 export async function create_user_session(req, mail, mail_perm) {
