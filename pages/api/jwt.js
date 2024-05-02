@@ -17,9 +17,8 @@ export default async function test (req, res) {
 	console.log("cook", req.cookies)
 	console.log("cook", res.cookies)
 
-	//setCookie(res, `${process.env.COOKIES_NAME}=${jwt}`)
-	//setCookie(res, "lool=lool")
-	setCookies2(res, ["lool2=lool", "lool3=lool"])
+	//setCookies2(res, ["lool=loo1", "lool2=lool", "lool3=lool"])
+	clearCookies2(res, "lool2")
 
 	const a = await jose.jwtDecrypt(jwt, secret).then(res => { console.log("OK", res); return res }).catch(err => console.log("KO", err))
 	console.log("RESULT", a)
@@ -31,4 +30,13 @@ export default async function test (req, res) {
 function setCookies2(res, cookies) {
 	let _cookies = res.getHeader("set-cookie") ?? []
 	res.setHeader("set-cookie", [..._cookies, ...cookies])
+}
+
+function clearCookies2(res, cookiesNames) {
+	if(!Array.isArray(cookiesNames))
+		cookiesNames = [cookiesNames]
+	let cookies = cookiesNames.map( cname => {
+		return cname.concat(`=0; Expires=${new Date(0).toUTCString()}`)
+	})
+	setCookies2(res, cookies)
 }
