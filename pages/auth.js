@@ -16,17 +16,15 @@ export default function auth(props) {
 }
 
 export const getServerSideProps = withSessionSsr(async (context) => {
-	if(context.query.logged && process.env.NODE_ENV === "development")
-		context.session = { a: 1 }
 	if(context.query.mail)
-		unseal_mail_perm(context)
-	if(context.query.logout)
-		context.session?.destroy()
-	//console.log("session", context?.session)
+		await unseal_mail_perm({ req : context})
+	//if(context.query.logout)
+	//	await context.req.session?.destroy()
+	//console.log("ARE YOU CONNECTED", context?.req.session.mail_perm)
 	return {
 		props: {
 			redirect: context?.query?.to || "/",
-			logged: (context?.session) ? true : false
+			logged: (context?.req.session.mail_perm) ? true : false
 		}
 	}
 })

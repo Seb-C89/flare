@@ -4,5 +4,5 @@ export default withSessionRoute(async (req, res) => {
 	
 	await req?.session?.destroy()
 
-	res.redirect("/")
+	res.redirect("/auth")
 });
