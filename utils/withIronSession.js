@@ -18,12 +18,12 @@ export function withSessionRoute(handler) {
 // 	const session = (req?.session) ? req.session : await getIronSession(req, res, options);
 // 	if(Object.keys(session).length !== 0) // req.session can be {} empty object and empty object is true...
 // 		req.session = session
-console.log(req.headers)
-console.log(req.cookies)
+//console.log(req.rawHeaders)
+//console.log(req.cookies)
 	req.session = await jwe.getSession(req)
 	console.log("with ironsession", req.session)
 	req.session.save = async () => { console.log("want to save session", req.session); await jwe.saveSession(res, req.session) }
-	req.session.destroy = () => { jwe.closeSession(res, req.session); delete req.session }
+	req.session.destroy = async () => { console.log("GOOD BYE"); await jwe.closeSession(res, req.session); delete req.session }
 	//req.session.mail_perm = Boolean(req.session.iss)
  	return handler(req, res);
    }
