@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
-import { sealData } from "iron-session";
+//import { sealData } from "iron-session";
+import { sealData } from "../../../utils/withIronSession.js";
 
 export default async function api_mail(req, res) {
 	if(req?.body?.email)

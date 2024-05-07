@@ -1,6 +1,6 @@
 import * as jwe from "./jwt.js"
-import { getIronSession } from "iron-session";
-import { unsealData } from "iron-session"
+//import { getIronSession, sealData } from "iron-session";
+//import { unsealData } from "iron-session"
 
 // const options = {
 // 	cookieName: process.env.COOKIES_NAME,
@@ -51,11 +51,18 @@ context.req.session = await jwe.getSession(context.req)
 
 export async function unseal_mail_perm(req, res){
 	console.log("UNSEAL")
-	const { mail_perm, mail } = await unsealData(req?.query?.mail, {
+	/*const { mail_perm, mail } = await unsealData(req?.query?.mail, {
 		password: process.env.SEAL_PASSWORD,
-	});
+	});*/
+	const { mail, mail_perm } = await jose.jwtDecrypt(req.cookies[process.env.SEAL_PASSWORD], jose.base64url.decode(process.env.COOKIES_PASSWORD)).then(res => { console.log("OK", res); return res.payload }).catch(err => { console.log("KO", err.code); return {} })
 
 	await create_user_session(req, mail, mail_perm);
+}
+
+export async function sealData ( data ) {
+	return await new jose.EncryptJWT(data)
+		.setProtectedHeader({ alg: 'dir', enc: 'A128CBC-HS256' })
+		.encrypt(jose.base64url.decode(process.env.SEAL_PASSWORD))
 }
 
 export async function create_user_session(req, mail, mail_perm) {
