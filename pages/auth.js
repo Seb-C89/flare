@@ -17,7 +17,7 @@ export default function auth(props) {
 
 export const getServerSideProps = withSessionSsr(async (context) => {
 	if(context.query.mail)
-		await unseal_mail_perm({ req : context})
+		await unseal_mail_perm(context)
 	//if(context.query.logout)
 	//	await context.req.session?.destroy()
 	//console.log("ARE YOU CONNECTED", context?.req.session.mail_perm)

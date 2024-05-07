@@ -14,6 +14,7 @@ export default function(props) {
 
 	async function onSubmit(event) {
 		event.preventDefault() // don't redirect the page
+		setSubmited(true)
 		var formData = new URLSearchParams(new FormData(form_ref.current))  // ?key=value&key2=value2
 		fetch(process.env.NEXT_PUBLIC_API+"/form/mail", {
 			method: 'POST', // URLSearchParams passed in the body of the POST request, not in the url

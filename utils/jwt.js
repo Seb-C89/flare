@@ -8,10 +8,11 @@ export function createAdminSession(iss){
 	return createSession(iss, ["admin"])
 }
 
-function createSession(iss, authorities) {
+export function createSession(iss, authorities) {
 	/* return the session decrypted from cookies*/
 	return {
 		iss: iss, // TODO check mail format
+		mail: iss,
 		iat: Date.now(),
 		exp: Date.now() + (60 * 60 * 24 * 1000),
 		aut: authorities

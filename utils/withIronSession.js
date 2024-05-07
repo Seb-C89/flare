@@ -1,4 +1,5 @@
 import * as jwe from "./jwt.js"
+const jose = require('jose')
 //import { getIronSession, sealData } from "iron-session";
 //import { unsealData } from "iron-session"
 
@@ -49,14 +50,14 @@ context.req.session = await jwe.getSession(context.req)
 	}
 }
 
-export async function unseal_mail_perm(req, res){
-	console.log("UNSEAL")
+export async function unseal_mail_perm(context){
+	console.log("UNSEAL", context?.query?.mail)
 	/*const { mail_perm, mail } = await unsealData(req?.query?.mail, {
 		password: process.env.SEAL_PASSWORD,
 	});*/
-	const { mail, mail_perm } = await jose.jwtDecrypt(req.cookies[process.env.SEAL_PASSWORD], jose.base64url.decode(process.env.COOKIES_PASSWORD)).then(res => { console.log("OK", res); return res.payload }).catch(err => { console.log("KO", err.code); return {} })
+	const { mail, mail_perm } = await jose.jwtDecrypt(context?.query?.mail, jose.base64url.decode(process.env.SEAL_PASSWORD)).then(res => { console.log("OK", res); return res.payload }).catch(err => { console.log("KO", err.code); return {} })
 
-	await create_user_session(req, mail, mail_perm);
+	await create_user_session(context.req, context.res, mail, mail_perm);
 }
 
 export async function sealData ( data ) {
@@ -65,12 +66,12 @@ export async function sealData ( data ) {
 		.encrypt(jose.base64url.decode(process.env.SEAL_PASSWORD))
 }
 
-export async function create_user_session(req, mail, mail_perm) {
+export async function create_user_session(req, res, mail, mail_perm) {
 	if(mail) { // TODO better check 
-		req.session.mail = mail
+		req.session = jwe.createSession(mail)
 		req.session.mail_perm = (mail_perm) ? mail_perm : true
 
-		await req.session.save()
+		await jwe.saveSession(res, req.session)
 	} else
 		console.error("can not create session. Email is: ", mail)
 }
