@@ -22,7 +22,7 @@ export default function(props) {
 		}).then((res) => {
 			if(res.ok)
 				//console.log("DONE")
-				setSubmited(true)
+				setError(false)
 			else
 				//console.log("ERROR: "+res.status)
 				setError(true)
@@ -32,10 +32,12 @@ export default function(props) {
 	}
 
 	function result(){
-		if(submited)
-			return onSuccess()
-		if(error)
-			return onFail()
+		if(error !== undefined && error !== null) {
+			if(error)
+				return onFail()
+			else
+				return onSuccess()
+		}
 	}
 
 	return <><form ref={ form_ref } id="Form" method="POST" action="/login" onSubmit={onSubmit}>
