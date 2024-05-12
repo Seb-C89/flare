@@ -23,7 +23,7 @@ export default withSessionRoute(async (req, res) => {
 			const { code } = req.query;
 			const options = {
 				code,
-				redirect_uri: "http://localhost:3000/api/Oauth/Outlook" // MICROSOFT REQUIRE REDIRECT_URI HERE TOO !!!
+				redirect_uri: process.env.NEXT_PUBLIC_API+"/Oauth/Outlook" // MICROSOFT REQUIRE REDIRECT_URI HERE TOO !!!
 			};
 			try {
 				const accessToken = await oauth.getToken(options);
@@ -54,7 +54,7 @@ export default withSessionRoute(async (req, res) => {
 		} else
 			res.redirect(oauth.authorizeURL({
 				client_id: `${process.env.OAUTH_OUTLOOK_CLIENT}`,
-				redirect_uri: "http://localhost:3000/api/Oauth/Outlook",
+				redirect_uri: process.env.NEXT_PUBLIC_API+"/Oauth/Outlook",
 				scope: "User.Read",
 				state: "hsiudgh" // TODO make it random
 			}))

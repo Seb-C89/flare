@@ -60,7 +60,7 @@ export default withSessionRoute(async (req, res) => {
 		} else
 			res.redirect(oauth.authorizeURL({	// like `https://github.com/login/oauth/authorize?` + new URLSearchParams({})
 				client_id: `${process.env.OAUTH_GITHUB_CLIENT}`,
-				redirect_uri: "http://localhost:3000/api/Oauth/GitHub?callback=true",
+				redirect_uri: process.env.NEXT_PUBLIC_API+"/Oauth/GitHub?callback=true",
 				scope: "user:email",
 				state: "hsiudgh" // TODO make it random
 			}))

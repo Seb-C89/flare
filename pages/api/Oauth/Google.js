@@ -12,7 +12,7 @@ export default withSessionRoute(async (req, res) => {
 		const oauth2Client = new google.auth.OAuth2(
 			process.env.OAUTH_GOOGLE_CLIENT,
 			process.env.OAUTH_GOOGLE_SECRET,
-			"http://localhost:3000/api/Oauth/Google"
+			process.env.NEXT_PUBLIC_API+"/Oauth/Google"
 		);
 
 		if (code) {
