@@ -1,24 +1,6 @@
 # Read Me
 
-## Testez-moi
-
-J'ai voulu publier le site tel quel, car il est fonctionel, mais le fait que les images soient enregistrées sur le disque dur pose probléme avec les hébergeurs (tel Vercel). Il faudra mettre en place, et dépendre, d'un énième service pour héberger les images. J'ai donc créer un Docker pour faciliter le partage de la version de développement.
-
-### Docker
-
-Il suffit de lancer Docker-compose :
-`docker-compose up -d`
-
-Il faut attendre jusqu'à quelques minutes que le container MySQL s'initialise puis le site est accessible à partir de n'importe quel navigateur à l'adresse [http://localhost:3000/](http://localhost:3000/)
-
-#### Petite spécificité sur le fonctionnement du Docker
-
-Le code source n'est pas "monté" dans un volume, mais copié dans l'image pour rendre le docker plus portable. En effet les modules du dossier /node_module ont des versions spécifiques à Windows ou Linux. Si le code source est monté dans l'image avec des modules téléchargés depuis Windows celà pose probléme, et si les modules sont installés depuis Dockers le site ne peux plus être développé avec un ordinateur sous Windows...
-Pour mettre à jour le code il faut donc reconstruire l'image (Se qui n'est pas génant dans le cas de se docker de démonstration, puisqu'il est censé être construit qu'une seule fois)
-
-Autre spécificité, l'image MySQL initialise la base de donnée uniquement lors de la premiére utilisation. Il faut donc penser à supprimer le volume créé par défault pour redéclencher une initialisation. (Se n'est pas génant dans le cas de se docker de démonstration puisqu'il n'est pas censé être reconstruit)
-
-### Capture d'écran
+## Capture d'écran
 
 [![screenshoot](https://db3pap001files.storage.live.com/y4mmIPqG8H9yMM8O7MCsfQbwJnBeUeYHVc4AdKNrC4AihAaeNfNn9KRKlGDg4uDtZkkoZI9bGCaJJIDgQGVQVIpAC5ViFWLDnUdagNaaxQOzkjSwhm-NVpoJJvN5SEhNw3snxXb72BHVPs9yn2YQCwNYZ5IW4slkgXdqSNYCQmGTsQVqmoOz9GG2r1vmbNyPqJQ?width=256&height=124&cropmode=none)](https://db3pap001files.storage.live.com/y4mmIPqG8H9yMM8O7MCsfQbwJnBeUeYHVc4AdKNrC4AihAaeNfNn9KRKlGDg4uDtZkkoZI9bGCaJJIDgQGVQVIpAC5ViFWLDnUdagNaaxQOzkjSwhm-NVpoJJvN5SEhNw3snxXb72BHVPs9yn2YQCwNYZ5IW4slkgXdqSNYCQmGTsQVqmoOz9GG2r1vmbNyPqJQ?width=1919&height=933&cropmode=none) Plus de capture ici : https://1drv.ms/u/s!At9WEvfyjLgEhhPUQUvytRvNHUFd?e=qIsmUN
 
@@ -79,22 +61,23 @@ Le site ne nécessite pas d'inscription. Chaque post peut être signé avec un p
 
 ### Dépendance
 
-Next.js; React; busboy (formulaire); iron-session (session in cookie); mysql; nodemailer (envoie de mail);
+Next.js; React; busboy (formulaire); jose (session with jwe); mysql; nodemailer (envoie de mail);
 
 ## TODO
 
+- [ ] NextJS 14 features
 - [ ] SQL: 'game' col in 'post' as join ?
-- [ ] unit test
-- [ ] css: optimize for phone
-- [x] ~~Docker~~
+- [ ] CI/CD
+- [ ] CSS : make it Aesthetic
+- [ ] CSS: optimize for phone (disable flares)
+- [ ] Docker
 - [ ] use Next/image
 - [ ] internasionalization
 - [ ] gallery: auto load on scroll
-- [ ] pouvoir trier les posts par jeu /game/\[nom_du_jeu\]
+- [x] ~~pouvoir trier les posts par jeu /game/\[nom_du_jeu\]~~
 - [ ] SQL requete with UNIXTIMESTANP() to avoid parsing Date()
 - [ ] Utiliser un ORM (Sequelize)
 - [ ] Meilleur gestion des fichiers. ajouter une extension aux fichier validé pour faciliter la detection du type mime dans api/image/ (detection du type mime par l'extension)
-- [ ] Ne pas refaire vérifier les adresses mail qui l'on déjà était (les retrouver dans la bdd en cas de perte du cookies)
 - [ ] déclaration de confidentialité
 - [ ] improve database connexion handling (pool?)
 - [ ] site map
