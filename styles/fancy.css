@@ -64,6 +64,7 @@ border-radius: 10px;*/
 	border-radius: 15px;
 	border: 2px solid black;
 	text-align: center;
+	cursor: pointer;
 }
 
 .Oauth * {
