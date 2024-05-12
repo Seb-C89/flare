@@ -14,6 +14,7 @@ export default function(props) {
 
 	async function onSubmit(event) {
 		event.preventDefault() // don't redirect the page
+		setSubmited(true)
 		var formData = new URLSearchParams(new FormData(form_ref.current))  // ?key=value&key2=value2
 		fetch(process.env.NEXT_PUBLIC_API+"/form/mail", {
 			method: 'POST', // URLSearchParams passed in the body of the POST request, not in the url
@@ -21,7 +22,7 @@ export default function(props) {
 		}).then((res) => {
 			if(res.ok)
 				//console.log("DONE")
-				setSubmited(true)
+				setError(false)
 			else
 				//console.log("ERROR: "+res.status)
 				setError(true)
@@ -31,17 +32,19 @@ export default function(props) {
 	}
 
 	function result(){
-		if(submited)
-			return onSuccess()
-		if(error)
-			return onFail()
+		if(error !== undefined && error !== null) {
+			if(error)
+				return onFail()
+			else
+				return onSuccess()
+		}
 	}
 
-	return <form ref={ form_ref } id="Form" method="POST" action="/login" onSubmit={onSubmit}>
+	return <><form ref={ form_ref } id="Form" method="POST" action="/login" onSubmit={onSubmit}>
 		<section>
 			<h2>Connexion</h2>
 			<p>Pour accéder au formulaire vous devez d'abord valider votre adresse e-mail, ceci à fin d'éviter les spam/bot.<br />
-			Vous recevrez un e-mail contenant un lien vous permettant de valider votre adresse e-mail.</p>
+			Vous recevrez un e-mail contenant un lien vous permettant de vous connecter.</p>
 			<p><i>L'adresse e-mail ne sera ni conservée, ni communiquée à quiconque, conformément à notre politique de confidentialité.</i></p>
 			<div>
 				<label htmlFor="email">
@@ -56,6 +59,16 @@ export default function(props) {
 			{ result() }
 		</section>
 	</form>
+	<form>
+	<section id="Oauth_section">
+		<h2>Ou utilisez un compte existant</h2>
+		<p>Seule votre adresse mail sera consulter et utiliser pour enregistrez vos post ou message.</p>
+			<button className="Oauth Gmail" formMethod="get" formAction="/api/Oauth/Google"><img src="https://www.gstatic.com/images/branding/product/2x/gmail_2020q4_16dp.png" /><span>Gmail</span></button>
+			<button className="Oauth Outlook" formMethod="get" formAction="/api/Oauth/Outlook"><img src="https://res.cdn.office.net/owamail/20240329006.06/resources/images/favicons/mail-seen.ico" /><span>Outlook</span></button>
+			<button className="Oauth GitHub" formMethod="get" formAction="/api/Oauth/GitHub"><img src="https://github.githubassets.com/favicons/favicon-dark.png" /><span>GitHub</span></button>
+		</section>
+	</form>
+	</>
 }
 
 export function onSuccess(){
