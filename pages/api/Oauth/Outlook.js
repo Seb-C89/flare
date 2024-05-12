@@ -46,7 +46,7 @@ export default withSessionRoute(async (req, res) => {
 				})
 
 				console.log(data);
-				await create_user_session(req, data.mail) // impossible to know if email has been verified
+				await create_user_session(req, res, data.mail) // impossible to know if email has been verified
 			} catch (e) {
 				console.error(e);
 			}

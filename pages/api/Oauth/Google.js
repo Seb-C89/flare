@@ -28,7 +28,7 @@ export default withSessionRoute(async (req, res) => {
 			})
 			console.log("DATA", data)
 			console.log("EMAIL", data.payload.email, data.payload.email_verified)
-			await create_user_session(req, (data.payload.email_verified) ? data.payload.email : undefined)
+			await create_user_session(req, res, (data.payload.email_verified) ? data.payload.email : undefined)
 			res.redirect("/auth?logged=true").end()
 		} else
 			res.redirect(oauth2Client.generateAuthUrl({

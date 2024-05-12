@@ -52,7 +52,7 @@ export default withSessionRoute(async (req, res) => {
 				console.log("PRIMARY", user_primary_mail)
 
 				// Create session
-				await create_user_session(req, (user_primary_mail.verified) ? user_primary_mail.email : undefined)
+				await create_user_session(req, res, (user_primary_mail.verified) ? user_primary_mail.email : undefined)
 			} catch (e) {
 				console.error(e);
 			}
