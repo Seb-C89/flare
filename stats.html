@@ -6,6 +6,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+	<div id="unkik"></div>
 	<p>I'm the content</p>
 	<input type="file" id="input" name="input" />
 	<canvas id="img"></canvas>
@@ -36,17 +37,47 @@
 				reader.onload = function(progressEvent) {
 
 					const i = this.result.matchAll(/^(?<ip>[0-9.]+) - - \[(?<date>.*)\] "(?<http>[^"]*)" (?<status>\d+) (?<size>\d+) "(?<referer>[^"]*)" "(?<agent>[^"]*)"$/gm)
+					
+					unik["ip"] = {}
+					unik["date"] = {}
+					unik["http"] = {}
+					unik["status"] = {}
+					unik["size"] = {}
+					unik["referer"] = {}
+					unik["agent"] = {}
+					unik["date_d"] = {}
+					unik["route"] = {}
+					unik["method"] = {}
 
 					res = Array.from(i, (match) => {
 						const date = match.groups.date.match(/(?<day>\d{2})\/(?<mounth>\w{3})\/(?<year>\d{4}):(?<hour>\d{2}):(?<minute>\d{2}):(?<second>\d{2})/)
 						match.groups.date = new Date(date.groups.year, fuck[date.groups.mounth]-1, date.groups.day, date.groups.hour, date.groups.minute, date.groups.second)
 						match.groups.date_d = new Date(date.groups.year, fuck[date.groups.mounth]-1, date.groups.day, 0, 0, 0)
-						
+				
 						const route = match.groups.http.match(/(?<method>.+) (?<route>\/.*) .*/)
-						match.groups.route = route.groups.route
-						match.groups.method = route.groups.method
-						
-						// Unique IP
+						match.groups.route = route?.groups?.route || match.groups.http
+						match.groups.method = route?.groups?.method || ""
+						delete match.groups.http;
+
+						let exclude = ["date", "size"];
+
+						for(prop in match.groups) {
+							if(exclude.includes(prop))
+								continue;
+							else {
+								if(Object.hasOwn(unik[prop], match.groups[prop])){
+									++unik[prop][match.groups[prop]]
+									//console.log(prop, unik[prop])
+								}
+									
+								else
+									Object.defineProperty(unik[prop], match.groups[prop], {value: 1, writable: true});
+
+								//match.groups[prop] = unik[prop][match.groups[prop]] // add reference instead of keep nth similar value
+							}
+						}
+
+						/*// Unique IP
 						if(Object.hasOwn(unik.ip, match.groups.ip))
 							++unik.ip[match.groups.ip]
 						else
@@ -61,12 +92,16 @@
 							Object.defineProperty(unik.http, match.groups.http, {value: 1});
 
 						match.groups.http = unik.http[match.groups.http] // add reference instead of keep nth similar value
+						*/
 						
 						return {...match.groups}
 					})
 				};
 				reader.readAsText(file);
 		};
+
+		
+
 	</script>
 </body>
 </html>
